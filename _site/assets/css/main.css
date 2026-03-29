@@ -54,6 +54,7 @@
   --line-height-relaxed: 1.75;
   /* Layout */
   --container-max-width: 1200px;
+  --container-max-height: 800px;
   --container-padding: 1rem;
   --header-height: 70px;
   --footer-height: auto;
@@ -436,12 +437,9 @@ a.nav-link.active {
 a.nav-link.active::after {
   content: "";
   position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  background-color: var(--accent-color);
-  border-radius: var(--radius-full);
+  inset: 0;
+  border: 1px solid var(--accent-color);
+  border-radius: var(--radius-md);
 }
 
 /* Header Actions */
