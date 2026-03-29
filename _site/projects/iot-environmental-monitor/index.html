@@ -1,0 +1,1888 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IoT Environmental Monitoring Station - Harrison Saperstein</title>
+    <meta name="description"
+        content="A comprehensive IoT-based environmental monitoring system with wireless sensors, real-time data visualization, and automated alerts for greenhouse and outdoor applications.">
+
+    <!-- Apply theme immediately to prevent flash -->
+    <script>
+        (function () {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
+
+    <!-- SEO -->
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>IoT Environmental Monitoring Station | Harrison Saperstein</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="IoT Environmental Monitoring Station" />
+<meta name="author" content="Harrison Saperstein" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A comprehensive IoT-based environmental monitoring system with wireless sensors, real-time data visualization, and automated alerts for greenhouse and outdoor applications." />
+<meta property="og:description" content="A comprehensive IoT-based environmental monitoring system with wireless sensors, real-time data visualization, and automated alerts for greenhouse and outdoor applications." />
+<link rel="canonical" href="http://localhost:4000/hksaperstein/projects/iot-environmental-monitor/" />
+<meta property="og:url" content="http://localhost:4000/hksaperstein/projects/iot-environmental-monitor/" />
+<meta property="og:site_name" content="Harrison Saperstein" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2024-08-10T00:00:00-04:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="IoT Environmental Monitoring Station" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Harrison Saperstein"},"dateModified":"2024-08-10T00:00:00-04:00","datePublished":"2024-08-10T00:00:00-04:00","description":"A comprehensive IoT-based environmental monitoring system with wireless sensors, real-time data visualization, and automated alerts for greenhouse and outdoor applications.","headline":"IoT Environmental Monitoring Station","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/hksaperstein/projects/iot-environmental-monitor/"},"url":"http://localhost:4000/hksaperstein/projects/iot-environmental-monitor/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- MathJax -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/hksaperstein/assets/css/main.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/hksaperstein/assets/images/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/hksaperstein/assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/hksaperstein/assets/images/favicon-16x16.png">
+</head>
+
+<body>
+    <canvas id="canvas-bg"></canvas>
+
+    <header class="site-header">
+    <div class="container">
+        <div class="header-content">
+            <div class="site-brand">
+                <a href="/hksaperstein/" class="brand-link">
+                    <span class="brand-text">Harrison</span>
+                </a>
+            </div>
+
+            <nav class="site-nav" id="site-nav">
+                <ul class="nav-list">
+                    
+                    <li class="nav-item">
+                        <a href="/hksaperstein/"
+                            class="nav-link ">
+                            Home
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a href="/hksaperstein/projects/"
+                            class="nav-link ">
+                            Projects
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a href="/hksaperstein/about/"
+                            class="nav-link ">
+                            About
+                        </a>
+                    </li>
+                    
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+
+                <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <main id="main-content">
+        <div class="project-hero">
+    <div class="container">
+        <div class="project-header">
+            <h1 class="project-title">IoT Environmental Monitoring Station</h1>
+            <p class="project-description">A comprehensive IoT-based environmental monitoring system with wireless sensors, real-time data visualization, and automated alerts for greenhouse and outdoor applications.</p>
+
+            <div class="project-meta">
+                
+                <a href="https://github.com/aojedao/iot-environmental-monitor" class="btn-github" target="_blank">
+                    <i class="fab fa-github"></i> View on GitHub
+                </a>
+                
+
+                
+                <a href="#" class="btn-demo" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> Live Demo
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="project-content">
+    <div class="container">
+
+        <div class="project-header-simple">
+            <h1 class="project-title-simple">IoT Environmental Monitoring Station</h1>
+        </div>
+
+        <div class="project-split-layout">
+            <!-- Left Column: Text & Info -->
+            <div class="project-left-panel">
+
+                <!-- Overview / Description -->
+                <section class="project-section-clean" id="description">
+                    <h3>Overview</h3>
+                    <div class="project-description-content">
+                        <p class="project-lead">A comprehensive IoT-based environmental monitoring system with wireless sensors, real-time data visualization, and automated alerts for greenhouse and outdoor applications.</p>
+                        <h2 id="project-overview">Project Overview</h2>
+
+<p>This IoT Environmental Monitoring Station is a comprehensive system designed to collect, process, and visualize environmental data for agricultural, research, and monitoring applications. The system combines multiple sensors, wireless communication, solar power, and cloud-based data processing to provide real-time insights into environmental conditions.</p>
+
+<h2 id="system-architecture">System Architecture</h2>
+
+<h3 id="hardware-components">Hardware Components</h3>
+<ul>
+  <li><strong>ESP32 Microcontroller</strong>: Main processing unit with WiFi connectivity</li>
+  <li><strong>Multi-Sensor Array</strong>: Temperature, humidity, pressure, light, soil conditions, and weather</li>
+  <li><strong>Solar Power System</strong>: Self-sustaining power with battery backup</li>
+  <li><strong>Weatherproof Enclosure</strong>: IP65-rated protection for outdoor deployment</li>
+</ul>
+
+<h3 id="software-stack">Software Stack</h3>
+<ul>
+  <li><strong>Embedded Firmware</strong>: C++ on ESP32 for sensor reading and data transmission</li>
+  <li><strong>MQTT Protocol</strong>: Lightweight messaging for IoT communication</li>
+  <li><strong>Python Backend</strong>: Data processing, storage, and analysis</li>
+  <li><strong>Web Dashboard</strong>: Real-time visualization and monitoring interface</li>
+  <li><strong>Mobile App</strong>: Remote monitoring and alert notifications</li>
+</ul>
+
+<h2 id="key-features">Key Features</h2>
+
+<h3 id="comprehensive-monitoring">Comprehensive Monitoring</h3>
+<ul>
+  <li><strong>Temperature &amp; Humidity</strong>: High-precision DHT22 sensor</li>
+  <li><strong>Atmospheric Pressure</strong>: BMP280 barometric sensor</li>
+  <li><strong>Light Levels</strong>: TSL2561 digital luminosity sensor</li>
+  <li><strong>Soil Conditions</strong>: Moisture and temperature monitoring</li>
+  <li><strong>Weather Data</strong>: Rain detection, wind speed and direction</li>
+</ul>
+
+<h3 id="energy-efficient-design">Energy Efficient Design</h3>
+<ul>
+  <li><strong>Solar Powered</strong>: 6W solar panel with MPPT charging</li>
+  <li><strong>Battery Backup</strong>: 2000mAh LiPo for 72-hour operation without sun</li>
+  <li><strong>Sleep Modes</strong>: Ultra-low power consumption between readings</li>
+  <li><strong>Power Monitoring</strong>: Real-time battery voltage and charging status</li>
+</ul>
+
+<h3 id="wireless-connectivity">Wireless Connectivity</h3>
+<ul>
+  <li><strong>WiFi Communication</strong>: IEEE 802.11 b/g/n connectivity</li>
+  <li><strong>MQTT Protocol</strong>: Efficient publish/subscribe messaging</li>
+  <li><strong>Over-the-Air Updates</strong>: Remote firmware updates</li>
+  <li><strong>Fallback Storage</strong>: Local data logging when offline</li>
+</ul>
+
+<h3 id="intelligent-alerting">Intelligent Alerting</h3>
+<ul>
+  <li><strong>Threshold Monitoring</strong>: Customizable alert thresholds</li>
+  <li><strong>Multi-Channel Notifications</strong>: Email, SMS, and push notifications</li>
+  <li><strong>Smart Filtering</strong>: Reduces false alarms with trend analysis</li>
+  <li><strong>Escalation Policies</strong>: Different alert levels based on severity</li>
+</ul>
+
+<h2 id="technical-specifications">Technical Specifications</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Specification</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Operating Voltage</strong></td>
+      <td>3.3V (regulated from solar/battery)</td>
+    </tr>
+    <tr>
+      <td><strong>Power Consumption</strong></td>
+      <td>45mA active, 10μA sleep</td>
+    </tr>
+    <tr>
+      <td><strong>Transmission Range</strong></td>
+      <td>WiFi: 100m (outdoor)</td>
+    </tr>
+    <tr>
+      <td><strong>Data Resolution</strong></td>
+      <td>Temperature: ±0.1°C, Humidity: ±2%</td>
+    </tr>
+    <tr>
+      <td><strong>Sampling Rate</strong></td>
+      <td>30 seconds (configurable)</td>
+    </tr>
+    <tr>
+      <td><strong>Data Storage</strong></td>
+      <td>1MB onboard flash + cloud storage</td>
+    </tr>
+    <tr>
+      <td><strong>Operating Temperature</strong></td>
+      <td>-40°C to +85°C</td>
+    </tr>
+    <tr>
+      <td><strong>Weather Rating</strong></td>
+      <td>IP65 (dust tight, water resistant)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="sensor-details">Sensor Details</h2>
+
+<h3 id="environmental-sensors">Environmental Sensors</h3>
+<ol>
+  <li><strong>DHT22</strong>: ±0.5°C temperature, ±2-5% humidity accuracy</li>
+  <li><strong>BMP280</strong>: ±1 hPa pressure accuracy, 0.17m altitude resolution</li>
+  <li><strong>TSL2561</strong>: 0.1 to 40,000 lux light measurement range</li>
+</ol>
+
+<h3 id="agricultural-sensors">Agricultural Sensors</h3>
+<ol>
+  <li><strong>Capacitive Soil Moisture</strong>: Corrosion-resistant, 0-100% range</li>
+  <li><strong>DS18B20 Soil Temperature</strong>: Waterproof, ±0.5°C accuracy</li>
+  <li><strong>Rain Sensor</strong>: Digital rain/no-rain detection</li>
+</ol>
+
+<h3 id="weather-sensors">Weather Sensors</h3>
+<ol>
+  <li><strong>Anemometer</strong>: Hall effect, 0-70 m/s wind speed range</li>
+  <li><strong>Wind Vane</strong>: 16-position wind direction measurement</li>
+  <li><strong>Weather Station Integration</strong>: Compatible with standard protocols</li>
+</ol>
+
+<h2 id="data-processing-pipeline">Data Processing Pipeline</h2>
+
+<h3 id="real-time-processing">Real-Time Processing</h3>
+<ol>
+  <li><strong>Sensor Fusion</strong>: Combines multiple sensor readings for accuracy</li>
+  <li><strong>Quality Checks</strong>: Validates data for sensor errors and outliers</li>
+  <li><strong>Calibration</strong>: Automatic drift compensation and calibration</li>
+  <li><strong>Aggregation</strong>: Computes moving averages and trends</li>
+</ol>
+
+<h3 id="advanced-analytics">Advanced Analytics</h3>
+<ul>
+  <li><strong>Anomaly Detection</strong>: Machine learning-based outlier detection</li>
+  <li><strong>Predictive Modeling</strong>: Weather and crop condition forecasting</li>
+  <li><strong>Correlation Analysis</strong>: Identifies relationships between variables</li>
+  <li><strong>Statistical Reporting</strong>: Automated daily/weekly/monthly reports</li>
+</ul>
+
+<h2 id="dashboard-features">Dashboard Features</h2>
+
+<h3 id="real-time-visualization">Real-Time Visualization</h3>
+<ul>
+  <li><strong>Live Gauges</strong>: Current readings with color-coded status</li>
+  <li><strong>Time Series Charts</strong>: Historical data with zoom and pan</li>
+  <li><strong>Weather Maps</strong>: Geographic visualization of sensor network</li>
+  <li><strong>Mobile Responsive</strong>: Optimized for phones and tablets</li>
+</ul>
+
+<h3 id="data-export">Data Export</h3>
+<ul>
+  <li><strong>CSV Downloads</strong>: Raw data export for analysis</li>
+  <li><strong>API Access</strong>: RESTful API for third-party integration</li>
+  <li><strong>Report Generation</strong>: Automated PDF reports</li>
+  <li><strong>Database Backup</strong>: Scheduled data backups</li>
+</ul>
+
+<h2 id="installation--deployment">Installation &amp; Deployment</h2>
+
+<details class="assembly-details">
+<summary>Installation &amp; Deployment</summary>
+<div class="assembly-content">
+
+    <h3 id="site-preparation">Site Preparation</h3>
+    <ol>
+      <li><strong>Location Selection</strong>: Clear view of sky for solar panel</li>
+      <li><strong>Mounting</strong>: Secure pole or structure installation</li>
+      <li><strong>Network Setup</strong>: WiFi coverage area verification</li>
+      <li><strong>Sensor Placement</strong>: Optimal positioning for accurate readings</li>
+    </ol>
+
+    <h3 id="configuration">Configuration</h3>
+    <ol>
+      <li><strong>WiFi Credentials</strong>: Connect to local network infrastructure</li>
+      <li><strong>MQTT Broker</strong>: Configure cloud or local message broker</li>
+      <li><strong>Alert Thresholds</strong>: Set customized warning and critical levels</li>
+      <li><strong>Sampling Intervals</strong>: Optimize for battery life vs. data resolution</li>
+    </ol>
+
+  </div>
+</details>
+
+<h1 id="environmental-data-analysis--visualization">Environmental Data Analysis &amp; Visualization</h1>
+
+<h2 id="real-time-sensor-data-plots">Real-time Sensor Data Plots</h2>
+
+<h3 id="multi-parameter-time-series-analysis">Multi-parameter Time Series Analysis</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="n">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">from</span> <span class="n">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+
+<span class="c1"># Generate sample environmental data (24 hours)
+</span><span class="n">time_range</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="sh">'</span><span class="s">2024-01-01</span><span class="sh">'</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">288</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="sh">'</span><span class="s">5min</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Realistic environmental patterns
+</span><span class="n">temperature</span> <span class="o">=</span> <span class="mi">18</span> <span class="o">+</span> <span class="mi">8</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="nf">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="nf">arange</span><span class="p">(</span><span class="mi">288</span><span class="p">)</span> <span class="o">/</span> <span class="mi">288</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">288</span><span class="p">)</span>
+<span class="n">humidity</span> <span class="o">=</span> <span class="mi">65</span> <span class="o">+</span> <span class="mi">20</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="nf">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="nf">arange</span><span class="p">(</span><span class="mi">288</span><span class="p">)</span> <span class="o">/</span> <span class="mi">288</span> <span class="o">+</span> <span class="n">np</span><span class="p">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">288</span><span class="p">)</span>
+<span class="n">pressure</span> <span class="o">=</span> <span class="mi">1013</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="nf">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="nf">arange</span><span class="p">(</span><span class="mi">288</span><span class="p">)</span> <span class="o">/</span> <span class="mi">288</span> <span class="o">+</span> <span class="n">np</span><span class="p">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mi">288</span><span class="p">)</span>
+<span class="n">soil_moisture</span> <span class="o">=</span> <span class="mi">45</span> <span class="o">+</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="nf">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="nf">arange</span><span class="p">(</span><span class="mi">288</span><span class="p">)</span> <span class="o">/</span> <span class="mi">288</span> <span class="o">+</span> <span class="n">np</span><span class="p">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">288</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="p">((</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">),</span> <span class="p">(</span><span class="n">ax3</span><span class="p">,</span> <span class="n">ax4</span><span class="p">))</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="nf">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+<span class="c1"># Temperature
+</span><span class="n">ax1</span><span class="p">.</span><span class="nf">plot</span><span class="p">(</span><span class="n">time_range</span><span class="p">,</span> <span class="n">temperature</span><span class="p">,</span> <span class="sh">'</span><span class="s">r-</span><span class="sh">'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">ax1</span><span class="p">.</span><span class="nf">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="sh">'</span><span class="s">orange</span><span class="sh">'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="sh">'</span><span class="s">--</span><span class="sh">'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sh">'</span><span class="s">High Threshold</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax1</span><span class="p">.</span><span class="nf">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="sh">'</span><span class="s">blue</span><span class="sh">'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="sh">'</span><span class="s">--</span><span class="sh">'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sh">'</span><span class="s">Low Threshold</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax1</span><span class="p">.</span><span class="nf">set_ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Temperature (°C)</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax1</span><span class="p">.</span><span class="nf">set_title</span><span class="p">(</span><span class="sh">'</span><span class="s">Temperature Monitoring</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax1</span><span class="p">.</span><span class="nf">legend</span><span class="p">()</span>
+<span class="n">ax1</span><span class="p">.</span><span class="nf">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># Humidity
+</span><span class="n">ax2</span><span class="p">.</span><span class="nf">plot</span><span class="p">(</span><span class="n">time_range</span><span class="p">,</span> <span class="n">humidity</span><span class="p">,</span> <span class="sh">'</span><span class="s">b-</span><span class="sh">'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">ax2</span><span class="p">.</span><span class="nf">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="sh">'</span><span class="s">red</span><span class="sh">'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="sh">'</span><span class="s">--</span><span class="sh">'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sh">'</span><span class="s">High Alert</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax2</span><span class="p">.</span><span class="nf">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="sh">'</span><span class="s">orange</span><span class="sh">'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="sh">'</span><span class="s">--</span><span class="sh">'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sh">'</span><span class="s">Low Alert</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax2</span><span class="p">.</span><span class="nf">set_ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Humidity (%)</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax2</span><span class="p">.</span><span class="nf">set_title</span><span class="p">(</span><span class="sh">'</span><span class="s">Relative Humidity</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax2</span><span class="p">.</span><span class="nf">legend</span><span class="p">()</span>
+<span class="n">ax2</span><span class="p">.</span><span class="nf">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># Atmospheric Pressure
+</span><span class="n">ax3</span><span class="p">.</span><span class="nf">plot</span><span class="p">(</span><span class="n">time_range</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="sh">'</span><span class="s">g-</span><span class="sh">'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">ax3</span><span class="p">.</span><span class="nf">set_ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Pressure (hPa)</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax3</span><span class="p">.</span><span class="nf">set_title</span><span class="p">(</span><span class="sh">'</span><span class="s">Atmospheric Pressure</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax3</span><span class="p">.</span><span class="nf">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># Soil Moisture
+</span><span class="n">ax4</span><span class="p">.</span><span class="nf">plot</span><span class="p">(</span><span class="n">time_range</span><span class="p">,</span> <span class="n">soil_moisture</span><span class="p">,</span> <span class="sh">'</span><span class="s">brown</span><span class="sh">'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">ax4</span><span class="p">.</span><span class="nf">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="sh">'</span><span class="s">red</span><span class="sh">'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="sh">'</span><span class="s">--</span><span class="sh">'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sh">'</span><span class="s">Irrigation Needed</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax4</span><span class="p">.</span><span class="nf">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="sh">'</span><span class="s">blue</span><span class="sh">'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="sh">'</span><span class="s">--</span><span class="sh">'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sh">'</span><span class="s">Optimal Range</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax4</span><span class="p">.</span><span class="nf">set_ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Soil Moisture (%)</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax4</span><span class="p">.</span><span class="nf">set_title</span><span class="p">(</span><span class="sh">'</span><span class="s">Soil Moisture Content</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax4</span><span class="p">.</span><span class="nf">set_xlabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Time</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax4</span><span class="p">.</span><span class="nf">legend</span><span class="p">()</span>
+<span class="n">ax4</span><span class="p">.</span><span class="nf">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="nf">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="sensor-correlation-analysis">Sensor Correlation Analysis</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Correlation matrix and scatter plots
+</span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nc">DataFrame</span><span class="p">({</span>
+    <span class="sh">'</span><span class="s">Temperature</span><span class="sh">'</span><span class="p">:</span> <span class="n">temperature</span><span class="p">,</span>
+    <span class="sh">'</span><span class="s">Humidity</span><span class="sh">'</span><span class="p">:</span> <span class="n">humidity</span><span class="p">,</span>
+    <span class="sh">'</span><span class="s">Pressure</span><span class="sh">'</span><span class="p">:</span> <span class="n">pressure</span><span class="p">,</span>
+    <span class="sh">'</span><span class="s">Soil_Moisture</span><span class="sh">'</span><span class="p">:</span> <span class="n">soil_moisture</span>
+<span class="p">})</span>
+
+<span class="c1"># Calculate correlation matrix
+</span><span class="n">correlation_matrix</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="nf">corr</span><span class="p">()</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="p">((</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">),</span> <span class="p">(</span><span class="n">ax3</span><span class="p">,</span> <span class="n">ax4</span><span class="p">))</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="nf">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+<span class="c1"># Correlation heatmap
+</span><span class="n">im</span> <span class="o">=</span> <span class="n">ax1</span><span class="p">.</span><span class="nf">imshow</span><span class="p">(</span><span class="n">correlation_matrix</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="sh">'</span><span class="s">coolwarm</span><span class="sh">'</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax1</span><span class="p">.</span><span class="nf">set_xticks</span><span class="p">(</span><span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">correlation_matrix</span><span class="p">.</span><span class="n">columns</span><span class="p">)))</span>
+<span class="n">ax1</span><span class="p">.</span><span class="nf">set_yticks</span><span class="p">(</span><span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">correlation_matrix</span><span class="p">.</span><span class="n">columns</span><span class="p">)))</span>
+<span class="n">ax1</span><span class="p">.</span><span class="nf">set_xticklabels</span><span class="p">(</span><span class="n">correlation_matrix</span><span class="p">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">ax1</span><span class="p">.</span><span class="nf">set_yticklabels</span><span class="p">(</span><span class="n">correlation_matrix</span><span class="p">.</span><span class="n">columns</span><span class="p">)</span>
+<span class="n">ax1</span><span class="p">.</span><span class="nf">set_title</span><span class="p">(</span><span class="sh">'</span><span class="s">Sensor Data Correlation Matrix</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="c1"># Add correlation values to heatmap
+</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">correlation_matrix</span><span class="p">.</span><span class="n">columns</span><span class="p">)):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">correlation_matrix</span><span class="p">.</span><span class="n">columns</span><span class="p">)):</span>
+        <span class="n">ax1</span><span class="p">.</span><span class="nf">text</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="sa">f</span><span class="sh">'</span><span class="si">{</span><span class="n">correlation_matrix</span><span class="p">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="sh">'</span><span class="p">,</span> 
+                <span class="n">ha</span><span class="o">=</span><span class="sh">'</span><span class="s">center</span><span class="sh">'</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="sh">'</span><span class="s">center</span><span class="sh">'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="sh">'</span><span class="s">white</span><span class="sh">'</span> <span class="k">if</span> <span class="nf">abs</span><span class="p">(</span><span class="n">correlation_matrix</span><span class="p">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mf">0.5</span> <span class="k">else</span> <span class="sh">'</span><span class="s">black</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="nf">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
+
+<span class="c1"># Temperature vs Humidity scatter
+</span><span class="n">ax2</span><span class="p">.</span><span class="nf">scatter</span><span class="p">(</span><span class="n">temperature</span><span class="p">,</span> <span class="n">humidity</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="sh">'</span><span class="s">blue</span><span class="sh">'</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">ax2</span><span class="p">.</span><span class="nf">set_xlabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Temperature (°C)</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax2</span><span class="p">.</span><span class="nf">set_ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Humidity (%)</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax2</span><span class="p">.</span><span class="nf">set_title</span><span class="p">(</span><span class="sh">'</span><span class="s">Temperature vs Humidity</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax2</span><span class="p">.</span><span class="nf">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># Pressure vs Temperature
+</span><span class="n">ax3</span><span class="p">.</span><span class="nf">scatter</span><span class="p">(</span><span class="n">pressure</span><span class="p">,</span> <span class="n">temperature</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="sh">'</span><span class="s">green</span><span class="sh">'</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">ax3</span><span class="p">.</span><span class="nf">set_xlabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Pressure (hPa)</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax3</span><span class="p">.</span><span class="nf">set_ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Temperature (°C)</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax3</span><span class="p">.</span><span class="nf">set_title</span><span class="p">(</span><span class="sh">'</span><span class="s">Pressure vs Temperature</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax3</span><span class="p">.</span><span class="nf">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># Soil Moisture Distribution
+</span><span class="n">ax4</span><span class="p">.</span><span class="nf">hist</span><span class="p">(</span><span class="n">soil_moisture</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="sh">'</span><span class="s">brown</span><span class="sh">'</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="sh">'</span><span class="s">black</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax4</span><span class="p">.</span><span class="nf">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="nf">mean</span><span class="p">(</span><span class="n">soil_moisture</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="sh">'</span><span class="s">red</span><span class="sh">'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="sh">'</span><span class="s">--</span><span class="sh">'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="sh">'</span><span class="s">Mean: </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="nf">mean</span><span class="p">(</span><span class="n">soil_moisture</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="si">}</span><span class="s">%</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax4</span><span class="p">.</span><span class="nf">set_xlabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Soil Moisture (%)</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax4</span><span class="p">.</span><span class="nf">set_ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Frequency</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax4</span><span class="p">.</span><span class="nf">set_title</span><span class="p">(</span><span class="sh">'</span><span class="s">Soil Moisture Distribution</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax4</span><span class="p">.</span><span class="nf">legend</span><span class="p">()</span>
+<span class="n">ax4</span><span class="p">.</span><span class="nf">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="nf">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="power-management-analysis">Power Management Analysis</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Battery and solar charging analysis
+</span><span class="n">hours</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="n">solar_irradiance</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">maximum</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="nf">sin</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">hours</span> <span class="o">-</span> <span class="mi">6</span><span class="p">)</span> <span class="o">/</span> <span class="mi">12</span><span class="p">))</span>  <span class="c1"># Daylight hours
+</span><span class="n">solar_power</span> <span class="o">=</span> <span class="n">solar_irradiance</span> <span class="o">*</span> <span class="mf">2.5</span>  <span class="c1"># Watts peak
+</span>
+<span class="c1"># Battery simulation
+</span><span class="n">battery_capacity</span> <span class="o">=</span> <span class="mi">2000</span>  <span class="c1"># mAh
+</span><span class="n">consumption_rate</span> <span class="o">=</span> <span class="mi">85</span>    <span class="c1"># mA average
+</span><span class="n">charging_efficiency</span> <span class="o">=</span> <span class="mf">0.85</span>
+
+<span class="n">battery_level</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">current_charge</span> <span class="o">=</span> <span class="n">battery_capacity</span>
+
+<span class="k">for</span> <span class="n">hour</span> <span class="ow">in</span> <span class="n">hours</span><span class="p">:</span>
+    <span class="n">solar_hour</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="n">hour</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span> <span class="o">%</span> <span class="nf">len</span><span class="p">(</span><span class="n">solar_irradiance</span><span class="p">)</span>
+    <span class="n">charging_current</span> <span class="o">=</span> <span class="n">solar_power</span><span class="p">[</span><span class="n">solar_hour</span><span class="p">]</span> <span class="o">*</span> <span class="mi">200</span> <span class="o">*</span> <span class="n">charging_efficiency</span>  <span class="c1"># mA
+</span>    <span class="n">net_current</span> <span class="o">=</span> <span class="n">charging_current</span> <span class="o">-</span> <span class="n">consumption_rate</span>
+    <span class="n">current_charge</span> <span class="o">+=</span> <span class="n">net_current</span> <span class="o">*</span> <span class="mf">0.5</span>  <span class="c1"># 0.5 hour intervals
+</span>    <span class="n">current_charge</span> <span class="o">=</span> <span class="nf">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nf">min</span><span class="p">(</span><span class="n">battery_capacity</span><span class="p">,</span> <span class="n">current_charge</span><span class="p">))</span>
+    <span class="n">battery_level</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">current_charge</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">,</span> <span class="n">ax3</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="nf">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+<span class="c1"># Solar irradiance
+</span><span class="n">ax1</span><span class="p">.</span><span class="nf">fill_between</span><span class="p">(</span><span class="n">hours</span><span class="p">,</span> <span class="n">solar_irradiance</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="sh">'</span><span class="s">gold</span><span class="sh">'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sh">'</span><span class="s">Solar Irradiance</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax1</span><span class="p">.</span><span class="nf">set_ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Relative Irradiance</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax1</span><span class="p">.</span><span class="nf">set_title</span><span class="p">(</span><span class="sh">'</span><span class="s">Solar Energy Availability</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax1</span><span class="p">.</span><span class="nf">legend</span><span class="p">()</span>
+<span class="n">ax1</span><span class="p">.</span><span class="nf">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># Power generation vs consumption
+</span><span class="n">ax2</span><span class="p">.</span><span class="nf">plot</span><span class="p">(</span><span class="n">hours</span><span class="p">,</span> <span class="n">solar_power</span><span class="p">,</span> <span class="sh">'</span><span class="s">orange</span><span class="sh">'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sh">'</span><span class="s">Solar Power Generation</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax2</span><span class="p">.</span><span class="nf">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">consumption_rate</span><span class="o">/</span><span class="mi">1000</span><span class="o">*</span><span class="mf">3.7</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="sh">'</span><span class="s">red</span><span class="sh">'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="sh">'</span><span class="s">--</span><span class="sh">'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sh">'</span><span class="s">Power Consumption</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax2</span><span class="p">.</span><span class="nf">set_ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Power (W)</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax2</span><span class="p">.</span><span class="nf">set_title</span><span class="p">(</span><span class="sh">'</span><span class="s">Power Generation vs Consumption</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax2</span><span class="p">.</span><span class="nf">legend</span><span class="p">()</span>
+<span class="n">ax2</span><span class="p">.</span><span class="nf">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># Battery level
+</span><span class="n">battery_percentage</span> <span class="o">=</span> <span class="p">[(</span><span class="n">level</span><span class="o">/</span><span class="n">battery_capacity</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span> <span class="k">for</span> <span class="n">level</span> <span class="ow">in</span> <span class="n">battery_level</span><span class="p">]</span>
+<span class="n">ax3</span><span class="p">.</span><span class="nf">plot</span><span class="p">(</span><span class="n">hours</span><span class="p">,</span> <span class="n">battery_percentage</span><span class="p">,</span> <span class="sh">'</span><span class="s">green</span><span class="sh">'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sh">'</span><span class="s">Battery Level</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax3</span><span class="p">.</span><span class="nf">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="sh">'</span><span class="s">red</span><span class="sh">'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="sh">'</span><span class="s">--</span><span class="sh">'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sh">'</span><span class="s">Low Battery Alert</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax3</span><span class="p">.</span><span class="nf">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="sh">'</span><span class="s">blue</span><span class="sh">'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="sh">'</span><span class="s">--</span><span class="sh">'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sh">'</span><span class="s">Optimal Range</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax3</span><span class="p">.</span><span class="nf">set_xlabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Hour of Day</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax3</span><span class="p">.</span><span class="nf">set_ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Battery Level (%)</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax3</span><span class="p">.</span><span class="nf">set_title</span><span class="p">(</span><span class="sh">'</span><span class="s">Battery Charge Level Over 24 Hours</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax3</span><span class="p">.</span><span class="nf">legend</span><span class="p">()</span>
+<span class="n">ax3</span><span class="p">.</span><span class="nf">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">ax3</span><span class="p">.</span><span class="nf">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="nf">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="data-quality--system-health-monitoring">Data Quality &amp; System Health Monitoring</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># System performance metrics
+</span><span class="n">days</span> <span class="o">=</span> <span class="nf">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">31</span><span class="p">)</span>  <span class="c1"># 30 days of operation
+</span><span class="n">uptime</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">normal</span><span class="p">(</span><span class="mf">99.5</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="n">uptime</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">clip</span><span class="p">(</span><span class="n">uptime</span><span class="p">,</span> <span class="mi">95</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="n">packet_loss</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">exponential</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="n">packet_loss</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">clip</span><span class="p">(</span><span class="n">packet_loss</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">sensor_drift</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">cumsum</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mi">30</span><span class="p">))</span>
+<span class="n">sensor_drift</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">clip</span><span class="p">(</span><span class="n">sensor_drift</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="p">((</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">),</span> <span class="p">(</span><span class="n">ax3</span><span class="p">,</span> <span class="n">ax4</span><span class="p">))</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="nf">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+<span class="c1"># System uptime
+</span><span class="n">ax1</span><span class="p">.</span><span class="nf">plot</span><span class="p">(</span><span class="n">days</span><span class="p">,</span> <span class="n">uptime</span><span class="p">,</span> <span class="sh">'</span><span class="s">g-</span><span class="sh">'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="sh">'</span><span class="s">o</span><span class="sh">'</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">ax1</span><span class="p">.</span><span class="nf">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">99</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="sh">'</span><span class="s">orange</span><span class="sh">'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="sh">'</span><span class="s">--</span><span class="sh">'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sh">'</span><span class="s">Target Uptime</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax1</span><span class="p">.</span><span class="nf">set_ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Uptime (%)</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax1</span><span class="p">.</span><span class="nf">set_title</span><span class="p">(</span><span class="sh">'</span><span class="s">System Uptime Performance</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax1</span><span class="p">.</span><span class="nf">legend</span><span class="p">()</span>
+<span class="n">ax1</span><span class="p">.</span><span class="nf">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">ax1</span><span class="p">.</span><span class="nf">set_ylim</span><span class="p">(</span><span class="mi">95</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># Data transmission reliability
+</span><span class="n">ax2</span><span class="p">.</span><span class="nf">plot</span><span class="p">(</span><span class="n">days</span><span class="p">,</span> <span class="n">packet_loss</span><span class="p">,</span> <span class="sh">'</span><span class="s">r-</span><span class="sh">'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="sh">'</span><span class="s">s</span><span class="sh">'</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">ax2</span><span class="p">.</span><span class="nf">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="sh">'</span><span class="s">orange</span><span class="sh">'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="sh">'</span><span class="s">--</span><span class="sh">'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sh">'</span><span class="s">Acceptable Loss</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax2</span><span class="p">.</span><span class="nf">set_ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Packet Loss (%)</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax2</span><span class="p">.</span><span class="nf">set_title</span><span class="p">(</span><span class="sh">'</span><span class="s">Data Transmission Reliability</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax2</span><span class="p">.</span><span class="nf">legend</span><span class="p">()</span>
+<span class="n">ax2</span><span class="p">.</span><span class="nf">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># Sensor calibration drift
+</span><span class="n">ax3</span><span class="p">.</span><span class="nf">plot</span><span class="p">(</span><span class="n">days</span><span class="p">,</span> <span class="n">sensor_drift</span><span class="p">,</span> <span class="sh">'</span><span class="s">purple</span><span class="sh">'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="sh">'</span><span class="s">^</span><span class="sh">'</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">ax3</span><span class="p">.</span><span class="nf">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="sh">'</span><span class="s">red</span><span class="sh">'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="sh">'</span><span class="s">--</span><span class="sh">'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sh">'</span><span class="s">Recalibration Needed</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax3</span><span class="p">.</span><span class="nf">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=-</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="sh">'</span><span class="s">red</span><span class="sh">'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="sh">'</span><span class="s">--</span><span class="sh">'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">ax3</span><span class="p">.</span><span class="nf">set_ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Calibration Drift (°C)</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax3</span><span class="p">.</span><span class="nf">set_title</span><span class="p">(</span><span class="sh">'</span><span class="s">Temperature Sensor Drift</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax3</span><span class="p">.</span><span class="nf">legend</span><span class="p">()</span>
+<span class="n">ax3</span><span class="p">.</span><span class="nf">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># Alert frequency
+</span><span class="n">alert_types</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">Temperature</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">Humidity</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">Soil Moisture</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">Battery</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">Connectivity</span><span class="sh">'</span><span class="p">]</span>
+<span class="n">alert_counts</span> <span class="o">=</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">red</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">blue</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">brown</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">orange</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">purple</span><span class="sh">'</span><span class="p">]</span>
+
+<span class="n">bars</span> <span class="o">=</span> <span class="n">ax4</span><span class="p">.</span><span class="nf">bar</span><span class="p">(</span><span class="n">alert_types</span><span class="p">,</span> <span class="n">alert_counts</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">ax4</span><span class="p">.</span><span class="nf">set_ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Alert Count (30 days)</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax4</span><span class="p">.</span><span class="nf">set_title</span><span class="p">(</span><span class="sh">'</span><span class="s">Alert Frequency by Type</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax4</span><span class="p">.</span><span class="nf">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="sh">'</span><span class="s">x</span><span class="sh">'</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">bar</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nf">zip</span><span class="p">(</span><span class="n">bars</span><span class="p">,</span> <span class="n">alert_counts</span><span class="p">):</span>
+    <span class="n">ax4</span><span class="p">.</span><span class="nf">text</span><span class="p">(</span><span class="n">bar</span><span class="p">.</span><span class="nf">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">bar</span><span class="p">.</span><span class="nf">get_width</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">bar</span><span class="p">.</span><span class="nf">get_height</span><span class="p">()</span> <span class="o">+</span> <span class="mf">0.3</span><span class="p">,</span> 
+             <span class="nf">str</span><span class="p">(</span><span class="n">count</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="sh">'</span><span class="s">center</span><span class="sh">'</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="sh">'</span><span class="s">bottom</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="nf">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h2 id="performance-results">Performance Results</h2>
+
+<h3 id="accuracy-validation">Accuracy Validation</h3>
+<ul>
+  <li><strong>Temperature</strong>: ±0.3°C compared to reference thermometer</li>
+  <li><strong>Humidity</strong>: ±3% compared to professional hygrometer</li>
+  <li><strong>Pressure</strong>: ±0.5 hPa compared to reference weather station</li>
+  <li><strong>Soil Moisture</strong>: ±5% validated with gravimetric method</li>
+</ul>
+
+<h3 id="reliability-metrics">Reliability Metrics</h3>
+<ul>
+  <li><strong>Uptime</strong>: 99.7% over 6-month field test</li>
+  <li><strong>Data Loss</strong>: &lt;0.1% with redundant storage systems</li>
+  <li><strong>Battery Life</strong>: 96 hours without solar charging</li>
+  <li><strong>Weather Resistance</strong>: Survived -20°C to +45°C conditions</li>
+</ul>
+
+<h2 id="applications">Applications</h2>
+
+<h3 id="agriculture">Agriculture</h3>
+<ul>
+  <li><strong>Irrigation Control</strong>: Automated watering based on soil moisture</li>
+  <li><strong>Crop Monitoring</strong>: Growth condition optimization</li>
+  <li><strong>Pest Management</strong>: Environmental condition correlation</li>
+  <li><strong>Yield Prediction</strong>: Data-driven harvest planning</li>
+</ul>
+
+<h3 id="research">Research</h3>
+<ul>
+  <li><strong>Climate Studies</strong>: Long-term environmental data collection</li>
+  <li><strong>Ecosystem Monitoring</strong>: Habitat condition assessment</li>
+  <li><strong>Weather Stations</strong>: Meteorological data networks</li>
+  <li><strong>Urban Planning</strong>: Microclimate analysis</li>
+</ul>
+
+<h3 id="commercial">Commercial</h3>
+<ul>
+  <li><strong>Greenhouse Automation</strong>: Optimal growing condition maintenance</li>
+  <li><strong>Solar Farm Monitoring</strong>: Weather impact on energy production</li>
+  <li><strong>Construction Sites</strong>: Environmental compliance monitoring</li>
+  <li><strong>Event Planning</strong>: Weather-dependent activity management</li>
+</ul>
+
+<h2 id="future-enhancements">Future Enhancements</h2>
+
+<h3 id="hardware-improvements">Hardware Improvements</h3>
+<ul>
+  <li><strong>LoRaWAN Integration</strong>: Extended range communication</li>
+  <li><strong>Additional Sensors</strong>: CO2, UV index, particulate matter</li>
+  <li><strong>Edge AI Processing</strong>: On-device machine learning</li>
+  <li><strong>Modular Design</strong>: Plug-and-play sensor modules</li>
+</ul>
+
+<h3 id="software-features">Software Features</h3>
+<ul>
+  <li><strong>Machine Learning</strong>: Predictive analytics and pattern recognition</li>
+  <li><strong>Voice Integration</strong>: Alexa/Google Assistant compatibility</li>
+  <li><strong>Blockchain</strong>: Secure data provenance and sharing</li>
+  <li><strong>AR Visualization</strong>: Augmented reality data overlay</li>
+</ul>
+
+<h2 id="lessons-learned">Lessons Learned</h2>
+
+<h3 id="hardware-design">Hardware Design</h3>
+<ol>
+  <li><strong>Waterproofing</strong>: Cable glands are critical failure points</li>
+  <li><strong>Power Management</strong>: Solar charging requires MPPT for efficiency</li>
+  <li><strong>Sensor Placement</strong>: Wind affects temperature readings significantly</li>
+  <li><strong>PCB Design</strong>: Ground planes essential for noise reduction</li>
+</ol>
+
+<h3 id="software-development">Software Development</h3>
+<ol>
+  <li><strong>Error Handling</strong>: Network failures are common in remote locations</li>
+  <li><strong>Data Validation</strong>: Sensor drift detection prevents bad data</li>
+  <li><strong>Security</strong>: IoT devices are attractive targets for attacks</li>
+  <li><strong>Scalability</strong>: Database design affects query performance</li>
+</ol>
+
+
+                    </div>
+                </section>
+
+
+
+                <!-- Code Section (Collapsible) -->
+                
+                <section class="project-section-clean" id="code">
+                    <details class="code-details">
+                        <summary>Code Files</summary>
+                        <div class="code-list-container">
+                            
+                            <div class="code-file-wrapper">
+                                
+                                <details class="code-file-details">
+                                    <summary class="code-file-summary">
+                                        <span class="file-name"><i class="fas fa-code"></i> ESP32 Firmware</span>
+                                        <div class="file-meta">
+                                            <span class="lang-tag">cpp</span>
+                                            
+                                            <a href="https://github.com/aojedao/iot-environmental-monitor/blob/main/firmware/main.cpp" class="file-download-icon" download
+                                                title="Download"><i class="fas fa-download"></i></a>
+                                            
+                                        </div>
+                                    </summary>
+                                    <div class="code-block-content">
+                                        <pre><code class="language-cpp">#include &lt;WiFi.h&gt;
+#include &lt;PubSubClient.h&gt;
+#include &lt;ArduinoJson.h&gt;
+#include &lt;DHT.h&gt;
+#include &lt;Wire.h&gt;
+#include &lt;BMP280.h&gt;
+#include &lt;Adafruit_TSL2561_U.h&gt;
+#include &lt;OneWire.h&gt;
+#include &lt;DallasTemperature.h&gt;
+
+// Pin definitions
+#define DHT_PIN 4
+#define DHT_TYPE DHT22
+#define SOIL_MOISTURE_PIN A0
+#define SOIL_TEMP_PIN 2
+#define RAIN_SENSOR_PIN 5
+#define WIND_SPEED_PIN 18
+#define WIND_DIR_PIN A1
+#define BATTERY_PIN A2
+
+// Sensor instances
+DHT dht(DHT_PIN, DHT_TYPE);
+BMP280 bmp;
+Adafruit_TSL2561_Unified tsl = Adafruit_TSL2561_Unified(TSL2561_ADDR_FLOAT, 12345);
+OneWire oneWire(SOIL_TEMP_PIN);
+DallasTemperature soilTemp(&amp;oneWire);
+
+// WiFi and MQTT configuration
+const char* ssid = &quot;YOUR_WIFI_SSID&quot;;
+const char* password = &quot;YOUR_WIFI_PASSWORD&quot;;
+const char* mqtt_server = &quot;your-mqtt-broker.com&quot;;
+const char* mqtt_user = &quot;your_mqtt_user&quot;;
+const char* mqtt_password = &quot;your_mqtt_password&quot;;
+
+WiFiClient espClient;
+PubSubClient client(espClient);
+
+// Data structure
+struct SensorData {
+  float temperature;
+  float humidity;
+  float pressure;
+  float light_level;
+  float soil_moisture;
+  float soil_temperature;
+  bool rain_detected;
+  float wind_speed;
+  float wind_direction;
+  float battery_voltage;
+  unsigned long timestamp;
+};
+
+// Global variables
+SensorData currentData;
+unsigned long lastReading = 0;
+unsigned long lastTransmission = 0;
+const unsigned long READING_INTERVAL = 30000;  // 30 seconds
+const unsigned long TRANSMISSION_INTERVAL = 300000;  // 5 minutes
+
+void setup() {
+  Serial.begin(115200);
+  
+  // Initialize sensors
+  dht.begin();
+  
+  if (!bmp.begin()) {
+    Serial.println(&quot;BMP280 sensor not found!&quot;);
+  }
+  
+  if (!tsl.begin()) {
+    Serial.println(&quot;TSL2561 sensor not found!&quot;);
+  } else {
+    tsl.enableAutoRange(true);
+    tsl.setIntegrationTime(TSL2561_INTEGRATIONTIME_13MS);
+  }
+  
+  soilTemp.begin();
+  
+  // Configure pins
+  pinMode(RAIN_SENSOR_PIN, INPUT_PULLUP);
+  pinMode(WIND_SPEED_PIN, INPUT_PULLUP);
+  
+  // Initialize WiFi and MQTT
+  setupWiFi();
+  client.setServer(mqtt_server, 1883);
+  client.setCallback(mqttCallback);
+  
+  Serial.println(&quot;Environmental Monitor initialized&quot;);
+}
+
+void loop() {
+  if (!client.connected()) {
+    reconnectMQTT();
+  }
+  client.loop();
+  
+  unsigned long now = millis();
+  
+  // Read sensors at regular intervals
+  if (now - lastReading &gt;= READING_INTERVAL) {
+    readSensors();
+    lastReading = now;
+    
+    // Display data locally
+    displayData();
+  }
+  
+  // Transmit data at longer intervals
+  if (now - lastTransmission &gt;= TRANSMISSION_INTERVAL) {
+    transmitData();
+    lastTransmission = now;
+  }
+  
+  // Check for alerts
+  checkAlerts();
+  
+  delay(1000);
+}
+
+void setupWiFi() {
+  delay(10);
+  Serial.println();
+  Serial.print(&quot;Connecting to &quot;);
+  Serial.println(ssid);
+  
+  WiFi.begin(ssid, password);
+  
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(&quot;.&quot;);
+  }
+  
+  Serial.println(&quot;&quot;);
+  Serial.println(&quot;WiFi connected&quot;);
+  Serial.println(&quot;IP address: &quot;);
+  Serial.println(WiFi.localIP());
+}
+
+void reconnectMQTT() {
+  while (!client.connected()) {
+    Serial.print(&quot;Attempting MQTT connection...&quot;);
+    
+    String clientId = &quot;ESP32Client-&quot;;
+    clientId += String(random(0xffff), HEX);
+    
+    if (client.connect(clientId.c_str(), mqtt_user, mqtt_password)) {
+      Serial.println(&quot;connected&quot;);
+      client.subscribe(&quot;envmonitor/commands&quot;);
+    } else {
+      Serial.print(&quot;failed, rc=&quot;);
+      Serial.print(client.state());
+      Serial.println(&quot; try again in 5 seconds&quot;);
+      delay(5000);
+    }
+  }
+}
+
+void readSensors() {
+  currentData.timestamp = WiFi.getTime();
+  
+  // DHT22 - Temperature and Humidity
+  currentData.temperature = dht.readTemperature();
+  currentData.humidity = dht.readHumidity();
+  
+  // BMP280 - Pressure
+  currentData.pressure = bmp.readPressure() / 100.0F;  // Convert to hPa
+  
+  // TSL2561 - Light Level
+  sensors_event_t event;
+  tsl.getEvent(&amp;event);
+  currentData.light_level = event.light;
+  
+  // Soil moisture (capacitive sensor)
+  int soilMoistureRaw = analogRead(SOIL_MOISTURE_PIN);
+  currentData.soil_moisture = map(soilMoistureRaw, 0, 4095, 100, 0);  // Convert to percentage
+  
+  // Soil temperature
+  soilTemp.requestTemperatures();
+  currentData.soil_temperature = soilTemp.getTempCByIndex(0);
+  
+  // Rain detection
+  currentData.rain_detected = !digitalRead(RAIN_SENSOR_PIN);
+  
+  // Wind speed (anemometer with hall effect sensor)
+  currentData.wind_speed = measureWindSpeed();
+  
+  // Wind direction (potentiometer-based wind vane)
+  int windDirRaw = analogRead(WIND_DIR_PIN);
+  currentData.wind_direction = map(windDirRaw, 0, 4095, 0, 360);
+  
+  // Battery voltage
+  int batteryRaw = analogRead(BATTERY_PIN);
+  currentData.battery_voltage = (batteryRaw * 3.3 * 2) / 4095.0;  // Voltage divider
+}
+
+float measureWindSpeed() {
+  // Simple wind speed measurement using interrupt counting
+  // This is a simplified version - real implementation would use interrupts
+  static unsigned long lastWindMeasure = 0;
+  static int windPulseCount = 0;
+  
+  unsigned long now = millis();
+  if (now - lastWindMeasure &gt;= 10000) {  // 10 second measurement window
+    // Convert pulse count to wind speed (calibration dependent)
+    float windSpeed = windPulseCount * 0.33;  // Example conversion factor
+    windPulseCount = 0;
+    lastWindMeasure = now;
+    return windSpeed;
+  }
+  
+  return currentData.wind_speed;  // Return previous value
+}
+
+void displayData() {
+  Serial.println(&quot;=== Environmental Data ===&quot;);
+  Serial.printf(&quot;Temperature: %.1f°C\n&quot;, currentData.temperature);
+  Serial.printf(&quot;Humidity: %.1f%%\n&quot;, currentData.humidity);
+  Serial.printf(&quot;Pressure: %.1f hPa\n&quot;, currentData.pressure);
+  Serial.printf(&quot;Light: %.1f lux\n&quot;, currentData.light_level);
+  Serial.printf(&quot;Soil Moisture: %.1f%%\n&quot;, currentData.soil_moisture);
+  Serial.printf(&quot;Soil Temperature: %.1f°C\n&quot;, currentData.soil_temperature);
+  Serial.printf(&quot;Rain: %s\n&quot;, currentData.rain_detected ? &quot;Yes&quot; : &quot;No&quot;);
+  Serial.printf(&quot;Wind Speed: %.1f m/s\n&quot;, currentData.wind_speed);
+  Serial.printf(&quot;Wind Direction: %.0f°\n&quot;, currentData.wind_direction);
+  Serial.printf(&quot;Battery: %.2fV\n&quot;, currentData.battery_voltage);
+  Serial.println(&quot;========================&quot;);
+}
+
+void transmitData() {
+  // Create JSON payload
+  DynamicJsonDocument doc(1024);
+  doc[&quot;device_id&quot;] = &quot;ENV_MONITOR_001&quot;;
+  doc[&quot;timestamp&quot;] = currentData.timestamp;
+  doc[&quot;temperature&quot;] = currentData.temperature;
+  doc[&quot;humidity&quot;] = currentData.humidity;
+  doc[&quot;pressure&quot;] = currentData.pressure;
+  doc[&quot;light_level&quot;] = currentData.light_level;
+  doc[&quot;soil_moisture&quot;] = currentData.soil_moisture;
+  doc[&quot;soil_temperature&quot;] = currentData.soil_temperature;
+  doc[&quot;rain_detected&quot;] = currentData.rain_detected;
+  doc[&quot;wind_speed&quot;] = currentData.wind_speed;
+  doc[&quot;wind_direction&quot;] = currentData.wind_direction;
+  doc[&quot;battery_voltage&quot;] = currentData.battery_voltage;
+  
+  char buffer[1024];
+  serializeJson(doc, buffer);
+  
+  // Publish to MQTT
+  if (client.publish(&quot;envmonitor/data&quot;, buffer)) {
+    Serial.println(&quot;Data transmitted successfully&quot;);
+  } else {
+    Serial.println(&quot;Failed to transmit data&quot;);
+  }
+}
+
+void checkAlerts() {
+  // Temperature alerts
+  if (currentData.temperature &gt; 35.0 || currentData.temperature &lt; -5.0) {
+    sendAlert(&quot;TEMPERATURE&quot;, &quot;Temperature out of normal range&quot;);
+  }
+  
+  // Humidity alerts
+  if (currentData.humidity &gt; 90.0 || currentData.humidity &lt; 20.0) {
+    sendAlert(&quot;HUMIDITY&quot;, &quot;Humidity out of normal range&quot;);
+  }
+  
+  // Soil moisture alerts
+  if (currentData.soil_moisture &lt; 20.0) {
+    sendAlert(&quot;SOIL_MOISTURE&quot;, &quot;Soil moisture critically low&quot;);
+  }
+  
+  // Battery alerts
+  if (currentData.battery_voltage &lt; 3.3) {
+    sendAlert(&quot;BATTERY&quot;, &quot;Battery voltage low&quot;);
+  }
+  
+  // Rain alerts
+  if (currentData.rain_detected) {
+    sendAlert(&quot;WEATHER&quot;, &quot;Rain detected&quot;);
+  }
+}
+
+void sendAlert(const char* type, const char* message) {
+  DynamicJsonDocument alert(256);
+  alert[&quot;device_id&quot;] = &quot;ENV_MONITOR_001&quot;;
+  alert[&quot;alert_type&quot;] = type;
+  alert[&quot;message&quot;] = message;
+  alert[&quot;timestamp&quot;] = currentData.timestamp;
+  alert[&quot;severity&quot;] = &quot;WARNING&quot;;
+  
+  char buffer[256];
+  serializeJson(alert, buffer);
+  
+  client.publish(&quot;envmonitor/alerts&quot;, buffer);
+  Serial.printf(&quot;ALERT: %s - %s\n&quot;, type, message);
+}
+
+void mqttCallback(char* topic, byte* payload, unsigned int length) {
+  String message;
+  for (int i = 0; i &lt; length; i++) {
+    message += (char)payload[i];
+  }
+  
+  Serial.printf(&quot;Received command: %s\n&quot;, message.c_str());
+  
+  // Parse commands
+  if (message == &quot;STATUS&quot;) {
+    transmitData();
+  } else if (message == &quot;RESET&quot;) {
+    ESP.restart();
+  } else if (message.startsWith(&quot;INTERVAL:&quot;)) {
+    // Change transmission interval
+    int newInterval = message.substring(9).toInt();
+    if (newInterval &gt;= 60) {  // Minimum 1 minute
+      // Update interval (implementation depends on requirements)
+      Serial.printf(&quot;Interval changed to %d seconds\n&quot;, newInterval);
+    }
+  }
+}
+</code></pre>
+                                    </div>
+                                </details>
+                                
+                            </div>
+                            
+                            <div class="code-file-wrapper">
+                                
+                                <details class="code-file-details">
+                                    <summary class="code-file-summary">
+                                        <span class="file-name"><i class="fas fa-code"></i> Data Processing</span>
+                                        <div class="file-meta">
+                                            <span class="lang-tag">python</span>
+                                            
+                                            <a href="https://github.com/aojedao/iot-environmental-monitor/blob/main/backend/data_processor.py" class="file-download-icon" download
+                                                title="Download"><i class="fas fa-download"></i></a>
+                                            
+                                        </div>
+                                    </summary>
+                                    <div class="code-block-content">
+                                        <pre><code class="language-python">import json
+import sqlite3
+import pandas as pd
+import numpy as np
+from datetime import datetime, timedelta
+import paho.mqtt.client as mqtt
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy import stats
+import warnings
+warnings.filterwarnings(&#39;ignore&#39;)
+
+class EnvironmentalDataProcessor:
+    def __init__(self, db_path=&#39;environmental_data.db&#39;, mqtt_broker=&#39;localhost&#39;):
+        self.db_path = db_path
+        self.mqtt_broker = mqtt_broker
+        self.setup_database()
+        self.setup_mqtt()
+        
+    def setup_database(self):
+        &quot;&quot;&quot;Initialize SQLite database for storing sensor data&quot;&quot;&quot;
+        self.conn = sqlite3.connect(self.db_path, check_same_thread=False)
+        self.cursor = self.conn.cursor()
+        
+        # Create tables
+        self.cursor.execute(&#39;&#39;&#39;
+            CREATE TABLE IF NOT EXISTS sensor_data (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                device_id TEXT NOT NULL,
+                timestamp DATETIME NOT NULL,
+                temperature REAL,
+                humidity REAL,
+                pressure REAL,
+                light_level REAL,
+                soil_moisture REAL,
+                soil_temperature REAL,
+                rain_detected INTEGER,
+                wind_speed REAL,
+                wind_direction REAL,
+                battery_voltage REAL
+            )
+        &#39;&#39;&#39;)
+        
+        self.cursor.execute(&#39;&#39;&#39;
+            CREATE TABLE IF NOT EXISTS alerts (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                device_id TEXT NOT NULL,
+                timestamp DATETIME NOT NULL,
+                alert_type TEXT NOT NULL,
+                message TEXT NOT NULL,
+                severity TEXT NOT NULL,
+                acknowledged INTEGER DEFAULT 0
+            )
+        &#39;&#39;&#39;)
+        
+        self.conn.commit()
+        
+    def setup_mqtt(self):
+        &quot;&quot;&quot;Setup MQTT client for receiving data&quot;&quot;&quot;
+        self.mqtt_client = mqtt.Client()
+        self.mqtt_client.on_connect = self.on_mqtt_connect
+        self.mqtt_client.on_message = self.on_mqtt_message
+        
+        try:
+            self.mqtt_client.connect(self.mqtt_broker, 1883, 60)
+            self.mqtt_client.loop_start()
+        except Exception as e:
+            print(f&quot;MQTT connection failed: {e}&quot;)
+            
+    def on_mqtt_connect(self, client, userdata, flags, rc):
+        &quot;&quot;&quot;Callback for MQTT connection&quot;&quot;&quot;
+        if rc == 0:
+            print(&quot;Connected to MQTT broker&quot;)
+            client.subscribe(&quot;envmonitor/data&quot;)
+            client.subscribe(&quot;envmonitor/alerts&quot;)
+        else:
+            print(f&quot;Failed to connect to MQTT broker: {rc}&quot;)
+            
+    def on_mqtt_message(self, client, userdata, msg):
+        &quot;&quot;&quot;Process incoming MQTT messages&quot;&quot;&quot;
+        try:
+            topic = msg.topic
+            payload = json.loads(msg.payload.decode())
+            
+            if topic == &quot;envmonitor/data&quot;:
+                self.store_sensor_data(payload)
+            elif topic == &quot;envmonitor/alerts&quot;:
+                self.store_alert(payload)
+                
+        except Exception as e:
+            print(f&quot;Error processing MQTT message: {e}&quot;)
+            
+    def store_sensor_data(self, data):
+        &quot;&quot;&quot;Store sensor data in database&quot;&quot;&quot;
+        try:
+            self.cursor.execute(&#39;&#39;&#39;
+                INSERT INTO sensor_data (
+                    device_id, timestamp, temperature, humidity, pressure,
+                    light_level, soil_moisture, soil_temperature, rain_detected,
+                    wind_speed, wind_direction, battery_voltage
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            &#39;&#39;&#39;, (
+                data[&#39;device_id&#39;],
+                datetime.fromtimestamp(data[&#39;timestamp&#39;]),
+                data[&#39;temperature&#39;],
+                data[&#39;humidity&#39;],
+                data[&#39;pressure&#39;],
+                data[&#39;light_level&#39;],
+                data[&#39;soil_moisture&#39;],
+                data[&#39;soil_temperature&#39;],
+                int(data[&#39;rain_detected&#39;]),
+                data[&#39;wind_speed&#39;],
+                data[&#39;wind_direction&#39;],
+                data[&#39;battery_voltage&#39;]
+            ))
+            
+            self.conn.commit()
+            print(f&quot;Stored data from {data[&#39;device_id&#39;]}&quot;)
+            
+        except Exception as e:
+            print(f&quot;Error storing sensor data: {e}&quot;)
+            
+    def store_alert(self, alert):
+        &quot;&quot;&quot;Store alert in database&quot;&quot;&quot;
+        try:
+            self.cursor.execute(&#39;&#39;&#39;
+                INSERT INTO alerts (
+                    device_id, timestamp, alert_type, message, severity
+                ) VALUES (?, ?, ?, ?, ?)
+            &#39;&#39;&#39;, (
+                alert[&#39;device_id&#39;],
+                datetime.fromtimestamp(alert[&#39;timestamp&#39;]),
+                alert[&#39;alert_type&#39;],
+                alert[&#39;message&#39;],
+                alert[&#39;severity&#39;]
+            ))
+            
+            self.conn.commit()
+            print(f&quot;Stored alert: {alert[&#39;message&#39;]}&quot;)
+            
+            # Send email notification for critical alerts
+            if alert[&#39;severity&#39;] in [&#39;CRITICAL&#39;, &#39;WARNING&#39;]:
+                self.send_email_alert(alert)
+                
+        except Exception as e:
+            print(f&quot;Error storing alert: {e}&quot;)
+            
+    def get_recent_data(self, device_id, hours=24):
+        &quot;&quot;&quot;Retrieve recent sensor data&quot;&quot;&quot;
+        since = datetime.now() - timedelta(hours=hours)
+        
+        query = &#39;&#39;&#39;
+            SELECT * FROM sensor_data 
+            WHERE device_id = ? AND timestamp &gt;= ?
+            ORDER BY timestamp DESC
+        &#39;&#39;&#39;
+        
+        df = pd.read_sql_query(query, self.conn, params=(device_id, since))
+        df[&#39;timestamp&#39;] = pd.to_datetime(df[&#39;timestamp&#39;])
+        return df
+        
+    def generate_statistics(self, device_id, hours=24):
+        &quot;&quot;&quot;Generate statistical summary of recent data&quot;&quot;&quot;
+        df = self.get_recent_data(device_id, hours)
+        
+        if df.empty:
+            return None
+            
+        numeric_columns = [
+            &#39;temperature&#39;, &#39;humidity&#39;, &#39;pressure&#39;, &#39;light_level&#39;,
+            &#39;soil_moisture&#39;, &#39;soil_temperature&#39;, &#39;wind_speed&#39;,
+            &#39;wind_direction&#39;, &#39;battery_voltage&#39;
+        ]
+        
+        stats_dict = {}
+        
+        for col in numeric_columns:
+            if col in df.columns:
+                stats_dict[col] = {
+                    &#39;current&#39;: df[col].iloc[0] if not df.empty else None,
+                    &#39;mean&#39;: df[col].mean(),
+                    &#39;min&#39;: df[col].min(),
+                    &#39;max&#39;: df[col].max(),
+                    &#39;std&#39;: df[col].std()
+                }
+        
+        # Add derived statistics
+        stats_dict[&#39;data_points&#39;] = len(df)
+        stats_dict[&#39;rain_percentage&#39;] = (df[&#39;rain_detected&#39;].sum() / len(df)) * 100
+        stats_dict[&#39;time_range&#39;] = {
+            &#39;start&#39;: df[&#39;timestamp&#39;].min().isoformat(),
+            &#39;end&#39;: df[&#39;timestamp&#39;].max().isoformat()
+        }
+        
+        return stats_dict
+        
+    def detect_anomalies(self, device_id, hours=168):  # 1 week
+        &quot;&quot;&quot;Detect anomalies in sensor data using statistical methods&quot;&quot;&quot;
+        df = self.get_recent_data(device_id, hours)
+        
+        if len(df) &lt; 50:  # Need sufficient data for anomaly detection
+            return []
+            
+        anomalies = []
+        
+        # Temperature anomaly detection using Z-score
+        if &#39;temperature&#39; in df.columns:
+            z_scores = np.abs(stats.zscore(df[&#39;temperature&#39;].dropna()))
+            temp_anomalies = df[z_scores &gt; 3]  # 3 standard deviations
+            
+            for _, row in temp_anomalies.iterrows():
+                anomalies.append({
+                    &#39;timestamp&#39;: row[&#39;timestamp&#39;].isoformat(),
+                    &#39;type&#39;: &#39;temperature&#39;,
+                    &#39;value&#39;: row[&#39;temperature&#39;],
+                    &#39;severity&#39;: &#39;HIGH&#39; if abs(stats.zscore([row[&#39;temperature&#39;]])[0]) &gt; 4 else &#39;MEDIUM&#39;
+                })
+        
+        # Humidity anomaly detection
+        if &#39;humidity&#39; in df.columns:
+            z_scores = np.abs(stats.zscore(df[&#39;humidity&#39;].dropna()))
+            humidity_anomalies = df[z_scores &gt; 3]
+            
+            for _, row in humidity_anomalies.iterrows():
+                anomalies.append({
+                    &#39;timestamp&#39;: row[&#39;timestamp&#39;].isoformat(),
+                    &#39;type&#39;: &#39;humidity&#39;,
+                    &#39;value&#39;: row[&#39;humidity&#39;],
+                    &#39;severity&#39;: &#39;MEDIUM&#39;
+                })
+        
+        # Sudden changes detection (gradient-based)
+        for column in [&#39;temperature&#39;, &#39;humidity&#39;, &#39;pressure&#39;]:
+            if column in df.columns:
+                gradient = np.gradient(df[column].dropna())
+                sudden_changes = np.where(np.abs(gradient) &gt; 2 * np.std(gradient))[0]
+                
+                for idx in sudden_changes:
+                    if idx &lt; len(df):
+                        anomalies.append({
+                            &#39;timestamp&#39;: df.iloc[idx][&#39;timestamp&#39;].isoformat(),
+                            &#39;type&#39;: f&#39;{column}_sudden_change&#39;,
+                            &#39;value&#39;: df.iloc[idx][column],
+                            &#39;gradient&#39;: gradient[idx],
+                            &#39;severity&#39;: &#39;MEDIUM&#39;
+                        })
+        
+        return anomalies
+        
+    def generate_report(self, device_id, hours=24):
+        &quot;&quot;&quot;Generate comprehensive data report&quot;&quot;&quot;
+        df = self.get_recent_data(device_id, hours)
+        stats = self.generate_statistics(device_id, hours)
+        anomalies = self.detect_anomalies(device_id)
+        
+        report = {
+            &#39;device_id&#39;: device_id,
+            &#39;report_time&#39;: datetime.now().isoformat(),
+            &#39;data_period_hours&#39;: hours,
+            &#39;statistics&#39;: stats,
+            &#39;anomalies&#39;: anomalies,
+            &#39;data_quality&#39;: self.assess_data_quality(df)
+        }
+        
+        return report
+        
+    def assess_data_quality(self, df):
+        &quot;&quot;&quot;Assess the quality of collected data&quot;&quot;&quot;
+        if df.empty:
+            return {&#39;status&#39;: &#39;NO_DATA&#39;, &#39;score&#39;: 0}
+            
+        total_points = len(df)
+        missing_points = df.isnull().sum().sum()
+        completeness = 1 - (missing_points / (total_points * len(df.columns)))
+        
+        # Check data freshness
+        latest_data = df[&#39;timestamp&#39;].max()
+        time_since_last = (datetime.now() - latest_data).total_seconds() / 3600
+        freshness = max(0, 1 - (time_since_last / 24))  # Degrade over 24 hours
+        
+        # Overall quality score
+        quality_score = (completeness * 0.7 + freshness * 0.3) * 100
+        
+        status = &#39;EXCELLENT&#39; if quality_score &gt; 90 else \
+                &#39;GOOD&#39; if quality_score &gt; 70 else \
+                &#39;FAIR&#39; if quality_score &gt; 50 else &#39;POOR&#39;
+        
+        return {
+            &#39;status&#39;: status,
+            &#39;score&#39;: round(quality_score, 1),
+            &#39;completeness&#39;: round(completeness * 100, 1),
+            &#39;freshness&#39;: round(freshness * 100, 1),
+            &#39;total_points&#39;: total_points,
+            &#39;missing_points&#39;: missing_points
+        }
+        
+    def send_email_alert(self, alert):
+        &quot;&quot;&quot;Send email notification for alerts&quot;&quot;&quot;
+        # Email configuration (would be loaded from config file)
+        smtp_server = &quot;smtp.gmail.com&quot;
+        smtp_port = 587
+        sender_email = &quot;your-email@gmail.com&quot;
+        sender_password = &quot;your-app-password&quot;
+        recipient_email = &quot;recipient@gmail.com&quot;
+        
+        try:
+            msg = MIMEMultipart()
+            msg[&#39;From&#39;] = sender_email
+            msg[&#39;To&#39;] = recipient_email
+            msg[&#39;Subject&#39;] = f&quot;Environmental Monitor Alert: {alert[&#39;alert_type&#39;]}&quot;
+            
+            body = f&quot;&quot;&quot;
+            Alert from Environmental Monitoring System
+            
+            Device: {alert[&#39;device_id&#39;]}
+            Time: {datetime.fromtimestamp(alert[&#39;timestamp&#39;])}
+            Type: {alert[&#39;alert_type&#39;]}
+            Severity: {alert[&#39;severity&#39;]}
+            Message: {alert[&#39;message&#39;]}
+            
+            Please check the monitoring dashboard for more details.
+            &quot;&quot;&quot;
+            
+            msg.attach(MIMEText(body, &#39;plain&#39;))
+            
+            server = smtplib.SMTP(smtp_server, smtp_port)
+            server.starttls()
+            server.login(sender_email, sender_password)
+            server.send_message(msg)
+            server.quit()
+            
+            print(f&quot;Email alert sent for {alert[&#39;alert_type&#39;]}&quot;)
+            
+        except Exception as e:
+            print(f&quot;Failed to send email alert: {e}&quot;)
+
+# Example usage
+if __name__ == &quot;__main__&quot;:
+    processor = EnvironmentalDataProcessor()
+    
+    # Generate report for the last 24 hours
+    report = processor.generate_report(&quot;ENV_MONITOR_001&quot;, 24)
+    print(json.dumps(report, indent=2))
+    
+    # Keep the processor running to receive MQTT messages
+    try:
+        while True:
+            time.sleep(60)  # Run every minute
+    except KeyboardInterrupt:
+        print(&quot;Shutting down data processor...&quot;)
+        processor.conn.close()
+</code></pre>
+                                    </div>
+                                </details>
+                                
+                            </div>
+                            
+                        </div>
+                    </details>
+                </section>
+                
+
+                <!-- Components & Materials -->
+                
+                <section class="project-section-clean" id="components" style="margin-top: var(--spacing-lg);">
+                    <h3>Components & Materials</h3>
+                    <table class="components-table">
+                        <thead>
+                            <tr>
+                                <th>Component</th>
+                                <th>Qty</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr>
+                                <td>ESP32 Development Board</td>
+                                <td class="component-qty">x1</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>DHT22 Temperature/Humidity Sensor</td>
+                                <td class="component-qty">x1</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>BMP280 Pressure Sensor</td>
+                                <td class="component-qty">x1</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>TSL2561 Light Sensor</td>
+                                <td class="component-qty">x1</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Capacitive Soil Moisture Sensor</td>
+                                <td class="component-qty">x1</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>DS18B20 Waterproof Temperature Sensor</td>
+                                <td class="component-qty">x1</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Rain Drop Sensor</td>
+                                <td class="component-qty">x1</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Anemometer (Wind Speed)</td>
+                                <td class="component-qty">x1</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Wind Vane (Wind Direction)</td>
+                                <td class="component-qty">x1</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Solar Panel (6V 2W)</td>
+                                <td class="component-qty">x1</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>LiPo Battery (3.7V 2000mAh)</td>
+                                <td class="component-qty">x1</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Custom PCB</td>
+                                <td class="component-qty">x1</td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </section>
+                
+
+                <!-- Meta / Actions (Moved to bottom of left) -->
+                <div class="project-meta-bottom">
+
+                    <div class="project-actions-small">
+                        
+                        <a href="https://github.com/aojedao/iot-environmental-monitor" class="btn-small" target="_blank">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                        
+
+                        
+                        <a href="#" class="btn-small" target="_blank">
+                            <i class="fas fa-external-link-alt"></i> Demo
+                        </a>
+                        
+                    </div>
+
+                    <div class="project-categories-bottom">
+                        
+                        <span class="category-tag-small">IoT</span>
+                        
+                        <span class="category-tag-small">Arduino</span>
+                        
+                        <span class="category-tag-small">Mechatronics</span>
+                        
+                        <span class="category-tag-small">Data Science</span>
+                        
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Column: Media -->
+            <div class="project-right-panel">
+
+
+
+                <!-- 3D Models Section -->
+                
+                <section class="project-media-group" id="models">
+                    <div class="models-grid-compact">
+                        
+                        <div class="model-viewer-container">
+                            <model-viewer src="/hksaperstein/assets/models/iot-monitor/sensor-housing.gltf"
+                                alt="Weatherproof housing for outdoor sensor deployment" camera-controls
+                                auto-rotate="false"
+                                background-color="#f0f0f0"
+                                shadow-intensity="1" class="model-viewer">
+                            </model-viewer>
+                        </div>
+                        
+                        <div class="model-viewer-container">
+                            <model-viewer src="/hksaperstein/assets/models/iot-monitor/test.gltf"
+                                alt="IoT sensor enclosure 3D model" camera-controls
+                                auto-rotate="false"
+                                background-color="#f0f0f0"
+                                shadow-intensity="1" class="model-viewer">
+                            </model-viewer>
+                        </div>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Media Gallery -->
+                
+                <section class="project-media-group" id="gallery">
+                    <div class="media-gallery-stack">
+                        
+                        <div class="media-item">
+                            
+                            
+                            <img src="/hksaperstein/assets/images/projects/iot-monitor/featured.jpg"
+                                alt="IoT Environmental monitoring station - Physical hardware setup" class="gallery-image" data-zoomable>
+                            
+                            
+                            <p class="media-caption">IoT Environmental monitoring station - Physical hardware setup</p>
+                            
+                        </div>
+                        
+                        <div class="media-item">
+                            
+                            
+                            <img src="/hksaperstein/assets/images/projects/iot-monitor/sensor-monitoring.gif"
+                                alt="Real-time sensor data visualization - Animated demonstration of live monitoring dashboard" class="gallery-image" data-zoomable>
+                            
+                            
+                            <p class="media-caption">Real-time sensor data visualization - Animated demonstration of live monitoring dashboard</p>
+                            
+                        </div>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Visualizations (Interactive HTML Plots) -->
+                
+
+                <!-- Plotly for custom plots -->
+                
+
+                <!-- Interactive Data Plot (only if page has interactive_plot: true) -->
+                
+                <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+                <div class="project-media-group">
+                    <div class="project-section-clean" id="interactive-data">
+    <h3>System Performance Data</h3>
+
+    <!-- Plot Container -->
+    <div id="performance-plot"
+        style="width:100%; height:400px; background: var(--surface-color); border-radius: var(--radius-lg); border: 1px solid var(--border-color); position: relative;">
+        <!-- Loading Overlay -->
+        <div id="plot-loading"
+            style="position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; background: var(--surface-color); z-index: 10; flex-direction: column; gap: 12px; transition: opacity 0.3s;">
+            <div style="font-size: 1.2em; color: var(--text-primary);"><i class="fas fa-circle-notch fa-spin"></i>
+                &nbsp; Initializing...</div>
+            <div id="plot-status-text" style="color: var(--text-secondary); font-family: monospace; font-size: 0.9em;">
+                Preparing...</div>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            const containerId = 'performance-plot';
+            const loadingId = 'plot-loading';
+            const statusId = 'plot-status-text';
+
+            async function updateStatus(msg) {
+                const el = document.getElementById(statusId);
+                if (el) el.innerText = msg;
+                console.log("[InteractivePlot] " + msg);
+                // Allow UI to update
+                await new Promise(r => requestAnimationFrame(r));
+            }
+
+            async function initPlot() {
+                const loadingEl = document.getElementById(loadingId);
+
+                try {
+                    // 1. WaitForPlotly
+                    if (typeof Plotly === 'undefined') {
+                        await updateStatus("Loading Plotly library...");
+                        const maxWait = 10000;
+                        const start = Date.now();
+                        while (typeof Plotly === 'undefined') {
+                            if (Date.now() - start > maxWait) throw new Error("Plotly library failed to load (timeout).");
+                            await new Promise(r => setTimeout(r, 200));
+                        }
+                    }
+
+                    // 2. Configuration
+                    
+                    await updateStatus("No plot configuration found. Showing demo.");
+                    // Demo fallback
+                    renderPlot([1, 2, 3], [10, 15, 13], null);
+                    return;
+                    
+
+                    // 3. Fetch Data
+                    await updateStatus(`Fetching data files...`);
+                    const [xRes, yRes] = await Promise.all([
+                        fetch(config.xUrl),
+                        fetch(config.yUrl)
+                    ]);
+
+                    if (!xRes.ok) throw new Error(`Failed to load X data (${xRes.status})`);
+                    if (!yRes.ok) throw new Error(`Failed to load Y data (${yRes.status})`);
+
+                    await updateStatus("Reading data streams...");
+                    const xRaw = await xRes.text();
+                    const yRaw = await yRes.text();
+
+                    // 4. Parsing
+                    await updateStatus("Parsing CSV data...");
+
+                    // Robust parser for flat CSVs (comma or newline separated)
+                    const parseNums = (str) => {
+                        if (!str) return [];
+                        // Replace newlines with commas, split by comma, trim, filter empty
+                        return str.replace(/[\r\n]+/g, ',')
+                            .split(',')
+                            .map(v => v.trim())
+                            .filter(v => v !== '')
+                            .map(Number)
+                            .filter(n => !isNaN(n));
+                    };
+
+                    let xData = parseNums(xRaw);
+                    let yData = parseNums(yRaw);
+
+                    await updateStatus(`Parsed: ${xData.length} pts (X), ${yData.length} pts (Y)`);
+
+                    if (xData.length === 0 || yData.length === 0) {
+                        throw new Error("Data files contained no valid numbers.");
+                    }
+
+                    // 5. Validation & Truncation
+                    if (xData.length !== yData.length) {
+                        const minLen = Math.min(xData.length, yData.length);
+                        console.warn(`[InteractivePlot] Length mismatch. X:${xData.length} Y:${yData.length}. Truncating to ${minLen}.`);
+                        xData = xData.slice(0, minLen);
+                        yData = yData.slice(0, minLen);
+                    }
+
+                    // 6. Decimation (for performance)
+                    const MAX_POINTS = 8000;
+                    if (xData.length > MAX_POINTS) {
+                        await updateStatus(`Decimating ${xData.length} points...`);
+                        const step = Math.ceil(xData.length / MAX_POINTS);
+                        xData = xData.filter((_, i) => i % step === 0);
+                        yData = yData.filter((_, i) => i % step === 0);
+                    }
+
+                    // 7. Render
+                    await updateStatus("Rendering chart...");
+                    renderPlot(xData, yData, config);
+
+                } catch (err) {
+                    console.error("[InteractivePlot] Error:", err);
+                    if (loadingEl) {
+                        loadingEl.innerHTML = `
+                            <div style="color: #ef4444; font-size: 2em; margin-bottom: 10px;"><i class="fas fa-exclamation-triangle"></i></div>
+                            <div style="color: var(--text-primary); font-weight: bold;">Visualization Error</div>
+                            <div style="color: var(--text-secondary); text-align: center; font-size: 0.9em; max-width: 300px;">
+                                ${err.message}
+                            </div>
+                        `;
+                    }
+                }
+            }
+
+            function renderPlot(x, y, config) {
+                const loadingEl = document.getElementById(loadingId);
+                const container = document.getElementById(containerId);
+
+                if (!container) return;
+
+                const trace = {
+                    x: x,
+                    y: y,
+                    type: 'scatter',
+                    mode: 'lines',
+                    line: { color: '#3b82f6', width: 2 }, // Tailwind blue-500
+                    fill: 'tozeroy',
+                    fillcolor: 'rgba(59, 130, 246, 0.1)'
+                };
+
+                const layout = {
+                    paper_bgcolor: 'rgba(0,0,0,0)',
+                    plot_bgcolor: 'rgba(0,0,0,0)',
+                    font: { color: getComputedStyle(document.body).getPropertyValue('--text-primary').trim() },
+                    margin: { l: 60, r: 20, t: 20, b: 60 },
+                    xaxis: {
+                        title: config ? config.xLabel : 'X',
+                        gridcolor: 'rgba(128,128,128,0.2)',
+                        zerolinecolor: 'rgba(128,128,128,0.2)'
+                    },
+                    yaxis: {
+                        title: config ? config.yLabel : 'Y',
+                        gridcolor: 'rgba(128,128,128,0.2)',
+                        zerolinecolor: 'rgba(128,128,128,0.2)'
+                    },
+                    showlegend: false
+                };
+
+                const plotConfig = { responsive: true, displayModeBar: false };
+
+                Plotly.newPlot(containerId, [trace], layout, plotConfig).then(() => {
+                    // Fade out loading screen
+                    if (loadingEl) {
+                        loadingEl.style.opacity = '0';
+                        setTimeout(() => loadingEl.style.display = 'none', 300);
+                    }
+                });
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initPlot);
+            } else {
+                initPlot();
+            }
+        })();
+    </script>
+</div>
+                </div>
+                
+
+                <!-- Custom Plot Include -->
+                
+
+                <!-- Circuit Schematics -->
+                
+                <section class="project-media-group" id="schematics">
+                    <h4>Schematics</h4>
+                    <div class="schematics-stack">
+                        
+                        <div class="schematic-container">
+                            <img src="/hksaperstein/assets/schematics/iot-monitor/main-board.svg"
+                                alt="ESP32 main control board with sensor interfaces"
+                                class="schematic-image">
+                        </div>
+                        
+                        <div class="schematic-container">
+                            <img src="/hksaperstein/assets/schematics/iot-monitor/power-management.svg"
+                                alt="Solar charging system with battery backup"
+                                class="schematic-image">
+                        </div>
+                        
+                        <div class="schematic-container">
+                            <img src="/hksaperstein/assets/schematics/iot-monitor/sensor-network.svg"
+                                alt="Wireless sensor network topology and communication"
+                                class="schematic-image">
+                        </div>
+                        
+                    </div>
+            </div>
+            </section>
+            
+
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- Project Navigation -->
+<div class="project-navigation">
+    <div class="container">
+        
+        
+        
+        
+        
+
+        <div class="nav-links">
+            
+
+            <a href="/hksaperstein/projects/" class="nav-link all-projects">
+                <i class="fas fa-th"></i>
+                <span>All Projects</span>
+            </a>
+
+              <a
+                href="/hksaperstein/projects/6dof-robotic-arm/" class="nav-link next">
+                <span>6-DOF Robotic Arm with Vision System</span>
+                <i class="fas fa-chevron-right"></i>
+                </a>
+                
+        </div>
+    </div>
+</div>
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-simple">
+            <div class="footer-brand">
+                <h3 class="mesgro-title">HKS</h3>
+                <div class="mesgro-definition">
+                    Solving real-world problems
+                </div>
+            </div>
+
+            <div class="social-links-center">
+                
+                <a href="https://github.com/hksaperstein" target="_blank" aria-label="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                
+                
+                <a href="https://linkedin.com/in/harrison-saperstein" target="_blank" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                
+                
+                
+                <a href="mailto:harrison.saperstein@gmail.com" aria-label="Email">
+                    <i class="fas fa-envelope"></i>
+                </a>
+                
+            </div>
+
+            <div class="footer-credits">
+                <p>&copy; 2026 Harrison Saperstein. Built with &hearts; using Jekyll.</p>
+                <p>Template designed and developed by <strong>Alejandro Ojeda Olarte</strong></p>
+                <p><a href="https://github.com/aojedao/MESGRO" target="_blank">MESGRO Template</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <!-- Scripts -->
+    <script src="/hksaperstein/assets/js/main.js"></script>
+    <script src="/hksaperstein/assets/js/circuit-bg.js"></script>
+
+    <!-- 3D Model Viewer -->
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+    <!-- Three.js for additional 3D functionality -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Image zoom library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js"></script>
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-okaidia.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+
+    <!-- Plotly.js for interactive data visualization -->
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+
+    
+    <script src="/hksaperstein/assets/js/project-viewer.js"></script>
+    
+</body>
+
+</html>

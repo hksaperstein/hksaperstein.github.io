@@ -1,13 +1,12 @@
 # Site settings
-title: "MESGRO - Robotics & Mechatronics Portfolio"
-description: "An open-source template for showcasing robotics and mechatronics projects with 3D models, schematics, and code"
-url: "https://aojedao.github.io"
-baseurl: "/MESGRO"
-author: "Your Name"
-email: "your.email@example.com"
-github_username: "your-github-username"
-linkedin_username: "your-linkedin"
-twitter_username: "your-twitter"
+title: "Harrison Saperstein"
+description: "A portfolio of my projects and hobbies in robotics and 3D-printing."
+url: "https://hksaperstein.github.io"
+baseurl: "/hksaperstein"
+author: "Harrison Saperstein"
+email: "harrison.saperstein@gmail.com"
+github_username: "hksaperstein"
+linkedin_username: "harrison-saperstein"
 
 # Build settings
 markdown: kramdown
@@ -35,6 +34,10 @@ defaults:
       type: "posts"
     values:
       layout: "post"
+
+# Include in processing
+include:
+  - docs
 
 # Exclude from processing
 exclude:

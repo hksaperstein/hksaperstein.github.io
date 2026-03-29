@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autonomous Line Following Robot - Harrison Saperstein</title>
+    <meta name="description"
+        content="A sophisticated line-following robot built with Arduino Uno, featuring PID control, obstacle detection, and wireless monitoring capabilities.">
+
+    <!-- Apply theme immediately to prevent flash -->
+    <script>
+        (function () {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
+
+    <!-- SEO -->
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Autonomous Line Following Robot | Harrison Saperstein</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Autonomous Line Following Robot" />
+<meta name="author" content="Harrison Saperstein" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A sophisticated line-following robot built with Arduino Uno, featuring PID control, obstacle detection, and wireless monitoring capabilities." />
+<meta property="og:description" content="A sophisticated line-following robot built with Arduino Uno, featuring PID control, obstacle detection, and wireless monitoring capabilities." />
+<link rel="canonical" href="http://localhost:4000/hksaperstein/projects/line-following-robot/" />
+<meta property="og:url" content="http://localhost:4000/hksaperstein/projects/line-following-robot/" />
+<meta property="og:site_name" content="Harrison Saperstein" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2024-10-15T00:00:00-04:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Autonomous Line Following Robot" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Harrison Saperstein"},"dateModified":"2024-10-15T00:00:00-04:00","datePublished":"2024-10-15T00:00:00-04:00","description":"A sophisticated line-following robot built with Arduino Uno, featuring PID control, obstacle detection, and wireless monitoring capabilities.","headline":"Autonomous Line Following Robot","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/hksaperstein/projects/line-following-robot/"},"url":"http://localhost:4000/hksaperstein/projects/line-following-robot/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- MathJax -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/hksaperstein/assets/css/main.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/hksaperstein/assets/images/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/hksaperstein/assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/hksaperstein/assets/images/favicon-16x16.png">
+</head>
+
+<body>
+    <canvas id="canvas-bg"></canvas>
+
+    <header class="site-header">
+    <div class="container">
+        <div class="header-content">
+            <div class="site-brand">
+                <a href="/hksaperstein/" class="brand-link">
+                    <span class="brand-text">Harrison</span>
+                </a>
+            </div>
+
+            <nav class="site-nav" id="site-nav">
+                <ul class="nav-list">
+                    
+                    <li class="nav-item">
+                        <a href="/hksaperstein/"
+                            class="nav-link ">
+                            Home
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a href="/hksaperstein/projects/"
+                            class="nav-link ">
+                            Projects
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a href="/hksaperstein/about/"
+                            class="nav-link ">
+                            About
+                        </a>
+                    </li>
+                    
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+
+                <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <main id="main-content">
+        <div class="project-hero">
+    <div class="container">
+        <div class="project-header">
+            <h1 class="project-title">Autonomous Line Following Robot</h1>
+            <p class="project-description">A sophisticated line-following robot built with Arduino Uno, featuring PID control, obstacle detection, and wireless monitoring capabilities.</p>
+
+            <div class="project-meta">
+                
+                <a href="https://github.com/aojedao/line-following-robot" class="btn-github" target="_blank">
+                    <i class="fab fa-github"></i> View on GitHub
+                </a>
+                
+
+                
+                <a href="#" class="btn-demo" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> Live Demo
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="project-content">
+    <div class="container">
+
+        <div class="project-header-simple">
+            <h1 class="project-title-simple">Autonomous Line Following Robot</h1>
+        </div>
+
+        <div class="project-split-layout">
+            <!-- Left Column: Text & Info -->
+            <div class="project-left-panel">
+
+                <!-- Overview / Description -->
+                <section class="project-section-clean" id="description">
+                    <h3>Overview</h3>
+                    <div class="project-description-content">
+                        <p class="project-lead">A sophisticated line-following robot built with Arduino Uno, featuring PID control, obstacle detection, and wireless monitoring capabilities.</p>
+                        <h2 id="project-overview">Project Overview</h2>
+
+<p>This project demonstrates the design and implementation of an autonomous line-following robot using Arduino Uno and advanced control algorithms. The robot features PID (Proportional-Integral-Derivative) control for smooth line tracking, obstacle detection capabilities, and wireless parameter tuning.</p>
+
+<h2 id="key-features">Key Features</h2>
+
+<h3 id="advanced-control-system">Advanced Control System</h3>
+<ul>
+  <li><strong>PID Controller</strong>: Implements a sophisticated PID control algorithm for precise line following</li>
+  <li><strong>Sensor Fusion</strong>: Uses a 5-sensor IR array for accurate line position detection</li>
+  <li><strong>Adaptive Speed</strong>: Automatically adjusts speed based on track curvature</li>
+</ul>
+
+<h3 id="wireless-monitoring">Wireless Monitoring</h3>
+<ul>
+  <li><strong>Real-time Telemetry</strong>: Sends sensor data and control parameters via Bluetooth</li>
+  <li><strong>Parameter Tuning</strong>: Live PID parameter adjustment using custom Python GUI</li>
+  <li><strong>Performance Logging</strong>: Records track performance for analysis and optimization</li>
+</ul>
+
+<h3 id="safety-features">Safety Features</h3>
+<ul>
+  <li><strong>Obstacle Detection</strong>: Ultrasonic sensor for collision avoidance</li>
+  <li><strong>Battery Management</strong>: Low voltage detection and automatic shutdown</li>
+  <li><strong>Emergency Stop</strong>: Wireless emergency stop functionality</li>
+</ul>
+
+<h2 id="technical-specifications">Technical Specifications</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Specification</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Microcontroller</strong></td>
+      <td>Arduino Uno R3 (ATmega328P)</td>
+    </tr>
+    <tr>
+      <td><strong>Operating Voltage</strong></td>
+      <td>7.4V (2S LiPo)</td>
+    </tr>
+    <tr>
+      <td><strong>Maximum Speed</strong></td>
+      <td>1.2 m/s</td>
+    </tr>
+    <tr>
+      <td><strong>Line Detection Range</strong></td>
+      <td>12cm wide sensor array</td>
+    </tr>
+    <tr>
+      <td><strong>Battery Life</strong></td>
+      <td>45 minutes continuous operation</td>
+    </tr>
+    <tr>
+      <td><strong>Weight</strong></td>
+      <td>485g</td>
+    </tr>
+    <tr>
+      <td><strong>Dimensions</strong></td>
+      <td>18cm x 12cm x 8cm</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="algorithm-implementation">Algorithm Implementation</h2>
+
+<p>The robot uses a weighted average algorithm to determine line position:</p>
+
+<ol>
+  <li><strong>Sensor Reading</strong>: Five IR sensors provide analog values (0-1023)</li>
+  <li><strong>Thresholding</strong>: Convert analog values to binary (line/no line)</li>
+  <li><strong>Position Calculation</strong>: Weighted average gives position (-2 to +2)</li>
+  <li><strong>PID Control</strong>: Error correction using PID algorithm</li>
+  <li><strong>Motor Control</strong>: Differential steering based on PID output</li>
+</ol>
+
+<h1 id="data-visualization--analysis">Data Visualization &amp; Analysis</h1>
+
+<h2 id="real-time-performance-plots">Real-time Performance Plots</h2>
+
+<h3 id="pid-controller-response">PID Controller Response</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="c1"># Sample data from robot testing
+</span><span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">setpoint</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">zeros_like</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>  <span class="c1"># Line position target (center = 0)
+</span><span class="n">actual_position</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">sin</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">time</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="nf">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.2</span> <span class="o">*</span> <span class="n">time</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">pid_output</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.5</span> <span class="o">*</span> <span class="n">actual_position</span> <span class="o">-</span> <span class="mf">0.8</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="nf">gradient</span><span class="p">(</span><span class="n">actual_position</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="nf">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="nf">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">setpoint</span><span class="p">,</span> <span class="sh">'</span><span class="s">r--</span><span class="sh">'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sh">'</span><span class="s">Setpoint (Line Center)</span><span class="sh">'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">actual_position</span><span class="p">,</span> <span class="sh">'</span><span class="s">b-</span><span class="sh">'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sh">'</span><span class="s">Robot Position</span><span class="sh">'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Position (cm)</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">title</span><span class="p">(</span><span class="sh">'</span><span class="s">Line Following Performance Analysis</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="nf">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">pid_output</span><span class="p">,</span> <span class="sh">'</span><span class="s">g-</span><span class="sh">'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sh">'</span><span class="s">PID Output</span><span class="sh">'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Control Signal</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="nf">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">error</span> <span class="o">=</span> <span class="n">actual_position</span> <span class="o">-</span> <span class="n">setpoint</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="nf">abs</span><span class="p">(</span><span class="n">error</span><span class="p">),</span> <span class="sh">'</span><span class="s">orange</span><span class="sh">'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sh">'</span><span class="s">Absolute Error</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Error (cm)</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">xlabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Time (seconds)</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="nf">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="sensor-array-response">Sensor Array Response</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Sensor calibration and response analysis
+</span><span class="n">sensor_positions</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>  <span class="c1"># cm from center
+</span><span class="n">raw_readings</span> <span class="o">=</span> <span class="p">[</span><span class="mi">850</span><span class="p">,</span> <span class="mi">920</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">940</span><span class="p">,</span> <span class="mi">880</span><span class="p">]</span>  <span class="c1"># ADC values
+</span><span class="n">normalized</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">1000</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1000</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">raw_readings</span><span class="p">]</span>  <span class="c1"># Normalize (1 = line detected)
+</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">bar</span><span class="p">(</span><span class="n">sensor_positions</span><span class="p">,</span> <span class="n">raw_readings</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="sh">'</span><span class="s">red</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">orange</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">green</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">orange</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">red</span><span class="sh">'</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">title</span><span class="p">(</span><span class="sh">'</span><span class="s">IR Sensor Raw Readings</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">ADC Value</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">xlabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Sensor Position (cm)</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="nf">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">bar</span><span class="p">(</span><span class="n">sensor_positions</span><span class="p">,</span> <span class="n">normalized</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="sh">'</span><span class="s">red</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">orange</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">green</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">orange</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">red</span><span class="sh">'</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">title</span><span class="p">(</span><span class="sh">'</span><span class="s">Normalized Sensor Response</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Line Detection (0-1)</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">xlabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Sensor Position (cm)</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="speed-vs-accuracy-analysis">Speed vs. Accuracy Analysis</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Performance testing results
+</span><span class="n">speeds</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">80</span><span class="p">]</span>  <span class="c1"># cm/s
+</span><span class="n">accuracy</span> <span class="o">=</span> <span class="p">[</span><span class="mf">99.2</span><span class="p">,</span> <span class="mf">98.8</span><span class="p">,</span> <span class="mf">97.5</span><span class="p">,</span> <span class="mf">96.2</span><span class="p">,</span> <span class="mf">94.8</span><span class="p">,</span> <span class="mf">92.1</span><span class="p">,</span> <span class="mf">88.5</span><span class="p">,</span> <span class="mf">85.2</span><span class="p">]</span>  <span class="c1"># %
+</span><span class="n">power_consumption</span> <span class="o">=</span> <span class="p">[</span><span class="mi">180</span><span class="p">,</span> <span class="mi">220</span><span class="p">,</span> <span class="mi">280</span><span class="p">,</span> <span class="mi">350</span><span class="p">,</span> <span class="mi">440</span><span class="p">,</span> <span class="mi">580</span><span class="p">,</span> <span class="mi">780</span><span class="p">,</span> <span class="mi">1020</span><span class="p">]</span>  <span class="c1"># mA
+</span>
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="nf">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+<span class="c1"># Speed vs Accuracy
+</span><span class="n">ax1</span><span class="p">.</span><span class="nf">plot</span><span class="p">(</span><span class="n">speeds</span><span class="p">,</span> <span class="n">accuracy</span><span class="p">,</span> <span class="sh">'</span><span class="s">bo-</span><span class="sh">'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">ax1</span><span class="p">.</span><span class="nf">set_xlabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Speed (cm/s)</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax1</span><span class="p">.</span><span class="nf">set_ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Accuracy (%)</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax1</span><span class="p">.</span><span class="nf">set_title</span><span class="p">(</span><span class="sh">'</span><span class="s">Speed vs. Line Following Accuracy</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax1</span><span class="p">.</span><span class="nf">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">ax1</span><span class="p">.</span><span class="nf">set_ylim</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># Speed vs Power Consumption
+</span><span class="n">ax2</span><span class="p">.</span><span class="nf">plot</span><span class="p">(</span><span class="n">speeds</span><span class="p">,</span> <span class="n">power_consumption</span><span class="p">,</span> <span class="sh">'</span><span class="s">ro-</span><span class="sh">'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">ax2</span><span class="p">.</span><span class="nf">set_xlabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Speed (cm/s)</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax2</span><span class="p">.</span><span class="nf">set_ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Power Consumption (mA)</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax2</span><span class="p">.</span><span class="nf">set_title</span><span class="p">(</span><span class="sh">'</span><span class="s">Speed vs. Power Consumption</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax2</span><span class="p">.</span><span class="nf">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="nf">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h2 id="performance-results">Performance Results</h2>
+
+<p>After extensive testing and PID tuning, the robot achieved:</p>
+<ul>
+  <li><strong>Line Following Accuracy</strong>: 95% on standard tracks</li>
+  <li><strong>Maximum Track Speed</strong>: Successfully follows lines at 80cm/s</li>
+  <li><strong>Curve Handling</strong>: Navigates 90° turns without losing the line</li>
+  <li><strong>Obstacle Response</strong>: Stops within 10cm of detected obstacles</li>
+</ul>
+
+<h2 id="lessons-learned">Lessons Learned</h2>
+
+<ol>
+  <li><strong>PID Tuning</strong>: Start with proportional control only, then add integral and derivative terms</li>
+  <li><strong>Sensor Calibration</strong>: Regular calibration is crucial for consistent performance</li>
+  <li><strong>Power Management</strong>: Use voltage regulators for stable sensor readings</li>
+  <li><strong>Mechanical Design</strong>: Proper wheel alignment significantly improves tracking accuracy</li>
+</ol>
+
+<h2 id="future-improvements">Future Improvements</h2>
+
+<ul>
+  <li><strong>Machine Learning</strong>: Implement adaptive PID parameters using reinforcement learning</li>
+  <li><strong>Multi-Line Support</strong>: Add capability to handle intersections and multiple line paths</li>
+  <li><strong>Wireless Communication</strong>: Upgrade to WiFi for remote monitoring and control</li>
+  <li><strong>Advanced Sensors</strong>: Add color sensors for enhanced track detection</li>
+</ul>
+
+<h2 id="build-instructions">Build Instructions</h2>
+
+<details class="assembly-details">
+<summary>Assembly Instructions</summary>
+<div class="assembly-content">
+
+    <h3 id="step-1-mechanical-assembly">Step 1: Mechanical Assembly</h3>
+    <ol>
+      <li>3D print the chassis using the provided STL files</li>
+      <li>Mount the motors and wheels to the chassis</li>
+      <li>Install the sensor array at the front of the robot</li>
+      <li>Secure the Arduino and motor driver board</li>
+    </ol>
+
+    <h3 id="step-2-electronics">Step 2: Electronics</h3>
+    <ol>
+      <li>Follow the circuit schematic to connect all components</li>
+      <li>Use the custom PCB design for a cleaner installation</li>
+      <li>Test all connections before powering on</li>
+      <li>Upload the Arduino code and calibrate sensors</li>
+    </ol>
+
+    <h3 id="step-3-software-setup">Step 3: Software Setup</h3>
+    <ol>
+      <li>Install the Arduino IDE and required libraries</li>
+      <li>Upload the main control code to the Arduino</li>
+      <li>Install Python dependencies for the tuning interface</li>
+      <li>Run initial calibration and PID tuning procedures</li>
+    </ol>
+
+  </div>
+</details>
+
+
+                    </div>
+                </section>
+
+
+
+                <!-- Code Section (Collapsible) -->
+                
+                <section class="project-section-clean" id="code">
+                    <details class="code-details">
+                        <summary>Code Files</summary>
+                        <div class="code-list-container">
+                            
+                            <div class="code-file-wrapper">
+                                
+                                <details class="code-file-details">
+                                    <summary class="code-file-summary">
+                                        <span class="file-name"><i class="fas fa-code"></i> Main Control</span>
+                                        <div class="file-meta">
+                                            <span class="lang-tag">cpp</span>
+                                            
+                                            <a href="https://github.com/aojedao/line-following-robot/blob/main/src/main.ino" class="file-download-icon" download
+                                                title="Download"><i class="fas fa-download"></i></a>
+                                            
+                                        </div>
+                                    </summary>
+                                    <div class="code-block-content">
+                                        <pre><code class="language-cpp">#include &lt;PID_v1.h&gt;
+#include &lt;SoftwareSerial.h&gt;
+
+// Pin definitions
+#define LEFT_MOTOR_PWM 3
+#define LEFT_MOTOR_DIR 2
+#define RIGHT_MOTOR_PWM 5
+#define RIGHT_MOTOR_DIR 4
+
+// Sensor pins (analog)
+#define SENSOR_1 A0
+#define SENSOR_2 A1
+#define SENSOR_3 A2
+#define SENSOR_4 A3
+#define SENSOR_5 A4
+
+// PID Controller variables
+double setpoint = 0;
+double input, output;
+double kp = 2.0, ki = 0.1, kd = 0.5;
+PID pid(&amp;input, &amp;output, &amp;setpoint, kp, ki, kd, DIRECT);
+
+// Base speed
+int baseSpeed = 150;
+
+void setup() {
+  Serial.begin(9600);
+  
+  // Initialize motor pins
+  pinMode(LEFT_MOTOR_PWM, OUTPUT);
+  pinMode(LEFT_MOTOR_DIR, OUTPUT);
+  pinMode(RIGHT_MOTOR_PWM, OUTPUT);
+  pinMode(RIGHT_MOTOR_DIR, OUTPUT);
+  
+  // Initialize PID
+  pid.SetMode(AUTOMATIC);
+  pid.SetOutputLimits(-255, 255);
+  
+  Serial.println(&quot;Line Following Robot Initialized&quot;);
+}
+
+void loop() {
+  // Read sensor values
+  int sensor1 = analogRead(SENSOR_1);
+  int sensor2 = analogRead(SENSOR_2);
+  int sensor3 = analogRead(SENSOR_3);
+  int sensor4 = analogRead(SENSOR_4);
+  int sensor5 = analogRead(SENSOR_5);
+  
+  // Calculate line position (-2 to +2)
+  input = calculateLinePosition(sensor1, sensor2, sensor3, sensor4, sensor5);
+  
+  // Compute PID
+  pid.Compute();
+  
+  // Calculate motor speeds
+  int leftSpeed = baseSpeed + output;
+  int rightSpeed = baseSpeed - output;
+  
+  // Constrain speeds
+  leftSpeed = constrain(leftSpeed, -255, 255);
+  rightSpeed = constrain(rightSpeed, -255, 255);
+  
+  // Drive motors
+  driveMotors(leftSpeed, rightSpeed);
+  
+  delay(10);
+}
+
+double calculateLinePosition(int s1, int s2, int s3, int s4, int s5) {
+  // Convert analog readings to digital (0 or 1)
+  int sensors[5];
+  sensors[0] = (s1 &gt; 500) ? 1 : 0;
+  sensors[1] = (s2 &gt; 500) ? 1 : 0;
+  sensors[2] = (s3 &gt; 500) ? 1 : 0;
+  sensors[3] = (s4 &gt; 500) ? 1 : 0;
+  sensors[4] = (s5 &gt; 500) ? 1 : 0;
+  
+  // Calculate weighted average
+  int sum = 0, weightedSum = 0;
+  for(int i = 0; i &lt; 5; i++) {
+    weightedSum += sensors[i] * (i - 2);
+    sum += sensors[i];
+  }
+  
+  if(sum == 0) return 0; // No line detected
+  
+  return (double)weightedSum / sum;
+}
+
+void driveMotors(int leftSpeed, int rightSpeed) {
+  // Left motor
+  if(leftSpeed &gt;= 0) {
+    digitalWrite(LEFT_MOTOR_DIR, HIGH);
+    analogWrite(LEFT_MOTOR_PWM, leftSpeed);
+  } else {
+    digitalWrite(LEFT_MOTOR_DIR, LOW);
+    analogWrite(LEFT_MOTOR_PWM, -leftSpeed);
+  }
+  
+  // Right motor
+  if(rightSpeed &gt;= 0) {
+    digitalWrite(RIGHT_MOTOR_DIR, HIGH);
+    analogWrite(RIGHT_MOTOR_PWM, rightSpeed);
+  } else {
+    digitalWrite(RIGHT_MOTOR_DIR, LOW);
+    analogWrite(RIGHT_MOTOR_PWM, -rightSpeed);
+  }
+}
+</code></pre>
+                                    </div>
+                                </details>
+                                
+                            </div>
+                            
+                            <div class="code-file-wrapper">
+                                
+                                <details class="code-file-details">
+                                    <summary class="code-file-summary">
+                                        <span class="file-name"><i class="fas fa-code"></i> PID Tuning</span>
+                                        <div class="file-meta">
+                                            <span class="lang-tag">python</span>
+                                            
+                                            <a href="https://github.com/aojedao/line-following-robot/blob/main/tools/pid_tuner.py" class="file-download-icon" download
+                                                title="Download"><i class="fas fa-download"></i></a>
+                                            
+                                        </div>
+                                    </summary>
+                                    <div class="code-block-content">
+                                        <pre><code class="language-python">import serial
+import matplotlib.pyplot as plt
+import numpy as np
+from tkinter import *
+from tkinter import ttk
+
+class PIDTuner:
+    def __init__(self):
+        self.serial_port = None
+        self.data_log = []
+        self.setup_gui()
+        
+    def setup_gui(self):
+        self.root = Tk()
+        self.root.title(&quot;PID Tuner for Line Following Robot&quot;)
+        self.root.geometry(&quot;800x600&quot;)
+        
+        # Connection frame
+        conn_frame = ttk.Frame(self.root)
+        conn_frame.pack(pady=10)
+        
+        ttk.Label(conn_frame, text=&quot;Serial Port:&quot;).pack(side=LEFT)
+        self.port_entry = ttk.Entry(conn_frame, width=10)
+        self.port_entry.pack(side=LEFT, padx=5)
+        self.port_entry.insert(0, &quot;COM3&quot;)
+        
+        self.connect_btn = ttk.Button(conn_frame, text=&quot;Connect&quot;, 
+                                    command=self.connect_serial)
+        self.connect_btn.pack(side=LEFT, padx=5)
+        
+        # PID parameter frame
+        pid_frame = ttk.LabelFrame(self.root, text=&quot;PID Parameters&quot;)
+        pid_frame.pack(pady=10, padx=10, fill=X)
+        
+        # Kp
+        ttk.Label(pid_frame, text=&quot;Kp:&quot;).grid(row=0, column=0, sticky=W)
+        self.kp_var = DoubleVar(value=2.0)
+        self.kp_scale = ttk.Scale(pid_frame, from_=0, to=10, 
+                                 variable=self.kp_var, orient=HORIZONTAL)
+        self.kp_scale.grid(row=0, column=1, sticky=EW, padx=5)
+        self.kp_label = ttk.Label(pid_frame, text=&quot;2.0&quot;)
+        self.kp_label.grid(row=0, column=2)
+        
+        # Ki
+        ttk.Label(pid_frame, text=&quot;Ki:&quot;).grid(row=1, column=0, sticky=W)
+        self.ki_var = DoubleVar(value=0.1)
+        self.ki_scale = ttk.Scale(pid_frame, from_=0, to=2, 
+                                 variable=self.ki_var, orient=HORIZONTAL)
+        self.ki_scale.grid(row=1, column=1, sticky=EW, padx=5)
+        self.ki_label = ttk.Label(pid_frame, text=&quot;0.1&quot;)
+        self.ki_label.grid(row=1, column=2)
+        
+        # Kd
+        ttk.Label(pid_frame, text=&quot;Kd:&quot;).grid(row=2, column=0, sticky=W)
+        self.kd_var = DoubleVar(value=0.5)
+        self.kd_scale = ttk.Scale(pid_frame, from_=0, to=5, 
+                                 variable=self.kd_var, orient=HORIZONTAL)
+        self.kd_scale.grid(row=2, column=1, sticky=EW, padx=5)
+        self.kd_label = ttk.Label(pid_frame, text=&quot;0.5&quot;)
+        self.kd_label.grid(row=2, column=2)
+        
+        pid_frame.columnconfigure(1, weight=1)
+        
+        # Update button
+        ttk.Button(pid_frame, text=&quot;Send Parameters&quot;, 
+                  command=self.send_parameters).grid(row=3, column=1, pady=10)
+        
+        # Bind scale events
+        self.kp_scale.bind(&quot;&lt;Motion&gt;&quot;, self.update_labels)
+        self.ki_scale.bind(&quot;&lt;Motion&gt;&quot;, self.update_labels)
+        self.kd_scale.bind(&quot;&lt;Motion&gt;&quot;, self.update_labels)
+        
+    def connect_serial(self):
+        try:
+            port = self.port_entry.get()
+            self.serial_port = serial.Serial(port, 9600, timeout=1)
+            self.connect_btn.config(text=&quot;Connected&quot;, state=DISABLED)
+            print(f&quot;Connected to {port}&quot;)
+        except Exception as e:
+            print(f&quot;Connection failed: {e}&quot;)
+            
+    def update_labels(self, event=None):
+        self.kp_label.config(text=f&quot;{self.kp_var.get():.2f}&quot;)
+        self.ki_label.config(text=f&quot;{self.ki_var.get():.2f}&quot;)
+        self.kd_label.config(text=f&quot;{self.kd_var.get():.2f}&quot;)
+        
+    def send_parameters(self):
+        if self.serial_port and self.serial_port.is_open:
+            kp = self.kp_var.get()
+            ki = self.ki_var.get()
+            kd = self.kd_var.get()
+            
+            command = f&quot;PID:{kp:.2f},{ki:.2f},{kd:.2f}\n&quot;
+            self.serial_port.write(command.encode())
+            print(f&quot;Sent: {command.strip()}&quot;)
+        
+    def run(self):
+        self.root.mainloop()
+        
+if __name__ == &quot;__main__&quot;:
+    tuner = PIDTuner()
+    tuner.run()
+</code></pre>
+                                    </div>
+                                </details>
+                                
+                            </div>
+                            
+                        </div>
+                    </details>
+                </section>
+                
+
+                <!-- Components & Materials -->
+                
+                <section class="project-section-clean" id="components" style="margin-top: var(--spacing-lg);">
+                    <h3>Components & Materials</h3>
+                    <table class="components-table">
+                        <thead>
+                            <tr>
+                                <th>Component</th>
+                                <th>Qty</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr>
+                                <td>Arduino Uno R3</td>
+                                <td class="component-qty">x1</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>L298N Motor Driver</td>
+                                <td class="component-qty">x1</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>IR Sensor Array</td>
+                                <td class="component-qty">x1</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>DC Geared Motors (6V)</td>
+                                <td class="component-qty">x2</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Robot Wheels</td>
+                                <td class="component-qty">x2</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>LiPo Battery (7.4V 2200mAh)</td>
+                                <td class="component-qty">x1</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Ultrasonic Sensor HC-SR04</td>
+                                <td class="component-qty">x1</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Breadboard & Jumper Wires</td>
+                                <td class="component-qty">x1</td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </section>
+                
+
+                <!-- Meta / Actions (Moved to bottom of left) -->
+                <div class="project-meta-bottom">
+
+                    <div class="project-actions-small">
+                        
+                        <a href="https://github.com/aojedao/line-following-robot" class="btn-small" target="_blank">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                        
+
+                        
+                        <a href="#" class="btn-small" target="_blank">
+                            <i class="fas fa-external-link-alt"></i> Demo
+                        </a>
+                        
+                    </div>
+
+                    <div class="project-categories-bottom">
+                        
+                        <span class="category-tag-small">Robotics</span>
+                        
+                        <span class="category-tag-small">Arduino</span>
+                        
+                        <span class="category-tag-small">Mechatronics</span>
+                        
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Column: Media -->
+            <div class="project-right-panel">
+
+
+
+                <!-- 3D Models Section -->
+                
+                <section class="project-media-group" id="models">
+                    <div class="models-grid-compact">
+                        
+                        <div class="model-viewer-container">
+                            <model-viewer src="/hksaperstein/assets/models/line-robot/chassis.gltf"
+                                alt="3D printed robot chassis with integrated sensor mounts" camera-controls
+                                auto-rotate="false"
+                                background-color="#f0f0f0"
+                                shadow-intensity="1" class="model-viewer">
+                            </model-viewer>
+                        </div>
+                        
+                        <div class="model-viewer-container">
+                            <model-viewer src="/hksaperstein/assets/models/line-robot/wheel-assembly.gltf"
+                                alt="Custom wheel assembly with encoder integration" camera-controls
+                                auto-rotate="false"
+                                background-color="#f0f0f0"
+                                shadow-intensity="1" class="model-viewer">
+                            </model-viewer>
+                        </div>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Media Gallery -->
+                
+                <section class="project-media-group" id="gallery">
+                    <div class="media-gallery-stack">
+                        
+                        <div class="media-item">
+                            
+                            
+                            <img src="/hksaperstein/assets/images/projects/line-robot/featured.jpg"
+                                alt="Line following robot overview" class="gallery-image" data-zoomable>
+                            
+                            
+                            <p class="media-caption">Line following robot overview</p>
+                            
+                        </div>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Visualizations (Interactive HTML Plots) -->
+                
+
+                <!-- Plotly for custom plots -->
+                
+
+                <!-- Interactive Data Plot (only if page has interactive_plot: true) -->
+                
+
+                <!-- Custom Plot Include -->
+                
+
+                <!-- Circuit Schematics -->
+                
+                <section class="project-media-group" id="schematics">
+                    <h4>Schematics</h4>
+                    <div class="schematics-stack">
+                        
+                        <div class="schematic-container">
+                            <img src="/hksaperstein/assets/schematics/line-robot/main-circuit.svg"
+                                alt="Main control circuit with Arduino Uno and motor driver"
+                                class="schematic-image">
+                        </div>
+                        
+                    </div>
+            </div>
+            </section>
+            
+
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- Project Navigation -->
+<div class="project-navigation">
+    <div class="container">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+        <div class="nav-links">
+            
+            
+            
+            <a href="/hksaperstein/projects/6dof-robotic-arm/" class="nav-link prev">
+                <i class="fas fa-chevron-left"></i>
+                <span>6-DOF Robotic Arm with Vision System</span>
+            </a>
+            
+
+            <a href="/hksaperstein/projects/" class="nav-link all-projects">
+                <i class="fas fa-th"></i>
+                <span>All Projects</span>
+            </a>
+
+            
+        </div>
+    </div>
+</div>
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-simple">
+            <div class="footer-brand">
+                <h3 class="mesgro-title">HKS</h3>
+                <div class="mesgro-definition">
+                    Solving real-world problems
+                </div>
+            </div>
+
+            <div class="social-links-center">
+                
+                <a href="https://github.com/hksaperstein" target="_blank" aria-label="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                
+                
+                <a href="https://linkedin.com/in/harrison-saperstein" target="_blank" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                
+                
+                
+                <a href="mailto:harrison.saperstein@gmail.com" aria-label="Email">
+                    <i class="fas fa-envelope"></i>
+                </a>
+                
+            </div>
+
+            <div class="footer-credits">
+                <p>&copy; 2026 Harrison Saperstein. Built with &hearts; using Jekyll.</p>
+                <p>Template designed and developed by <strong>Alejandro Ojeda Olarte</strong></p>
+                <p><a href="https://github.com/aojedao/MESGRO" target="_blank">MESGRO Template</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <!-- Scripts -->
+    <script src="/hksaperstein/assets/js/main.js"></script>
+    <script src="/hksaperstein/assets/js/circuit-bg.js"></script>
+
+    <!-- 3D Model Viewer -->
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+    <!-- Three.js for additional 3D functionality -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Image zoom library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js"></script>
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-okaidia.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+
+    <!-- Plotly.js for interactive data visualization -->
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+
+    
+    <script src="/hksaperstein/assets/js/project-viewer.js"></script>
+    
+</body>
+
+</html>

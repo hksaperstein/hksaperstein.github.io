@@ -256,7 +256,8 @@ layout: default
 
         <div class="nav-links">
             {% if current_index > 1 %}
-            {% assign prev_project = project_array[current_index | minus: 2] %}
+            {% assign prev_index = current_index | minus: 2 %}
+            {% assign prev_project = project_array[prev_index] %}
             <a href="{{ prev_project.url | relative_url }}" class="nav-link prev">
                 <i class="fas fa-chevron-left"></i>
                 <span>{{ prev_project.title }}</span>

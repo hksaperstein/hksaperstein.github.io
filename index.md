@@ -8,7 +8,7 @@ layout: default
       <div class="hero-info-wrapper">
         <div class="hero-text">
            <h1 class="hero-name">{{ site.author | default: "Your Name" }}</h1>
-           <p class="hero-title">Robotics & Mechatronics</p>
+           <p class="hero-title">Projects and Problems</p>
         </div>
         
         <div class="hero-actions">
