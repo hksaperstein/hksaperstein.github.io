@@ -122,6 +122,7 @@ a.nav-link.active::after {
   display: none;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   width: 40px;
   height: 40px;
   background: transparent;
@@ -139,7 +140,7 @@ a.nav-link.active::after {
 }
 
 .mobile-menu-toggle.active .hamburger-line:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
+  transform: translate(0px, 6px) rotate(45deg) 
 }
 
 .mobile-menu-toggle.active .hamburger-line:nth-child(2) {
@@ -147,7 +148,7 @@ a.nav-link.active::after {
 }
 
 .mobile-menu-toggle.active .hamburger-line:nth-child(3) {
-  transform: rotate(-45deg) translate(5px, -5px);
+  transform: translate(0px, -6px) rotate(-45deg) 
 }
 
 /* Main Content */

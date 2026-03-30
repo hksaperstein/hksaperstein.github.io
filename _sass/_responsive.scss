@@ -21,6 +21,8 @@
     visibility: hidden;
     transition: all var(--transition-normal);
     z-index: var(--z-dropdown);
+    justify-content: center;
+    align-items: center;
   }
 
   .site-nav.active {
