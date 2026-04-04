@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>http://localhost:4000/hksaperstein/projects/iot-environmental-monitor/</loc>
-<lastmod>2024-08-10T00:00:00-04:00</lastmod>
-</url>
-<url>
 <loc>http://localhost:4000/hksaperstein/projects/6dof-robotic-arm/</loc>
 <lastmod>2024-09-20T00:00:00-04:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/hksaperstein/projects/line-following-robot/</loc>
 <lastmod>2024-10-15T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/hksaperstein/projects/ender-3/</loc>
+<lastmod>2026-03-29T00:00:00-04:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/hksaperstein/about/</loc>
