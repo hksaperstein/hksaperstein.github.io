@@ -6,6 +6,7 @@ baseurl: "/hksaperstein"
 author: "Harrison Saperstein"
 email: "harrison.saperstein@gmail.com"
 github_username: "hksaperstein"
+thingiverse_username: "hksaperstein"
 linkedin_username: "harrison-saperstein"
 
 # Build settings
@@ -48,6 +49,7 @@ exclude:
   - vendor/cache/
   - vendor/gems/
   - vendor/ruby/
+  - .vscode/
   - README.md
   - LICENSE
 

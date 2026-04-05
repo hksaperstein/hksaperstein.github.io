@@ -2,25 +2,25 @@
 layout: project
 title: "Ender-3 Pro"
 description: "Optimizations and improvements made to my Ender-3 Pro with an ongoing drive to tinker further."
-date: 2026-03-29
+date: 2024-04-04
 categories: [3D Printing]
-featured_image: "/assets/images/projects/iot-monitor/sensor-monitoring.gif"
-# github_url: "https://github.com/aojedao/iot-environmental-monitor"
-# demo_url: "#"
+featured_image: "/assets/images/projects/ender3-pro/sensor-monitoring.gif"
+thingiverse_url: "https://www.thingiverse.com/hksaperstein/collections/43743826/things"
+demo_url: "#"
 interactive_plot: false
 
 models:
-  - file: "/assets/models/iot-monitor/sensor-housing.gltf"
+  - file: "/assets/models/ender3-pro/sensor-housing.gltf"
     description: "Weatherproof housing for outdoor sensor deployment"
-  - file: "/assets/models/iot-monitor/test.gltf"
+  - file: "/assets/models/ender3-pro/test.gltf"
     description: "IoT sensor enclosure 3D model"
 
 schematics:
-  - file: "/assets/schematics/iot-monitor/main-board.svg"
+  - file: "/assets/schematics/ender3-pro/main-board.svg"
     description: "ESP32 main control board with sensor interfaces"
-  - file: "/assets/schematics/iot-monitor/power-management.svg"
+  - file: "/assets/schematics/ender3-pro/power-management.svg"
     description: "Solar charging system with battery backup"
-  - file: "/assets/schematics/iot-monitor/sensor-network.svg"
+  - file: "/assets/schematics/ender3-pro/sensor-network.svg"
     description: "Wireless sensor network topology and communication"
 
 
@@ -37,50 +37,15 @@ components:
     
   - name: "Raspberry Pi 4 Model B, 2GB"
     quantity: 1
-    description: "Used for klipper and moonraker with a Fluidd front-end"
+    description: "Used for Klipper and Moonraker with a Fluidd front-end"
     
-  - name: "TSL2561 Light Sensor"
-    quantity: 1
-    description: "Digital luminosity/light sensor with I2C interface"
-    
-  - name: "Capacitive Soil Moisture Sensor"
-    quantity: 1
-    description: "Corrosion-resistant soil moisture measurement"
-    
-  - name: "DS18B20 Waterproof Temperature Sensor"
-    quantity: 1
-    description: "Waterproof digital temperature sensor for soil"
-    
-  - name: "Rain Drop Sensor"
-    quantity: 1
-    description: "Digital rain detection sensor"
-    
-  - name: "Anemometer (Wind Speed)"
-    quantity: 1
-    description: "Hall effect wind speed sensor"
-    
-  - name: "Wind Vane (Wind Direction)"
-    quantity: 1
-    description: "Potentiometer-based wind direction sensor"
-    
-  - name: "Solar Panel (6V 2W)"
-    quantity: 1
-    description: "Small solar panel for battery charging"
-    
-  - name: "LiPo Battery (3.7V 2000mAh)"
-    quantity: 1
-    description: "Rechargeable battery for continuous operation"
-    
-  - name: "Custom PCB"
-    quantity: 1
-    description: "Custom designed PCB for clean sensor integration"
 
 gallery:
   - type: "image"
-    file: "/assets/images/projects/iot-monitor/featured.jpg"
+    file: "/assets/images/projects/ender3-pro/featured.jpg"
     description: "IoT Environmental monitoring station - Physical hardware setup"
   - type: "image"
-    file: "/assets/images/projects/iot-monitor/sensor-monitoring.gif"
+    file: "/assets/images/projects/ender3-pro/sensor-monitoring.gif"
     description: "Real-time sensor data visualization - Animated demonstration of live monitoring dashboard"
 ---
 

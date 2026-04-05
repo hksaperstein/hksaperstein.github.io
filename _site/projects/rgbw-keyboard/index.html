@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RGBW Mechanical Keyboard - HKS</title>
+    <meta name="description"
+        content="Designing a custom mechanical keyboard from the ground up.">
+
+    <!-- Apply theme immediately to prevent flash -->
+    <script>
+        (function () {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
+
+    <!-- SEO -->
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>RGBW Mechanical Keyboard | HKS</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="RGBW Mechanical Keyboard" />
+<meta name="author" content="Harrison Saperstein" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Designing a custom mechanical keyboard from the ground up." />
+<meta property="og:description" content="Designing a custom mechanical keyboard from the ground up." />
+<link rel="canonical" href="http://localhost:4000/hksaperstein/projects/rgbw-keyboard/" />
+<meta property="og:url" content="http://localhost:4000/hksaperstein/projects/rgbw-keyboard/" />
+<meta property="og:site_name" content="HKS" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2024-10-15T00:00:00-04:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="RGBW Mechanical Keyboard" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Harrison Saperstein"},"dateModified":"2024-10-15T00:00:00-04:00","datePublished":"2024-10-15T00:00:00-04:00","description":"Designing a custom mechanical keyboard from the ground up.","headline":"RGBW Mechanical Keyboard","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/hksaperstein/projects/rgbw-keyboard/"},"url":"http://localhost:4000/hksaperstein/projects/rgbw-keyboard/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- MathJax -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/hksaperstein/assets/css/main.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/hksaperstein/assets/images/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/hksaperstein/assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/hksaperstein/assets/images/favicon-16x16.png">
+</head>
+
+<body>
+    <canvas id="canvas-bg"></canvas>
+
+    <header class="site-header">
+    <div class="container" style="height: 100%;">
+        <div class="header-content">
+            <div class="site-brand">
+                <a href="/hksaperstein/" class="brand-link">
+                    <span class="brand-text">HKS</span>
+                </a>
+            </div>
+
+            <nav class="site-nav" id="site-nav">
+                <ul class="nav-list">
+                    
+                    <li class="nav-item">
+                        <a href="/hksaperstein/"
+                            class="nav-link ">
+                            Home
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a href="/hksaperstein/projects/"
+                            class="nav-link ">
+                            Projects
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a href="/hksaperstein/about/"
+                            class="nav-link ">
+                            About
+                        </a>
+                    </li>
+                    
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+
+                <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <main id="main-content">
+        <div class="project-hero">
+    <div class="container">
+        <div class="project-header">
+            <h1 class="project-title">RGBW Mechanical Keyboard</h1>
+            <p class="project-description">Designing a custom mechanical keyboard from the ground up.</p>
+
+            <div class="project-meta">
+                
+                <a href="https://github.com/hksaperstein/keyboard" class="btn-github" target="_blank">
+                    <i class="fab fa-github"></i> View on GitHub
+                </a>
+                
+
+                
+                
+                
+                <a href="#" class="btn-demo" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> Live Demo
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="project-content">
+    <div class="container">
+
+        <div class="project-header-simple">
+            <h1 class="project-title-simple">RGBW Mechanical Keyboard</h1>
+        </div>
+
+        <div class="project-split-layout">
+            <!-- Left Column: Text & Info -->
+            <div class="project-left-panel">
+
+                <!-- Overview / Description -->
+                <section class="project-section-clean" id="description">
+                    <h3>Overview</h3>
+                    <div class="project-description-content">
+                        <p class="project-lead">Designing a custom mechanical keyboard from the ground up.</p>
+                        <h2 id="project-overview">Project Overview</h2>
+
+<p>This project was an attempt to solve a real world problem. I wanted a mechanical keyboard with a 65% compact, in-line layout, hot-swap mechanical switches, and most importantly, backlit with RGB-W LEDs</p>
+
+<h2 id="key-features">Key Features</h2>
+
+<h3 id="key-features-1">KEY Features</h3>
+<ul>
+  <li><strong>RGBW LEDs</strong>: RGB LEDs with a dedicated W channel for white. Cool, neutral, and warm white are all considered.</li>
+  <li><strong>Sensor Fusion</strong>: Uses a 5-sensor IR array for accurate line position detection</li>
+  <li><strong>Adaptive Speed</strong>: Automatically adjusts speed based on track curvature</li>
+</ul>
+
+<h3 id="wireless-monitoring">Wireless Monitoring</h3>
+<ul>
+  <li><strong>Real-time Telemetry</strong>: Sends sensor data and control parameters via Bluetooth</li>
+  <li><strong>Parameter Tuning</strong>: Live PID parameter adjustment using custom Python GUI</li>
+  <li><strong>Performance Logging</strong>: Records track performance for analysis and optimization</li>
+</ul>
+
+<h3 id="safety-features">Safety Features</h3>
+<ul>
+  <li><strong>Obstacle Detection</strong>: Ultrasonic sensor for collision avoidance</li>
+  <li><strong>Battery Management</strong>: Low voltage detection and automatic shutdown</li>
+  <li><strong>Emergency Stop</strong>: Wireless emergency stop functionality</li>
+</ul>
+
+<h2 id="technical-specifications">Technical Specifications</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Specification</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Microcontroller</strong></td>
+      <td>Arduino Uno R3 (ATmega328P)</td>
+    </tr>
+    <tr>
+      <td><strong>Operating Voltage</strong></td>
+      <td>7.4V (2S LiPo)</td>
+    </tr>
+    <tr>
+      <td><strong>Maximum Speed</strong></td>
+      <td>1.2 m/s</td>
+    </tr>
+    <tr>
+      <td><strong>Line Detection Range</strong></td>
+      <td>12cm wide sensor array</td>
+    </tr>
+    <tr>
+      <td><strong>Battery Life</strong></td>
+      <td>45 minutes continuous operation</td>
+    </tr>
+    <tr>
+      <td><strong>Weight</strong></td>
+      <td>485g</td>
+    </tr>
+    <tr>
+      <td><strong>Dimensions</strong></td>
+      <td>18cm x 12cm x 8cm</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="algorithm-implementation">Algorithm Implementation</h2>
+
+<p>The robot uses a weighted average algorithm to determine line position:</p>
+
+<ol>
+  <li><strong>Sensor Reading</strong>: Five IR sensors provide analog values (0-1023)</li>
+  <li><strong>Thresholding</strong>: Convert analog values to binary (line/no line)</li>
+  <li><strong>Position Calculation</strong>: Weighted average gives position (-2 to +2)</li>
+  <li><strong>PID Control</strong>: Error correction using PID algorithm</li>
+  <li><strong>Motor Control</strong>: Differential steering based on PID output</li>
+</ol>
+
+<h1 id="data-visualization--analysis">Data Visualization &amp; Analysis</h1>
+
+<h2 id="real-time-performance-plots">Real-time Performance Plots</h2>
+
+<h2 id="performance-results">Performance Results</h2>
+
+<p>After extensive testing and PID tuning, the robot achieved:</p>
+<ul>
+  <li><strong>Line Following Accuracy</strong>: 95% on standard tracks</li>
+  <li><strong>Maximum Track Speed</strong>: Successfully follows lines at 80cm/s</li>
+  <li><strong>Curve Handling</strong>: Navigates 90° turns without losing the line</li>
+  <li><strong>Obstacle Response</strong>: Stops within 10cm of detected obstacles</li>
+</ul>
+
+<h2 id="lessons-learned">Lessons Learned</h2>
+
+<ol>
+  <li><strong>PID Tuning</strong>: Start with proportional control only, then add integral and derivative terms</li>
+  <li><strong>Sensor Calibration</strong>: Regular calibration is crucial for consistent performance</li>
+  <li><strong>Power Management</strong>: Use voltage regulators for stable sensor readings</li>
+  <li><strong>Mechanical Design</strong>: Proper wheel alignment significantly improves tracking accuracy</li>
+</ol>
+
+<h2 id="future-improvements">Future Improvements</h2>
+
+<ul>
+  <li><strong>Machine Learning</strong>: Implement adaptive PID parameters using reinforcement learning</li>
+  <li><strong>Multi-Line Support</strong>: Add capability to handle intersections and multiple line paths</li>
+  <li><strong>Wireless Communication</strong>: Upgrade to WiFi for remote monitoring and control</li>
+  <li><strong>Advanced Sensors</strong>: Add color sensors for enhanced track detection</li>
+</ul>
+
+<h2 id="build-instructions">Build Instructions</h2>
+
+<details class="assembly-details">
+<summary>Assembly Instructions</summary>
+<div class="assembly-content">
+
+    <h3 id="step-1-mechanical-assembly">Step 1: Mechanical Assembly</h3>
+    <ol>
+      <li>3D print the chassis using the provided STL files</li>
+      <li>Mount the motors and wheels to the chassis</li>
+      <li>Install the sensor array at the front of the robot</li>
+      <li>Secure the Arduino and motor driver board</li>
+    </ol>
+
+    <h3 id="step-2-electronics">Step 2: Electronics</h3>
+    <ol>
+      <li>Follow the circuit schematic to connect all components</li>
+      <li>Use the custom PCB design for a cleaner installation</li>
+      <li>Test all connections before powering on</li>
+      <li>Upload the Arduino code and calibrate sensors</li>
+    </ol>
+
+    <h3 id="step-3-software-setup">Step 3: Software Setup</h3>
+    <ol>
+      <li>Install the Arduino IDE and required libraries</li>
+      <li>Upload the main control code to the Arduino</li>
+      <li>Install Python dependencies for the tuning interface</li>
+      <li>Run initial calibration and PID tuning procedures</li>
+    </ol>
+
+  </div>
+</details>
+
+
+                    </div>
+                </section>
+
+
+
+                <!-- Code Section (Collapsible) -->
+                
+
+                <!-- Components & Materials -->
+                
+
+                <!-- Meta / Actions (Moved to bottom of left) -->
+                <div class="project-meta-bottom">
+
+                    <div class="project-actions-small">
+                        
+                        <a href="https://github.com/hksaperstein/keyboard" class="btn-small" target="_blank">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                        
+
+                        
+                        <a href="#" class="btn-small" target="_blank">
+                            <i class="fas fa-external-link-alt"></i> Demo
+                        </a>
+                        
+                    </div>
+
+                    <div class="project-categories-bottom">
+                        
+                        <span class="category-tag-small">Arduino</span>
+                        
+                        <span class="category-tag-small">Electronics</span>
+                        
+                        <span class="category-tag-small">3D Printing</span>
+                        
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Column: Media -->
+            <div class="project-right-panel">
+
+
+
+                <!-- 3D Models Section -->
+                
+
+                <!-- Media Gallery -->
+                
+                <section class="project-media-group" id="gallery">
+                    <div class="media-gallery-stack">
+                        
+                        <div class="media-item">
+                            
+                            
+                            <img src="/hksaperstein/assets/images/projects/rgbw-keyboard/featured.jpg"
+                                alt="Line following robot overview" class="gallery-image" data-zoomable>
+                            
+                            
+                            <p class="media-caption">Line following robot overview</p>
+                            
+                        </div>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Visualizations (Interactive HTML Plots) -->
+                
+
+                <!-- Plotly for custom plots -->
+                
+
+                <!-- Interactive Data Plot (only if page has interactive_plot: true) -->
+                
+
+                <!-- Custom Plot Include -->
+                
+
+                <!-- Circuit Schematics -->
+                
+                <section class="project-media-group" id="schematics">
+                    <h4>Schematics</h4>
+                    <div class="schematics-stack">
+                        
+                        <div class="schematic-container">
+                            <img src="/hksaperstein/assets/schematics/rgbw-keyboard/main-circuit.svg"
+                                alt="Main control circuit with Arduino Uno and motor driver"
+                                class="schematic-image">
+                        </div>
+                        
+                    </div>
+            </div>
+            </section>
+            
+
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- Project Navigation -->
+<div class="project-navigation">
+    <div class="container">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+        <div class="nav-links">
+            
+            
+            
+            <a href="/hksaperstein/projects/6dof-robotic-arm/" class="nav-link prev">
+                <i class="fas fa-chevron-left"></i>
+                <span>6-DOF Robotic Arm</span>
+            </a>
+            
+
+            <a href="/hksaperstein/projects/" class="nav-link all-projects">
+                <i class="icon-thingiverse"></i>
+                <span>All Projects</span>
+            </a>
+
+            
+        </div>
+    </div>
+</div>
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-simple">
+            <div class="footer-brand">
+                <h3 class="mesgro-title">HKS</h3>
+                <div class="mesgro-definition">
+                    Solving real-world problems
+                </div>
+            </div>
+
+            <div class="social-links-center">
+                
+                <a href="https://github.com/hksaperstein" target="_blank" aria-label="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                
+                
+                <a href="https://linkedin.com/in/harrison-saperstein" target="_blank" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                
+                
+                <a href="https://thingiverse.com/hksaperstein/designs" target="_blank" aria-label="Thingiverse">
+                    <i class="icon-thingiverse"></i>
+                </a>
+                
+                
+                <a href="mailto:harrison.saperstein@gmail.com" aria-label="Email">
+                    <i class="fas fa-envelope"></i>
+                </a>
+                
+            </div>
+
+            <div class="footer-credits">
+                <p>&copy; 2026 Harrison Saperstein. Built with &hearts; using Jekyll.</p>
+                <p>Template designed and developed by <strong>Alejandro Ojeda Olarte</strong></p>
+                <p><a href="https://github.com/aojedao/MESGRO" target="_blank">MESGRO Template</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <!-- Scripts -->
+    <script src="/hksaperstein/assets/js/main.js"></script>
+    <script src="/hksaperstein/assets/js/circuit-bg.js"></script>
+
+    <!-- 3D Model Viewer -->
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+    <!-- Three.js for additional 3D functionality -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Image zoom library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js"></script>
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-okaidia.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+
+    <!-- Plotly.js for interactive data visualization -->
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+
+    
+    <script src="/hksaperstein/assets/js/project-viewer.js"></script>
+    
+</body>
+
+</html>

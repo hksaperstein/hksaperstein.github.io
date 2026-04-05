@@ -6,8 +6,8 @@ permalink: /about/
 
 <div class="hero-section" style="padding: 100px 0; background: var(--background-color); border-bottom: 1px solid var(--border-color); text-align: center;">
     <div class="container">
-        <h1 style="font-size: var(--font-size-3xl); letter-spacing: -0.02em; color: var(--text-primary);">About MESGRO</h1>
-        <p style="color: var(--text-secondary); opacity: 0.7; max-width: 600px; margin: 0 auto; font-weight: 300;">An open-source portfolio template designed specifically for robotics and mechatronics engineers to showcase their innovative projects.</p>
+        <h1 style="font-size: var(--font-size-3xl); letter-spacing: -0.02em; color: var(--text-primary);">Hi, I'm Harrison Saperstein!</h1>
+        <p style="color: var(--text-secondary); opacity: 0.7; max-width: 600px; margin: 0 auto; font-weight: 300;"></p>
     </div>
 </div>
 
@@ -15,8 +15,8 @@ permalink: /about/
     <div class="container">
         
         <section class="about-section">
-            <h2>Who is Harrison Saperstein?</h2>
-            <p>Harrison Saperstein is a regular guy</p>
+            <h2>About Me?</h2>
+            <p>Hi </p>
         </section>
 
     </div>

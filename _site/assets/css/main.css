@@ -664,6 +664,7 @@ a.nav-link.active::after {
 .btn-primary,
 .btn-secondary,
 .btn-github,
+.btn-thingiverse,
 .btn-demo {
   display: inline-flex;
   align-items: center;
@@ -718,15 +719,29 @@ a.nav-link.active::after {
   background-color: #1a1e22;
 }
 
+.btn-thingiverse,
 .btn-demo {
   background-color: var(--primary-color);
   color: #ffffff;
   font-weight: 600;
 }
 
+.btn-thingiverse:hover,
 .btn-demo:hover {
   background-color: var(--primary-dark);
   color: #ffffff;
+}
+
+/* SVG Icons */
+.icon-thingiverse {
+  display: inline-block;
+  width: 1.2em;
+  height: 1.2em;
+  background-image: url("../images/thingiverse-logo.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.9;
 }
 
 /* Personal Hero Section */

@@ -1,1 +1,7 @@
 vendor/
+
+# jekyll
+.jekyll-cache/
+
+# vscode
+.vscode/

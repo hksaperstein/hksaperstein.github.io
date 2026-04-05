@@ -15,6 +15,12 @@ layout: default
                 </a>
                 {% endif %}
 
+                {% if page.thingiverse_url %}
+                <a href="{{ page.thingiverse_url }}" class="btn-thingiverse" target="_blank">
+                    <i class="icon-thingiverse"></i> View on Thingiverse
+                </a>
+                {% endif %}
+                
                 {% if page.demo_url %}
                 <a href="{{ page.demo_url }}" class="btn-demo" target="_blank">
                     <i class="fas fa-external-link-alt"></i> Live Demo
@@ -265,7 +271,7 @@ layout: default
             {% endif %}
 
             <a href="{{ '/projects/' | relative_url }}" class="nav-link all-projects">
-                <i class="fas fa-th"></i>
+                <i class="icon-thingiverse"></i>
                 <span>All Projects</span>
             </a>
 
