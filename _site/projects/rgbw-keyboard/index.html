@@ -172,84 +172,52 @@
 <h3 id="key-features-1">KEY Features</h3>
 <ul>
   <li><strong>RGBW LEDs</strong>: RGB LEDs with a dedicated W channel for white. Cool, neutral, and warm white are all considered.</li>
-  <li><strong>Sensor Fusion</strong>: Uses a 5-sensor IR array for accurate line position detection</li>
-  <li><strong>Adaptive Speed</strong>: Automatically adjusts speed based on track curvature</li>
+  <li><strong>Hot-Swappable Key Switches</strong>: Easily swap the key switches for personal preference.</li>
+  <li><strong>Compact 80%</strong>: Compact 10-keyless design.</li>
 </ul>
 
-<h3 id="wireless-monitoring">Wireless Monitoring</h3>
+<h3 id="the-prototype">The Prototype</h3>
 <ul>
-  <li><strong>Real-time Telemetry</strong>: Sends sensor data and control parameters via Bluetooth</li>
-  <li><strong>Parameter Tuning</strong>: Live PID parameter adjustment using custom Python GUI</li>
-  <li><strong>Performance Logging</strong>: Records track performance for analysis and optimization</li>
+  <li><strong>Size</strong>: 8 Keys total in a 2x4 design</li>
+  <li><strong>Daisy chainable</strong>: Ability to connect numerous PCBs as one.</li>
+  <li><strong>Secondary Layer</strong>: Ability to connect a secondary PCB below the primary PCB to test LEDs with different key switches</li>
+  <li><strong>I/O</strong>: Connect to any MCU for development.</li>
 </ul>
 
-<h3 id="safety-features">Safety Features</h3>
-<ul>
-  <li><strong>Obstacle Detection</strong>: Ultrasonic sensor for collision avoidance</li>
-  <li><strong>Battery Management</strong>: Low voltage detection and automatic shutdown</li>
-  <li><strong>Emergency Stop</strong>: Wireless emergency stop functionality</li>
-</ul>
-
-<h2 id="technical-specifications">Technical Specifications</h2>
+<h4 id="technical-specifications">Technical Specifications</h4>
 
 <table>
   <thead>
     <tr>
-      <th>Specification</th>
-      <th>Value</th>
+      <th style="text-align: center">Specification</th>
+      <th style="text-align: center">Value</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><strong>Microcontroller</strong></td>
-      <td>Arduino Uno R3 (ATmega328P)</td>
+      <td style="text-align: center">Microcontroller</td>
+      <td style="text-align: center">Arduino Uno R3 (ATmega328P)</td>
     </tr>
     <tr>
-      <td><strong>Operating Voltage</strong></td>
-      <td>7.4V (2S LiPo)</td>
+      <td style="text-align: center">Operating Voltage</td>
+      <td style="text-align: center">5V</td>
     </tr>
     <tr>
-      <td><strong>Maximum Speed</strong></td>
-      <td>1.2 m/s</td>
+      <td style="text-align: center">Weight</td>
+      <td style="text-align: center">485g</td>
     </tr>
     <tr>
-      <td><strong>Line Detection Range</strong></td>
-      <td>12cm wide sensor array</td>
-    </tr>
-    <tr>
-      <td><strong>Battery Life</strong></td>
-      <td>45 minutes continuous operation</td>
-    </tr>
-    <tr>
-      <td><strong>Weight</strong></td>
-      <td>485g</td>
-    </tr>
-    <tr>
-      <td><strong>Dimensions</strong></td>
-      <td>18cm x 12cm x 8cm</td>
+      <td style="text-align: center">Dimensions</td>
+      <td style="text-align: center">18cm x 12cm x 8cm</td>
     </tr>
   </tbody>
 </table>
 
-<h2 id="algorithm-implementation">Algorithm Implementation</h2>
-
-<p>The robot uses a weighted average algorithm to determine line position:</p>
-
-<ol>
-  <li><strong>Sensor Reading</strong>: Five IR sensors provide analog values (0-1023)</li>
-  <li><strong>Thresholding</strong>: Convert analog values to binary (line/no line)</li>
-  <li><strong>Position Calculation</strong>: Weighted average gives position (-2 to +2)</li>
-  <li><strong>PID Control</strong>: Error correction using PID algorithm</li>
-  <li><strong>Motor Control</strong>: Differential steering based on PID output</li>
-</ol>
-
-<h1 id="data-visualization--analysis">Data Visualization &amp; Analysis</h1>
-
-<h2 id="real-time-performance-plots">Real-time Performance Plots</h2>
+<h1 id="prototype-analysis">Prototype Analysis</h1>
 
 <h2 id="performance-results">Performance Results</h2>
 
-<p>After extensive testing and PID tuning, the robot achieved:</p>
+<p>,After extensive testing and PID tuning, the robot achieved:</p>
 <ul>
   <li><strong>Line Following Accuracy</strong>: 95% on standard tracks</li>
   <li><strong>Maximum Track Speed</strong>: Successfully follows lines at 80cm/s</li>
@@ -366,11 +334,33 @@
                         <div class="media-item">
                             
                             
-                            <img src="/hksaperstein/assets/images/projects/rgbw-keyboard/featured.jpg"
-                                alt="Line following robot overview" class="gallery-image" data-zoomable>
+                            <img src="/hksaperstein/assets/images/projects/rgbw-keyboard/3d-model-no-switches-top.png"
+                                alt="Top view of prototype with no key switches or RGBW components" class="gallery-image" data-zoomable>
                             
                             
-                            <p class="media-caption">Line following robot overview</p>
+                            <p class="media-caption">Top view of prototype with no key switches or RGBW components</p>
+                            
+                        </div>
+                        
+                        <div class="media-item">
+                            
+                            
+                            <img src="/hksaperstein/assets/images/projects/rgbw-keyboard/trace-mistake.jpg"
+                                alt="Between review and production, I managed to disconnect these traces from their respective terminals." class="gallery-image" data-zoomable>
+                            
+                            
+                            <p class="media-caption">Between review and production, I managed to disconnect these traces from their respective terminals.</p>
+                            
+                        </div>
+                        
+                        <div class="media-item">
+                            
+                            
+                            <img src="/hksaperstein/assets/images/projects/rgbw-keyboard/trace-fix.jpg"
+                                alt="I scraped the pcb substrate to expose the traces and soldered new wires to connect the traces to the appropriate terminals" class="gallery-image" data-zoomable>
+                            
+                            
+                            <p class="media-caption">I scraped the pcb substrate to expose the traces and soldered new wires to connect the traces to the appropriate terminals</p>
                             
                         </div>
                         
@@ -397,8 +387,8 @@
                     <div class="schematics-stack">
                         
                         <div class="schematic-container">
-                            <img src="/hksaperstein/assets/schematics/rgbw-keyboard/main-circuit.svg"
-                                alt="Main control circuit with Arduino Uno and motor driver"
+                            <img src="/hksaperstein/assets/schematics/rgbw-keyboard/proto-schematic.png"
+                                alt="Schematic diagram of a 2x4 RGBW LED mechanical keyboard prototype"
                                 class="schematic-image">
                         </div>
                         

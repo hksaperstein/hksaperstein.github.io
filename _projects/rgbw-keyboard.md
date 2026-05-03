@@ -4,7 +4,7 @@ title: "RGBW Mechanical Keyboard"
 description: "Designing a custom mechanical keyboard from the ground up."
 date: 2024-10-15
 categories: [Arduino, Electronics, 3D Printing]
-featured_image: "/assets/images/projects/rgbw-keyboard/featured.jpg"
+featured_image: "/assets/images/projects/rgbw-keyboard/proto-pcb.png"
 github_url: "https://github.com/hksaperstein/keyboard"
 demo_url: "#"
 
@@ -17,8 +17,8 @@ demo_url: "#"
 
 # Circuit Schematics - PNG, JPG, SVG, PDF formats
 schematics:
-  - file: "/assets/schematics/rgbw-keyboard/main-circuit.svg"
-    description: "Main control circuit with Arduino Uno and motor driver"
+  - file: "/assets/schematics/rgbw-keyboard/proto-schematic.png"
+    description: "Schematic diagram of a 2x4 RGBW LED mechanical keyboard prototype"
 
 
 # Components and materials list
@@ -60,8 +60,15 @@ schematics:
 # Media gallery with images, videos, and GIFs
 gallery:
   - type: "image"
-    file: "/assets/images/projects/rgbw-keyboard/featured.jpg"
-    description: "Line following robot overview"
+    file: "/assets/images/projects/rgbw-keyboard/3d-model-no-switches-top.png"
+    description: "Top view of prototype with no key switches or RGBW components"
+  - type: "image"
+    file: "/assets/images/projects/rgbw-keyboard/trace-mistake.jpg"
+    description: "Between review and production, I managed to disconnect these traces from their respective terminals."
+  - type: "image"
+    file: "/assets/images/projects/rgbw-keyboard/trace-fix.jpg"
+    description: "I scraped the pcb substrate to expose the traces and soldered new wires to connect the traces to the appropriate terminals"
+
 ---
 
 ## Project Overview
@@ -72,50 +79,30 @@ This project was an attempt to solve a real world problem. I wanted a mechanical
 
 ### KEY Features
 - **RGBW LEDs**: RGB LEDs with a dedicated W channel for white. Cool, neutral, and warm white are all considered.
-- **Sensor Fusion**: Uses a 5-sensor IR array for accurate line position detection
-- **Adaptive Speed**: Automatically adjusts speed based on track curvature
+- **Hot-Swappable Key Switches**: Easily swap the key switches for personal preference.
+- **Compact 80%**: Compact 10-keyless design.
 
-### Wireless Monitoring
-- **Real-time Telemetry**: Sends sensor data and control parameters via Bluetooth
-- **Parameter Tuning**: Live PID parameter adjustment using custom Python GUI
-- **Performance Logging**: Records track performance for analysis and optimization
+### The Prototype
+- **Size**: 8 Keys total in a 2x4 design
+- **Daisy chainable**: Ability to connect numerous PCBs as one.
+- **Secondary Layer**: Ability to connect a secondary PCB below the primary PCB to test LEDs with different key switches
+- **I/O**: Connect to any MCU for development.
 
-### Safety Features
-- **Obstacle Detection**: Ultrasonic sensor for collision avoidance
-- **Battery Management**: Low voltage detection and automatic shutdown
-- **Emergency Stop**: Wireless emergency stop functionality
 
-## Technical Specifications
+#### Technical Specifications
 
 | Specification | Value |
-|---------------|-------|
-| **Microcontroller** | Arduino Uno R3 (ATmega328P) |
-| **Operating Voltage** | 7.4V (2S LiPo) |
-| **Maximum Speed** | 1.2 m/s |
-| **Line Detection Range** | 12cm wide sensor array |
-| **Battery Life** | 45 minutes continuous operation |
-| **Weight** | 485g |
-| **Dimensions** | 18cm x 12cm x 8cm |
+|:---------------:|:-------:|
+| Microcontroller | Arduino Uno R3 (ATmega328P) |
+| Operating Voltage | 5V |
+| Weight | 485g |
+| Dimensions | 18cm x 12cm x 8cm |
 
-## Algorithm Implementation
-
-The robot uses a weighted average algorithm to determine line position:
-
-1. **Sensor Reading**: Five IR sensors provide analog values (0-1023)
-2. **Thresholding**: Convert analog values to binary (line/no line)
-3. **Position Calculation**: Weighted average gives position (-2 to +2)
-4. **PID Control**: Error correction using PID algorithm
-5. **Motor Control**: Differential steering based on PID output
-
-# Data Visualization & Analysis
-
-## Real-time Performance Plots
-
-
+# Prototype Analysis
 
 ## Performance Results
 
-After extensive testing and PID tuning, the robot achieved:
+,After extensive testing and PID tuning, the robot achieved:
 - **Line Following Accuracy**: 95% on standard tracks
 - **Maximum Track Speed**: Successfully follows lines at 80cm/s
 - **Curve Handling**: Navigates 90° turns without losing the line
