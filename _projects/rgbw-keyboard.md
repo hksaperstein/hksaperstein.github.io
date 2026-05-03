@@ -62,12 +62,17 @@ gallery:
   - type: "image"
     file: "/assets/images/projects/rgbw-keyboard/3d-model-no-switches-top.png"
     description: "Top view of prototype with no key switches or RGBW components"
+    section: "KiCad"
+
   - type: "image"
     file: "/assets/images/projects/rgbw-keyboard/trace-mistake.jpg"
     description: "Between review and production, I managed to disconnect these traces from their respective terminals."
+    section: "Prototype"
+
   - type: "image"
     file: "/assets/images/projects/rgbw-keyboard/trace-fix.jpg"
     description: "I scraped the pcb substrate to expose the traces and soldered new wires to connect the traces to the appropriate terminals"
+    section: "Prototype"
 
 ---
 

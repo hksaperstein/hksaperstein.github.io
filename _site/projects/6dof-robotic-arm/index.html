@@ -620,21 +620,30 @@ plt.show()
 
                 <!-- Media Gallery -->
                 
-                <section class="project-media-group" id="gallery">
-                    <div class="media-gallery-stack">
+                <section class="project-gallery">
+                    
+                    
+
+                    
+                    
+
+                    
+                    
+
+                    
+                        <div class="gallery-single">
                         
-                        <div class="media-item">
-                            
-                            
+                        
                             <img src="/hksaperstein/assets/images/projects/robotic-arm/featured.jpg"
                                 alt="6-DOF Robotic arm with vision system" class="gallery-image" data-zoomable>
-                            
-                            
-                            <p class="media-caption">6-DOF Robotic arm with vision system</p>
-                            
-                        </div>
                         
-                    </div>
+                        
+                            <p class="media-caption"></p>
+                        
+                        </div>
+                    
+
+                    
                 </section>
                 
 
@@ -866,7 +875,16 @@ plt.show()
     </div>
 </div>
 </div>
-
+<div id="gallery-modal" class="gallery-modal" aria-modal="true" role="dialog">
+<button class="modal-close" id="modal-close" aria-label="Close">&#10005;</button>
+<button class="modal-btn prev" id="modal-prev">&#8249;</button>
+<button class="modal-btn next" id="modal-next">&#8250;</button>
+<div class="modal-content">
+    <img id="modal-img" src="" alt="">
+    <p id="modal-caption" class="modal-caption"></p>
+</div>
+<div class="modal-dots" id="modal-dots"></div>
+</div>
 <!-- Project Navigation -->
 <div class="project-navigation">
     <div class="container">
@@ -949,6 +967,7 @@ plt.show()
     <!-- Scripts -->
     <script src="/hksaperstein/assets/js/main.js"></script>
     <script src="/hksaperstein/assets/js/circuit-bg.js"></script>
+    <script src="/hksaperstein/assets/js/carousel.js"></script>
 
     <!-- 3D Model Viewer -->
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>

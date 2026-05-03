@@ -167,26 +167,69 @@ layout: default
 
                 <!-- Media Gallery -->
                 {% if page.gallery %}
-                <section class="project-media-group" id="gallery">
-                    <div class="media-gallery-stack">
-                        {% for media in page.gallery %}
-                        <div class="media-item">
-                            {% assign file_extension = media.file | split: '.' | last | downcase %}
-                            {% if file_extension == 'mp4' or file_extension == 'webm' or file_extension == 'avi' %}
-                            <video controls class="gallery-video">
-                                <source src="{{ media.file | relative_url }}" type="video/{{ file_extension }}">
-                                Your browser does not support the video tag.
-                            </video>
-                            {% else %}
-                            <img src="{{ media.file | relative_url }}"
-                                alt="{{ media.description | default: page.title }}" class="gallery-image" data-zoomable>
-                            {% endif %}
-                            {% if media.description %}
-                            <p class="media-caption">{{ media.description }}</p>
-                            {% endif %}
+                <section class="project-gallery">
+                    {% assign sections = page.gallery | map: "section" | uniq %}
+                    {% assign carousel_index = 0 %}
+
+                    {% for section in sections %}
+                    {% assign section_items = page.gallery | where: "section", section %}
+
+                    {% if section %}
+                        <h4 class="gallery-section-header">{{ section }}</h4>
+                    {% endif %}
+                    {% assign file_extension = item.file | split: '.' | last | downcase %}
+
+                    {% if section_items.size > 1 %}
+                        {% assign carousel_id = "carousel-" | append: carousel_index %}
+                        <div class="gallery-carousel" id="{{ carousel_id }}">
+                        <div class="carousel-track">
+                            {% for item in section_items %}
+                            <div class="carousel-slide">
+                                {% if file_extension == 'mp4' or file_extension == 'webm' or file_extension == 'avi' %}
+                                <video controls>
+                                    <source src="{{ item.file | relative_url }}" type="video/{{ file_extension }}">
+                                </video>
+                                {% else %}
+                                <img src="{{ item.file | relative_url }}"
+                                    alt="{{ item.description | default: page.title }}" class="gallery-image" data-zoomable>                                {% endif %}
+                                {% if item.description %}
+                                <p class="gallery-caption">{{ item.description }}</p>
+                                {% endif %}
+                            </div>
+                            {% endfor %}
                         </div>
-                        {% endfor %}
-                    </div>
+
+                        {% if section_items.size > 1 %}
+                            <button class="carousel-btn prev" onclick="moveCarousel('{{ carousel_id }}', -1)">&#8249;</button>
+                            <button class="carousel-btn next" onclick="moveCarousel('{{ carousel_id }}', 1)">&#8250;</button>
+                            <div class="carousel-dots">
+                            {% for item in section_items %}
+                                <span class="dot {% if forloop.first %}active{% endif %}"
+                                    onclick="goToSlide('{{ carousel_id }}', {{ forloop.index0 }})"></span>
+                            {% endfor %}
+                            </div>
+                        {% endif %}
+                        </div>
+                        {% assign carousel_index = carousel_index | plus: 1 %}
+
+                    {% else %}
+                        <div class="gallery-single">
+                        {% assign item = section_items.first %}
+                        {% if item.type == "video" %}
+                            <video controls>
+                                <source src="{{ item.file | relative_url }}" type="video/{{ file_extension }}">
+                            </video>
+                        {% else %}
+                            <img src="{{ item.file | relative_url }}"
+                                alt="{{ item.description | default: page.title }}" class="gallery-image" data-zoomable>
+                        {% endif %}
+                        {% if item.description %}
+                            <p class="media-caption">{{ media.description }}</p>
+                        {% endif %}
+                        </div>
+                    {% endif %}
+
+                    {% endfor %}
                 </section>
                 {% endif %}
 
@@ -248,7 +291,16 @@ layout: default
     </div>
 </div>
 </div>
-
+<div id="gallery-modal" class="gallery-modal" aria-modal="true" role="dialog">
+<button class="modal-close" id="modal-close" aria-label="Close">&#10005;</button>
+<button class="modal-btn prev" id="modal-prev">&#8249;</button>
+<button class="modal-btn next" id="modal-next">&#8250;</button>
+<div class="modal-content">
+    <img id="modal-img" src="" alt="">
+    <p id="modal-caption" class="modal-caption"></p>
+</div>
+<div class="modal-dots" id="modal-dots"></div>
+</div>
 <!-- Project Navigation -->
 <div class="project-navigation">
     <div class="container">

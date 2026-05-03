@@ -758,32 +758,60 @@
 
                 <!-- Media Gallery -->
                 
-                <section class="project-media-group" id="gallery">
-                    <div class="media-gallery-stack">
+                <section class="project-gallery">
+                    
+                    
+
+                    
+                    
+
+                    
+                    
+
+                    
                         
-                        <div class="media-item">
+                        <div class="gallery-carousel" id="carousel-0">
+                        <div class="carousel-track">
                             
+                            <div class="carousel-slide">
+                                
+                                <img src="/hksaperstein/assets/images/projects/ender3-pro/featured.jpg"
+                                    alt="IoT Environmental monitoring station - Physical hardware setup" class="gallery-image" data-zoomable>                                
+                                
+                                <p class="gallery-caption">IoT Environmental monitoring station - Physical hardware setup</p>
+                                
+                            </div>
                             
-                            <img src="/hksaperstein/assets/images/projects/ender3-pro/featured.jpg"
-                                alt="IoT Environmental monitoring station - Physical hardware setup" class="gallery-image" data-zoomable>
-                            
-                            
-                            <p class="media-caption">IoT Environmental monitoring station - Physical hardware setup</p>
+                            <div class="carousel-slide">
+                                
+                                <img src="/hksaperstein/assets/images/projects/ender3-pro/sensor-monitoring.gif"
+                                    alt="Real-time sensor data visualization - Animated demonstration of live monitoring dashboard" class="gallery-image" data-zoomable>                                
+                                
+                                <p class="gallery-caption">Real-time sensor data visualization - Animated demonstration of live monitoring dashboard</p>
+                                
+                            </div>
                             
                         </div>
+
                         
-                        <div class="media-item">
+                            <button class="carousel-btn prev" onclick="moveCarousel('carousel-0', -1)">&#8249;</button>
+                            <button class="carousel-btn next" onclick="moveCarousel('carousel-0', 1)">&#8250;</button>
+                            <div class="carousel-dots">
                             
+                                <span class="dot active"
+                                    onclick="goToSlide('carousel-0', 0)"></span>
                             
-                            <img src="/hksaperstein/assets/images/projects/ender3-pro/sensor-monitoring.gif"
-                                alt="Real-time sensor data visualization - Animated demonstration of live monitoring dashboard" class="gallery-image" data-zoomable>
+                                <span class="dot "
+                                    onclick="goToSlide('carousel-0', 1)"></span>
                             
-                            
-                            <p class="media-caption">Real-time sensor data visualization - Animated demonstration of live monitoring dashboard</p>
-                            
+                            </div>
+                        
                         </div>
                         
-                    </div>
+
+                    
+
+                    
                 </section>
                 
 
@@ -832,7 +860,16 @@
     </div>
 </div>
 </div>
-
+<div id="gallery-modal" class="gallery-modal" aria-modal="true" role="dialog">
+<button class="modal-close" id="modal-close" aria-label="Close">&#10005;</button>
+<button class="modal-btn prev" id="modal-prev">&#8249;</button>
+<button class="modal-btn next" id="modal-next">&#8250;</button>
+<div class="modal-content">
+    <img id="modal-img" src="" alt="">
+    <p id="modal-caption" class="modal-caption"></p>
+</div>
+<div class="modal-dots" id="modal-dots"></div>
+</div>
 <!-- Project Navigation -->
 <div class="project-navigation">
     <div class="container">
@@ -906,6 +943,7 @@
     <!-- Scripts -->
     <script src="/hksaperstein/assets/js/main.js"></script>
     <script src="/hksaperstein/assets/js/circuit-bg.js"></script>
+    <script src="/hksaperstein/assets/js/carousel.js"></script>
 
     <!-- 3D Model Viewer -->
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
