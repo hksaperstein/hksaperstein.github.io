@@ -1196,7 +1196,7 @@ details.section-details .section-content {
   box-sizing: border-box;
 
   &.open { 
-    display: flex; 
+    display: grid; 
     align-items: center;
     justify-content: center;
     flex-direction: column;

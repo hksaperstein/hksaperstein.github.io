@@ -182,35 +182,42 @@ layout: default
                     {% if section_items.size > 1 %}
                         {% assign carousel_id = "carousel-" | append: carousel_index %}
                         <div class="gallery-carousel" id="{{ carousel_id }}">
-                        <div class="carousel-track">
-                            {% for item in section_items %}
-                            <div class="carousel-slide">
-                                {% if file_extension == 'mp4' or file_extension == 'webm' or file_extension == 'avi' %}
-                                <video controls>
-                                    <source src="{{ item.file | relative_url }}" type="video/{{ file_extension }}">
-                                </video>
-                                {% else %}
-                                <img src="{{ item.file | relative_url }}"
-                                    alt="{{ item.description | default: page.title }}" class="gallery-image" data-zoomable>                                {% endif %}
-                                {% if item.description %}
-                                <p class="gallery-caption">{{ item.description }}</p>
+                            <div class="carousel-media">
+                                <div class="carousel-track">
+                                    {% for item in section_items %}
+                                    {% assign file_extension = item.file | split: '.' | last | downcase %}
+                                    <div class="carousel-slide">
+                                        {% if file_extension == 'mp4' or file_extension == 'webm' or file_extension == 'avi' %}
+                                        <video controls>
+                                            <source src="{{ item.file | relative_url }}" type="video/{{ file_extension }}">
+                                        </video>
+                                        {% else %}
+                                        <img src="{{ item.file | relative_url }}"
+                                            alt="{{ item.description | default: page.title }}" class="gallery-image" data-zoomable>
+                                        {% endif %}
+                                        {% if item.description %}
+                                        <p class="gallery-caption">{{ item.description }}</p>
+                                        {% endif %}
+                                    </div>
+                                    {% endfor %}
+                                </div>
+
+                                {% if section_items.size > 1 %}
+                                <button class="carousel-btn prev" onclick="moveCarousel('{{ carousel_id }}', -1)">&#8249;</button>
+                                <button class="carousel-btn next" onclick="moveCarousel('{{ carousel_id }}', 1)">&#8250;</button>
                                 {% endif %}
                             </div>
-                            {% endfor %}
-                        </div>
 
-                        {% if section_items.size > 1 %}
-                            <button class="carousel-btn prev" onclick="moveCarousel('{{ carousel_id }}', -1)">&#8249;</button>
-                            <button class="carousel-btn next" onclick="moveCarousel('{{ carousel_id }}', 1)">&#8250;</button>
+                            {% if section_items.size > 1 %}
                             <div class="carousel-dots">
-                            {% for item in section_items %}
+                                {% for item in section_items %}
                                 <span class="dot {% if forloop.first %}active{% endif %}"
                                     onclick="goToSlide('{{ carousel_id }}', {{ forloop.index0 }})"></span>
-                            {% endfor %}
+                                {% endfor %}
                             </div>
-                        {% endif %}
+                            {% endif %}
                         </div>
-                        {% assign carousel_index = carousel_index | plus: 1 %}
+                    {% assign carousel_index = carousel_index | plus: 1 %}
 
                     {% else %}
                         <div class="gallery-single">
@@ -290,16 +297,16 @@ layout: default
         </div>
     </div>
 </div>
-</div>
+
 <div id="gallery-modal" class="gallery-modal" aria-modal="true" role="dialog">
-<button class="modal-close" id="modal-close" aria-label="Close">&#10005;</button>
-<button class="modal-btn prev" id="modal-prev">&#8249;</button>
-<button class="modal-btn next" id="modal-next">&#8250;</button>
-<div class="modal-content">
-    <img id="modal-img" src="" alt="">
-    <p id="modal-caption" class="modal-caption"></p>
-</div>
-<div class="modal-dots" id="modal-dots"></div>
+    <button class="modal-close" id="modal-close" aria-label="Close">&#10005;</button>
+    <button class="modal-btn prev" id="modal-prev">&#8249;</button>
+    <button class="modal-btn next" id="modal-next">&#8250;</button>
+    <div class="modal-content">
+        <img id="modal-img" src="" alt="">
+        <p id="modal-caption" class="modal-caption"></p>
+    </div>
+    <div class="modal-dots" id="modal-dots"></div>
 </div>
 <!-- Project Navigation -->
 <div class="project-navigation">

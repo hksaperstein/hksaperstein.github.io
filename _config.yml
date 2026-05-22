@@ -5,6 +5,7 @@ url: "https://hksaperstein.github.io"
 baseurl: "/hksaperstein"
 author: "Harrison Saperstein"
 email: "harrison.saperstein@gmail.com"
+resume: "./assets/resume/Harrison_Saperstein_Resume_26.pdf"
 github_username: "hksaperstein"
 thingiverse_username: "hksaperstein"
 linkedin_username: "harrison-saperstein"
@@ -61,6 +62,9 @@ navigation:
     url: "/projects/"
   - title: "About"
     url: "/about/"
+  # - title: "Resume"
+  #   url: "/assets/resume/Harrison_Saperstein_Resume_26.pdf"
+  #   download: true
 
 # Project categories
 project_categories:

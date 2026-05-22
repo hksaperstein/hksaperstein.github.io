@@ -12,12 +12,13 @@ layout: default
         </div>
         
         <div class="hero-actions">
-          <a href="{{ '/about/' | relative_url }}" class="btn-secondary">
-            About
+          <a href="{{ site.resume }}" download="hksaperstein_resume.pdf" class="btn-secondary">
+            Resume
           </a>
-           <a href="mailto:{{ site.email }}" class="btn-secondary">
-            Contact
+          <a href="https://linkedin.com/in/{{ site.linkedin_username }}" class="btn-secondary">
+            LinkedIn
           </a>
+
         </div>
       </div>
     </div>
