@@ -129,12 +129,12 @@ layout: default
           </div>
         </div>
         <div class="skill-category">
-          <h3><i class="fas fa-microchip"></i> Electronics</h3>
+          <h3><i class="fas fa-brain"></i> AI/ML</h3>
           <div class="skill-tags">
-            <span class="skill-tag">Arduino</span>
-            <span class="skill-tag">ESP32</span>
-            <span class="skill-tag">PCB Design</span>
-            <span class="skill-tag">Sensors</span>
+            <span class="skill-tag">TensorFlow</span>
+            <span class="skill-tag">OpenCV</span>
+            <span class="skill-tag">Agentic AI</span>
+            <span class="skill-tag">Claude Code</span>
           </div>
         </div>
         <div class="skill-category">
@@ -153,6 +153,15 @@ layout: default
             <span class="skill-tag">Fusion 360</span>
             <span class="skill-tag">3D Printing</span>
             <span class="skill-tag">KiCad</span>
+          </div>
+        </div>
+        <div class="skill-category">
+          <h3><i class="fas fa-microchip"></i> Electronics</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Arduino</span>
+            <span class="skill-tag">ESP32</span>
+            <span class="skill-tag">PCB Design</span>
+            <span class="skill-tag">Sensors</span>
           </div>
         </div>
       </div>

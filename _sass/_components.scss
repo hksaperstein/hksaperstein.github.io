@@ -234,12 +234,14 @@
 }
 
 .skills-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: var(--spacing-xl);
 }
 
 .skill-category {
+  flex: 0 1 calc((100% - 2 * var(--spacing-xl)) / 3);
   background-color: var(--background-color);
   padding: var(--spacing-xl);
   border-radius: var(--radius-lg);

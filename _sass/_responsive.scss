@@ -133,18 +133,18 @@
 /* Skills Section */
 @media (max-width: 768px) {
   .skills-grid {
-    grid-template-columns: repeat(2, 1fr);
     gap: var(--spacing-md);
   }
 
   .skill-category {
+    flex-basis: calc((100% - var(--spacing-md)) / 2);
     padding: var(--spacing-md);
   }
 }
 
 @media (max-width: 480px) {
-  .skills-grid {
-    grid-template-columns: 1fr;
+  .skill-category {
+    flex-basis: 100%;
   }
 }
 
