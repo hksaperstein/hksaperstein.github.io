@@ -1,5 +1,4 @@
 ---
-layout: project
 title: "Agentic AI Experiments"
 description: "A running log of experiments with agentic AI tools and workflows."
 date: 2026-06-30

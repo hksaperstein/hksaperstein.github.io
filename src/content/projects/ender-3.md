@@ -1,5 +1,4 @@
 ---
-layout: project
 title: "Ender-3 Pro"
 description: "Optimizations and improvements made to my Ender-3 Pro with an ongoing drive to tinker further."
 date: 2024-04-04
@@ -7,7 +6,6 @@ categories: [3D Printing]
 featured_image: "/assets/images/projects/ender3-pro/sensor-monitoring.gif"
 thingiverse_url: "https://www.thingiverse.com/hksaperstein/collections/43743826/things"
 demo_url: "#"
-interactive_plot: false
 
 models:
   - file: "/assets/models/ender3-pro/sensor-housing.gltf"

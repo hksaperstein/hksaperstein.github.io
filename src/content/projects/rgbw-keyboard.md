@@ -1,5 +1,4 @@
 ---
-layout: project
 title: "RGBW Mechanical Keyboard"
 description: "Designing a custom mechanical keyboard from the ground up."
 date: 2024-10-15

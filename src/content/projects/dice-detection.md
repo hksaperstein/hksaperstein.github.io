@@ -1,5 +1,4 @@
 ---
-layout: project
 title: "Procedural Dice Asset Generator"
 description: "A headless-Blender pipeline that procedurally generates a labeled library of TTRPG dice, grown into a full synthetic-to-real object detection pipeline: rendered scenes, COCO annotations, and a trained YOLO detector."
 date: 2026-07-05

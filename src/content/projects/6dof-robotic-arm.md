@@ -1,5 +1,4 @@
 ---
-layout: project
 title: "6-DOF Robotic Arm"
 description: "Exploration of the kinematics and control of the Annin-Robotics AR4 6-DoF robotic arm using ROS2. "
 date: 2024-09-20
@@ -7,7 +6,6 @@ categories: [Robotics, Computer Vision, Machine Learning, 3D Printing]
 featured_image: "/assets/images/projects/robotic-arm/featured.jpg"
 github_url: "https://github.com/hksaperstein/6DoF"
 demo_url: "#"
-interactive_plot: true
 
 models:
   - file: "/assets/models/robotic-arm/base.gltf"
