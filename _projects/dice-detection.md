@@ -7,11 +7,17 @@ categories: [Machine Learning, Computer Vision]
 featured_image: "/assets/images/projects/dice-detection/featured.png"
 gallery:
   - section: "Generated Assets"
+    file: "/assets/images/projects/dice-detection/die-type-lineup.png"
+    description: "One matched physical set, all 7 die types together — same material, same font, real relative sizes"
+  - section: "Generated Assets"
     file: "/assets/images/projects/dice-detection/asset-sample-grid.png"
     description: "8 of the 2,100 generated assets, spanning all 7 die types and a range of material/glyph combinations"
   - section: "Generated Assets"
     file: "/assets/images/projects/dice-detection/glyph-specimen.png"
     description: "4 of the supported glyph styles, cropped straight off the actual face textures the pipeline generates"
+  - section: "Generated Assets"
+    file: "/assets/images/projects/dice-detection/numeral-grid-1-20.png"
+    description: "All 20 faces of one generated d20, arranged 1-20 — real output, confirming the numbering scheme actually lands on every value"
   - section: "Detection Scenes"
     file: "/assets/images/projects/dice-detection/detection-scene-clutter-raw.jpg"
     description: "A physics-scattered scene with distractor primitives and an HDRI-lit honeycomb ground"
@@ -47,6 +53,8 @@ The fun part of this step: getting a d12's pentagons or a d10's kite faces right
 - **Initial approach — hand-author the face/vertex topology:** easy to get subtly wrong on a 12- or 20-sided solid.
 - **What I used instead:** `bmesh.ops.convex_hull` on the raw vertices, then `dissolve_limit` to merge the hull's coplanar triangles back into real faces — quads for the d10's kites, pentagons for the d12.
 - **Face numbering:** follows real dice conventions — opposite faces sum to 7 on a d6, 21 on a d20, and so on. The d4 is the exception: its faces sit opposite a vertex, not another face, so there's no pairing and values are assigned once each.
+
+The numeral grid in the gallery is the receipts for that last bullet: it's all 20 faces of one actual generated d20, arranged in order 1 through 20, not a mockup. The die-type lineup next to it is one matched physical set — all 7 types, same material and font, at their real relative sizes (that size difference matters later, in the training results).
 
 ## Step 2: Glyphs and Materials
 
