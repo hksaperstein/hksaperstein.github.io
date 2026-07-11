@@ -5,7 +5,11 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   site: 'https://hksaperstein.github.io',
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      filter: (page) => page !== 'https://hksaperstein.github.io/projects/',
+    }),
+  ],
   redirects: {
     '/about': '/#about',
   },

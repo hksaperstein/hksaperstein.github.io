@@ -30,4 +30,10 @@ const { items } = Astro.props;
 
 <script>
   import '@google/model-viewer';
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('model-viewer[auto-rotate]').forEach((viewer) => {
+      viewer.removeAttribute('auto-rotate');
+    });
+  }
 </script>
