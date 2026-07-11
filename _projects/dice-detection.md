@@ -7,17 +7,44 @@ categories: [Machine Learning, Computer Vision]
 featured_image: "/assets/images/projects/dice-detection/featured.png"
 gallery:
   - section: "Generated Assets"
-    file: "/assets/images/projects/dice-detection/die-type-lineup.png"
-    description: "One matched physical set, all 7 die types together — same material, same font, real relative sizes"
+    file: "/assets/images/projects/dice-detection/die-d4.png"
+    description: "d4 — from one matched physical set, same material and font as the other 6 types below"
+  - section: "Generated Assets"
+    file: "/assets/images/projects/dice-detection/die-d6.png"
+    description: "d6, same matched set"
+  - section: "Generated Assets"
+    file: "/assets/images/projects/dice-detection/die-d8.png"
+    description: "d8, same matched set"
+  - section: "Generated Assets"
+    file: "/assets/images/projects/dice-detection/die-d10.png"
+    description: "d10, same matched set"
+  - section: "Generated Assets"
+    file: "/assets/images/projects/dice-detection/die-d10-pct.png"
+    description: "d10_pct, the percentile die — same mold as the d10, arabic tens digits instead"
+  - section: "Generated Assets"
+    file: "/assets/images/projects/dice-detection/die-d12.png"
+    description: "d12, same matched set"
+  - section: "Generated Assets"
+    file: "/assets/images/projects/dice-detection/die-d20.png"
+    description: "d20, same matched set"
   - section: "Generated Assets"
     file: "/assets/images/projects/dice-detection/asset-sample-grid.png"
     description: "8 of the 2,100 generated assets, spanning all 7 die types and a range of material/glyph combinations"
   - section: "Generated Assets"
     file: "/assets/images/projects/dice-detection/glyph-specimen.png"
     description: "4 of the supported glyph styles, cropped straight off the actual face textures the pipeline generates"
-  - section: "Generated Assets"
-    file: "/assets/images/projects/dice-detection/numeral-grid-1-20.png"
-    description: "All 20 faces of one generated d20, arranged 1-20 — real output, confirming the numbering scheme actually lands on every value"
+  - section: "Numeral Grids (1-20)"
+    file: "/assets/images/projects/dice-detection/numeral-grid-1-20-arabic.png"
+    description: "All 20 faces of one generated arabic-numeral d20, arranged 1-20 — real output, confirming the numbering scheme lands on every value"
+  - section: "Numeral Grids (1-20)"
+    file: "/assets/images/projects/dice-detection/numeral-grid-1-20-roman.png"
+    description: "Same, roman numerals — a separate d20, I-XX"
+  - section: "Numeral Grids (1-20)"
+    file: "/assets/images/projects/dice-detection/numeral-grid-1-20-greek.png"
+    description: "Same, greek numerals — a separate d20, alpha through iota-prefixed forms up to 20"
+  - section: "Numeral Grids (1-20)"
+    file: "/assets/images/projects/dice-detection/numeral-grid-1-20-cjk.png"
+    description: "Same, CJK numerals — a separate d20, 一 through 二十"
   - section: "Detection Scenes"
     file: "/assets/images/projects/dice-detection/detection-scene-clutter-raw.jpg"
     description: "A physics-scattered scene with distractor primitives and an HDRI-lit honeycomb ground"
@@ -54,7 +81,7 @@ The fun part of this step: getting a d12's pentagons or a d10's kite faces right
 - **What I used instead:** `bmesh.ops.convex_hull` on the raw vertices, then `dissolve_limit` to merge the hull's coplanar triangles back into real faces — quads for the d10's kites, pentagons for the d12.
 - **Face numbering:** follows real dice conventions — opposite faces sum to 7 on a d6, 21 on a d20, and so on. The d4 is the exception: its faces sit opposite a vertex, not another face, so there's no pairing and values are assigned once each.
 
-The numeral grid in the gallery is the receipts for that last bullet: it's all 20 faces of one actual generated d20, arranged in order 1 through 20, not a mockup. The die-type lineup next to it is one matched physical set — all 7 types, same material and font, at their real relative sizes (that size difference matters later, in the training results).
+The numeral grids in the gallery are the receipts for that last bullet: 4 separate d20s, one per glyph style, each with all 20 faces arranged in order 1 through 20 — real output, not a mockup, and proof the numbering scheme actually lands on every value in every style. The 7 individual dice in the gallery are one matched physical set, same material and font throughout, shown at their real relative sizes — that size difference matters later, in the training results.
 
 ## Step 2: Glyphs and Materials
 
