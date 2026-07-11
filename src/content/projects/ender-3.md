@@ -8,17 +8,17 @@ thingiverse_url: "https://www.thingiverse.com/hksaperstein/collections/43743826/
 demo_url: "#"
 
 models:
-  - file: "/assets/models/ender3-pro/sensor-housing.gltf"
+  - file: "/assets/models/iot-monitor/sensor-housing.gltf"
     description: "Weatherproof housing for outdoor sensor deployment"
-  - file: "/assets/models/ender3-pro/test.gltf"
+  - file: "/assets/models/iot-monitor/test.gltf"
     description: "IoT sensor enclosure 3D model"
 
 schematics:
-  - file: "/assets/schematics/ender3-pro/main-board.svg"
+  - file: "/assets/schematics/iot-monitor/main-board.svg"
     description: "ESP32 main control board with sensor interfaces"
-  - file: "/assets/schematics/ender3-pro/power-management.svg"
+  - file: "/assets/schematics/iot-monitor/power-management.svg"
     description: "Solar charging system with battery backup"
-  - file: "/assets/schematics/ender3-pro/sensor-network.svg"
+  - file: "/assets/schematics/iot-monitor/sensor-network.svg"
     description: "Wireless sensor network topology and communication"
 
 
