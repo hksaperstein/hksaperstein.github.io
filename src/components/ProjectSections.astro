@@ -8,7 +8,7 @@ const projects = entries.filter((entry): entry is NonNullable<typeof entry> => B
 ---
 
 <section id="projects" class="scroll-mt-16 border-t border-line">
-  <div class="mx-auto max-w-5xl px-6 py-20">
+  <div class="reveal mx-auto max-w-5xl px-6 py-20">
     <h2 class="text-2xl font-bold tracking-tight">Projects</h2>
     <div class="mt-10 flex flex-col gap-16">
       {
@@ -16,7 +16,7 @@ const projects = entries.filter((entry): entry is NonNullable<typeof entry> => B
           const mediaOrder = index % 2 === 0 ? 'sm:order-1' : 'sm:order-2';
           const textOrder = index % 2 === 0 ? 'sm:order-2' : 'sm:order-1';
           return (
-            <div class="grid gap-6 sm:grid-cols-2 sm:gap-10">
+            <div class="reveal grid gap-6 sm:grid-cols-2 sm:gap-10">
               <figure class={`order-1 overflow-hidden rounded-2xl border border-line bg-card ${mediaOrder}`}>
                 {project.data.featured_image ? (
                   <img

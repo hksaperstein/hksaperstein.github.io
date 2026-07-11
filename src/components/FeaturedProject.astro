@@ -6,7 +6,7 @@ const [featured] = await getCollection('projects', (p) => p.data.featured);
 
 {
   featured && (
-    <section class="mx-auto max-w-5xl px-6 pb-20">
+    <section class="reveal mx-auto max-w-5xl px-6 pb-20">
       <p class="mb-4 text-sm font-medium tracking-widest text-accent uppercase">Current project</p>
       <div class="overflow-hidden rounded-2xl border border-line bg-card sm:grid sm:grid-cols-2">
         <video
