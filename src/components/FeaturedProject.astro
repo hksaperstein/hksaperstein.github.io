@@ -1,0 +1,47 @@
+---
+import { getCollection } from 'astro:content';
+
+const [featured] = await getCollection('projects', (p) => p.data.featured);
+---
+
+{
+  featured && (
+    <section class="mx-auto max-w-5xl px-6 pb-20">
+      <div class="overflow-hidden rounded-2xl border border-line bg-card sm:grid sm:grid-cols-2">
+        <video
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          class="h-full w-full object-cover"
+          src="/assets/videos/projects/ar4-pickplace-rl/ar4_pickplace_perception.mp4"
+        />
+        <div class="p-8">
+          <div class="flex flex-wrap gap-2">
+            {featured.data.categories.map((category) => (
+              <span class="rounded-full border border-line px-2.5 py-0.5 text-xs text-muted">{category}</span>
+            ))}
+          </div>
+          <h3 class="mt-4 text-2xl font-bold tracking-tight">
+            <a href={`/projects/${featured.id}/`} class="hover:text-accent">{featured.data.title}</a>
+          </h3>
+          <p class="mt-3 text-muted">{featured.data.description}</p>
+          <a href={`/projects/${featured.id}/`} class="mt-6 inline-block font-medium text-accent hover:underline">
+            Read the write-up →
+          </a>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<script>
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll<HTMLVideoElement>('video[autoplay]').forEach((video) => {
+      video.removeAttribute('autoplay');
+      video.pause();
+      video.setAttribute('controls', '');
+    });
+  }
+</script>

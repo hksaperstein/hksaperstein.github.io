@@ -1,7 +1,20 @@
 ---
 import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import AboutSection from '../components/AboutSection.astro';
+import FeaturedProject from '../components/FeaturedProject.astro';
+import ProjectGrid from '../components/ProjectGrid.astro';
+import SkillsSection from '../components/SkillsSection.astro';
 ---
 
-<Base title="Harrison Saperstein" description="A portfolio of my projects in robotics, machine learning, and 3D printing.">
-  <h1 class="text-fg">placeholder</h1>
+<Base
+  title="Harrison Saperstein — Robotics Engineer"
+  description="A portfolio of my projects in robotics, machine learning, and 3D printing."
+  ogImage="/assets/images/projects/ar4-pickplace-rl/featured.jpg"
+>
+  <Hero />
+  <FeaturedProject />
+  <AboutSection />
+  <ProjectGrid />
+  <SkillsSection />
 </Base>
