@@ -4,7 +4,7 @@ import { SITE } from '../data/site';
 const stats = [
   { value: '5', label: 'years in surgical robotics' },
   { value: '15+', label: 'manual processes automated' },
-  { value: 'days', label: 'verification cycles, down from weeks' },
+  { value: 'DAYS', label: 'verification cycles, down from weeks' },
   { value: 'MS + BS', label: 'Robotics Engineering at WPI' },
 ];
 ---
@@ -13,12 +13,12 @@ const stats = [
   <div class="mx-auto max-w-5xl px-6 py-20">
     <h2 class="text-2xl font-bold tracking-tight">Experience</h2>
 
-    <div class="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
+    <div class="mt-10 grid grid-cols-2 gap-x-8 gap-y-8 lg:grid-cols-4">
       {
         stats.map((stat) => (
-          <div class="block rounded-2xl border border-line bg-card p-5">
-            <p class="text-3xl font-bold tracking-tight">{stat.value}</p>
-            <p class="mt-2 text-sm text-muted">{stat.label}</p>
+          <div>
+            <p class="text-4xl font-bold tracking-tight">{stat.value}</p>
+            <p class="mt-1 text-sm text-muted">{stat.label}</p>
           </div>
         ))
       }
