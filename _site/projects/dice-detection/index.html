@@ -157,43 +157,58 @@
                         <p class="project-lead">A headless-Blender pipeline that procedurally generates a labeled library of TTRPG dice (d4-d20): geometry, engraved or printed numerals, and physically-based materials, exported as USD with ground-truth manifests.</p>
                         <h2 id="overview">Overview</h2>
 
-<p>This is a headless Blender (5.1.2) Python pipeline, <code class="language-plaintext highlighter-rouge">src/dice_gen/</code>, that procedurally generates a large library of the 6 standard tabletop RPG dice shapes — d4, d6, d8, d10, d12, d20 — as individual textured 3D assets. Every asset is exported as USD alongside a JSON manifest recording every parameter that went into generating it: die type, size, numbering scheme, glyph style and method, material category and its randomized parameters, and the random seed. That makes the whole library a fully labeled synthetic dataset, generated with an eventual object detection/recognition pipeline in mind — the ground-truth manifests exist specifically so a downstream model has something to train against.</p>
+<p>This is a headless Blender (5.1.2) Python pipeline, <code class="language-plaintext highlighter-rouge">src/dice_gen/</code>, that procedurally generates a labeled library of the 6 standard tabletop RPG dice — d4, d6, d8, d10, d12, d20 — as individual textured 3D assets. Every asset exports as USD alongside a JSON manifest recording every parameter that went into generating it, which makes the library a fully labeled synthetic dataset, built with an eventual object-detection pipeline in mind.</p>
 
 <h2 id="geometry">Geometry</h2>
 
-<p>Each die’s base shape starts from a literal list of known vertex coordinates — the standard Platonic-solid vertices for d4/d6/d8/d12/d20, and an empirically-derived pentagonal-trapezohedron vertex set for d10. Rather than hand-authoring face/vertex-index topology (easy to get subtly wrong on a 12- or 20-sided solid), those vertices are run through <code class="language-plaintext highlighter-rouge">bmesh.ops.convex_hull</code> followed by <code class="language-plaintext highlighter-rouge">dissolve_limit</code>: the convex hull computes the correct facets from the raw point set, and dissolve_limit merges the hull’s coplanar triangles back into the real faces (quads for the d10’s kites, pentagons for the d12, and so on).</p>
+<p>Each die’s mesh comes from a fixed vertex set run through Blender’s boolean tooling rather than hand-authored face topology.</p>
 
-<p>Face numbering follows real-world dice conventions per die type — opposite faces of a d6 sum to 7, a d20 to 21, and so on for the others. The d4 is the exception: its faces are opposite a vertex rather than another face, so there’s no opposite-face pairing for it, and its values are just assigned once each.</p>
+<ul>
+  <li><strong>Base vertices:</strong> the standard Platonic-solid coordinates for d4/d6/d8/d12/d20, plus an empirically-derived pentagonal-trapezohedron set for d10.</li>
+  <li><strong>Initial approach — hand-author the face/vertex topology:</strong> easy to get subtly wrong on a 12- or 20-sided solid.</li>
+  <li><strong>What I used instead:</strong> <code class="language-plaintext highlighter-rouge">bmesh.ops.convex_hull</code> on the raw vertices, then <code class="language-plaintext highlighter-rouge">dissolve_limit</code> to merge the hull’s coplanar triangles back into real faces — quads for the d10’s kites, pentagons for the d12.</li>
+  <li><strong>Face numbering:</strong> follows real dice conventions — opposite faces sum to 7 on a d6, 21 on a d20, and so on. The d4 is the exception: its faces sit opposite a vertex, not another face, so there’s no pairing and values are assigned once each.</li>
+</ul>
 
 <h2 id="glyphs-and-materials">Glyphs and Materials</h2>
 
-<p>Numerals are applied using two real, manufacturing-accurate methods, chosen at random per asset: <strong>engraved</strong> (boolean-cut directly into the mesh, optionally with a painted recessed fill) and <strong>printed decal</strong> (UV-unwrapped face textures). Five glyph styles are supported — arabic, roman, greek, and CJK numerals, plus pips — with pips restricted to d6 and d4 only, matching how real dice are actually numbered.</p>
+<p>Numerals and materials are both randomized per asset from a fixed set of manufacturing-accurate methods.</p>
 
-<p>Materials come from 6 procedural PBR categories built from Blender shader nodes: opaque, translucent, marbled, glitter, metallic, and speckled. Every asset gets randomized hue/saturation/value/roughness, plus category-specific parameters where relevant — IOR and transmission for translucent, noise scale for marbled, and so on.</p>
+<ul>
+  <li><strong>Glyph application — 2 methods, chosen at random per asset:</strong> engraved (boolean-cut into the mesh, optional painted recessed fill) and printed decal (UV-unwrapped face textures).</li>
+  <li><strong>Glyph styles — 5 supported:</strong> arabic, roman, greek, CJK numerals, and pips. Pips are restricted to d6 and d4 only, matching how real dice are actually numbered.</li>
+  <li><strong>Materials — 6 procedural PBR categories:</strong> opaque, translucent, marbled, glitter, metallic, speckled, all built from Blender shader nodes.</li>
+  <li><strong>Randomization:</strong> every asset gets randomized hue/saturation/value/roughness, plus category-specific parameters — IOR and transmission for translucent, noise scale for marbled, and so on.</li>
+</ul>
 
 <h2 id="results">Results</h2>
 
-<p>The current generated library is 500 assets, with 0 recorded failures during generation and 0 validation errors from <code class="language-plaintext highlighter-rouge">scripts/validate_dice_assets.py</code> against the resulting manifest (verified directly against <code class="language-plaintext highlighter-rouge">data/raw/dice_assets/manifest.json</code> and <code class="language-plaintext highlighter-rouge">failures.json</code>).</p>
-
-<p>By die type: 94 d4, 88 d6, 88 d8, 83 d10, 84 d12, 63 d20.</p>
-
-<p>By material category: 94 metallic, 86 translucent, 85 glitter, 84 speckled, 80 marbled, 71 opaque.</p>
+<ul>
+  <li><strong>500 assets</strong> generated, <strong>0 recorded failures</strong>, <strong>0 validation errors</strong> from <code class="language-plaintext highlighter-rouge">scripts/validate_dice_assets.py</code> (verified against <code class="language-plaintext highlighter-rouge">data/raw/dice_assets/manifest.json</code> and <code class="language-plaintext highlighter-rouge">failures.json</code>).</li>
+  <li><strong>By die type:</strong> 94 d4, 88 d6, 88 d8, 83 d10, 84 d12, 63 d20.</li>
+  <li><strong>By material:</strong> 94 metallic, 86 translucent, 85 glitter, 84 speckled, 80 marbled, 71 opaque.</li>
+</ul>
 
 <h2 id="notable-bugs">Notable Bugs</h2>
 
 <p>The boolean-engrave step turned out to be the fiddliest part of the pipeline, and it surfaced a few real correctness bugs worth recording:</p>
 
 <ul>
-  <li><strong>Silent no-op cuts.</strong> On one d20 with arabic numerals, Blender’s EXACT boolean solver silently no-op’d on all 20 numeral cuts — the die’s body came out byte-for-byte untouched, with each cutter just appended as inert debris, and nothing about the die’s volume changed enough to look wrong. That one required adding a connected-component face-count check alongside the existing volume check: a real cut always grows the largest connected shell it touches, so if that shell’s face count doesn’t increase after a cut, the pipeline now retries with the FLOAT solver instead.</li>
-  <li><strong>Full-die collapse on a degenerate cutter.</strong> A d10 with greek numerals hit a case where the EXACT solver collapsed the entire die’s volume on a single glyph cut, because the source glyph (a capital Alpha) had residual non-manifold edges from font curve-fill self-overlap even after welding. The fix snapshots the die’s volume before each cut and, if a single cut would remove more than half of it (geometrically impossible for a numeral engraving), rolls back and retries with FLOAT.</li>
-  <li><strong>Unwelded cutter meshes corrupting geometry.</strong> Converting extruded text curves to mesh leaves duplicate, unwelded vertices at every seam, which occasionally crashed the boolean solver outright and gutted one die into disconnected garbage fragments. Fixed by welding the cutter mesh and recomputing normals before it’s used as a boolean operand.</li>
+  <li><strong>Silent no-op cuts.</strong> On one d20 with arabic numerals, Blender’s EXACT boolean solver silently no-op’d on all 20 numeral cuts — the die’s body came out byte-for-byte untouched, with each cutter just appended as inert debris, and nothing about the die’s volume changed enough to look wrong. Fix: a connected-component face-count check alongside the existing volume check. A real cut always grows the largest connected shell it touches, so if that shell’s face count doesn’t increase after a cut, the pipeline now retries with the FLOAT solver instead.</li>
+  <li><strong>Full-die collapse on a degenerate cutter.</strong> A d10 with greek numerals hit a case where the EXACT solver collapsed the entire die’s volume on a single glyph cut, because the source glyph (a capital Alpha) had residual non-manifold edges from font curve-fill self-overlap even after welding. Fix: snapshot the die’s volume before each cut; if a single cut would remove more than half of it (geometrically impossible for a numeral engraving), roll back and retry with FLOAT.</li>
+  <li><strong>Unwelded cutter meshes corrupting geometry.</strong> Converting extruded text curves to mesh leaves duplicate, unwelded vertices at every seam, which occasionally crashed the boolean solver outright and gutted one die into disconnected garbage fragments. Fix: weld the cutter mesh and recompute normals before it’s used as a boolean operand.</li>
 </ul>
 
 <p>None of these were exotic edge cases — they were real assets in the batch failing in real ways, caught by generating at scale and checking the output rather than assuming the boolean op just works.</p>
 
 <h2 id="testing">Testing</h2>
 
-<p>Pure-logic modules — numbering and the parameter sampler — are tested with plain pytest. Everything that depends on the Blender API is tested by running scripts through <code class="language-plaintext highlighter-rouge">blender --background --python</code>, using a shared test harness. That harness exists for a specific reason: Blender’s background mode exits with code 0 even when the script raises an uncaught exception, so a bare <code class="language-plaintext highlighter-rouge">assert</code> inside a background script can’t actually fail the shell command that ran it. The harness catches exceptions explicitly and calls <code class="language-plaintext highlighter-rouge">sys.exit(1)</code> on failure or <code class="language-plaintext highlighter-rouge">sys.exit(0)</code> on success, so Blender-dependent tests fail the way a test actually should.</p>
+<ul>
+  <li><strong>Pure-logic modules</strong> — numbering, the parameter sampler — tested with plain pytest.</li>
+  <li><strong>Blender-API-dependent code</strong> — run through <code class="language-plaintext highlighter-rouge">blender --background --python</code>, using a shared test harness.</li>
+  <li><strong>Initial issue:</strong> Blender’s background mode exits with code 0 even when the script raises an uncaught exception, so a bare <code class="language-plaintext highlighter-rouge">assert</code> inside a background script can’t actually fail the shell command that ran it.</li>
+  <li><strong>Fix:</strong> the harness catches exceptions explicitly and calls <code class="language-plaintext highlighter-rouge">sys.exit(1)</code> on failure or <code class="language-plaintext highlighter-rouge">sys.exit(0)</code> on success, so Blender-dependent tests fail the way a test actually should.</li>
+</ul>
 
 <h2 id="object-detection-dataset">Object Detection Dataset</h2>
 
@@ -201,26 +216,42 @@
 
 <h3 id="scene-composition">Scene composition</h3>
 
-<p>Each scene drops 3-8 dice, sampled randomly from the 500-asset library, onto a ground plane and runs a short rigid-body physics simulation so they settle the way real dice actually land instead of sitting at hand-picked poses. I also scatter 0-5 distractor primitives — cubes, spheres, cones, torii, slabs, sticks — into the same simulation, so a model trained on this data has negative examples of things that aren’t dice, not just positive examples of things that are. The ground gets a randomized material (flat color, or one of four procedural two-tone patterns), and the scene is lit by a random HDRI environment map with randomized rotation and strength, so the same 500 dice show up under a wide range of lighting and backgrounds across the dataset.</p>
-
-<p>Camera azimuth, elevation, and focal length are all randomized, and about half the shots get real depth-of-field with a randomized aperture. Sensor noise, exposure jitter, and randomized JPEG quality get applied to the final image on the way out, closing some of the gap between a clean render and an actual photo.</p>
+<ul>
+  <li><strong>Dice per scene:</strong> 3-8, sampled randomly from the 500-asset library.</li>
+  <li><strong>Placement:</strong> dropped onto a ground plane and settled with a short rigid-body physics simulation, rather than hand-picked poses.</li>
+  <li><strong>Distractors:</strong> 0-5 random primitives (cubes, spheres, cones, torii, slabs, sticks) scattered into the same simulation, so the model gets negative examples of things that aren’t dice, not just positive examples of things that are.</li>
+  <li><strong>Ground material:</strong> flat color, or one of 4 procedural two-tone patterns (noise, voronoi, checker, wave).</li>
+  <li><strong>Lighting:</strong> a random HDRI environment map per scene, with randomized rotation and strength.</li>
+  <li><strong>Camera:</strong> randomized azimuth, elevation, and focal length; about half the shots get real depth-of-field with a randomized aperture.</li>
+  <li><strong>Post:</strong> sensor noise, exposure jitter, and randomized JPEG quality on the output image — closes some of the gap between a clean render and an actual photo.</li>
+</ul>
 
 <h3 id="occlusion-aware-annotation">Occlusion-aware annotation</h3>
 
-<p>Bounding boxes come from a second render pass, not from projecting each die’s 3D silhouette. After the beauty shot, every die is swapped to a unique flat-emission color, the background goes black, and the scene is re-rendered at 1 sample. Reading that image back gives an exact per-pixel visibility mask per die, so a die that’s mostly buried under another die gets a box around the part that’s actually visible, not its full unoccluded footprint. Dice with fewer than 60 visible pixels are skipped entirely rather than getting a box drawn around something the model realistically couldn’t see.</p>
+<ul>
+  <li><strong>Approach:</strong> boxes come from a second render pass, not from projecting each die’s 3D silhouette.</li>
+  <li><strong>How it works:</strong> after the beauty shot, every die is swapped to a unique flat-emission color, the background goes black, and the scene is re-rendered at 1 sample — giving an exact per-pixel visibility mask per die.</li>
+  <li><strong>Result:</strong> a die that’s mostly buried under another die gets a box around the part that’s actually visible, not its full unoccluded footprint.</li>
+  <li><strong>Cutoff:</strong> dice with fewer than 60 visible pixels are skipped entirely, rather than boxed for something the model realistically couldn’t see.</li>
+</ul>
 
 <h3 id="output">Output</h3>
 
-<p>The full run is 10,000 rendered scenes and 51,505 individual die annotations in COCO format, across 7 label classes (d4, d6, d8, d10, d10_pct, d12, d20). I split the render across 6 parallel Blender worker processes, each deterministic from a shared seed, then merged their shard files into one <code class="language-plaintext highlighter-rouge">coco.json</code>.</p>
+<ul>
+  <li><strong>10,000</strong> rendered scenes.</li>
+  <li><strong>51,505</strong> individual die annotations, COCO format.</li>
+  <li><strong>7 label classes:</strong> d4, d6, d8, d10, d10_pct, d12, d20.</li>
+  <li>Rendered across <strong>6 parallel Blender worker processes</strong>, each deterministic from a shared seed, then merged into one <code class="language-plaintext highlighter-rouge">coco.json</code>.</li>
+</ul>
 
 <h3 id="bugs-worth-recording">Bugs worth recording</h3>
 
 <p>Same as the asset generator, this pipeline had real bugs that only surfaced at scale:</p>
 
 <ul>
-  <li><strong>Depth-of-field leaking into the ID pass.</strong> The occlusion pass initially inherited the beauty render’s camera settings, DOF included. Blurring a flat-color ID image smears colors across neighboring pixels, and one die’s box came out 706px wide from only 672 actually-visible pixels. Fixed by forcing DOF and exposure off before the ID pass renders.</li>
-  <li><strong>sRGB-encoded IDs colliding.</strong> The ID pass PNG stores sRGB-encoded values, and decoding them as if they were already linear shifted two adjacent dice’s ID colors into the same bucket, merging their boxes into one. Fixed by explicitly linearizing the raw pixel values before mapping them back to die indices.</li>
-  <li><strong>A checkpoint bug that orphaned 6,193 images.</strong> The first version of the renderer wrote its annotation shard file once, at the very end of the run. A worker killed mid-run left thousands of rendered JPEGs on disk with zero annotations recorded for any of them. I added checkpointing every 20 scenes, with resume logic that only counts a scene as done if it’s both in the checkpoint and its file still exists on disk.</li>
+  <li><strong>Depth-of-field leaking into the ID pass.</strong> The occlusion pass initially inherited the beauty render’s camera settings, DOF included. Blurring a flat-color ID image smears colors across neighboring pixels, and one die’s box came out 706px wide from only 672 actually-visible pixels. Fix: force DOF and exposure off before the ID pass renders.</li>
+  <li><strong>sRGB-encoded IDs colliding.</strong> The ID pass PNG stores sRGB-encoded values, and decoding them as if they were already linear shifted two adjacent dice’s ID colors into the same bucket, merging their boxes into one. Fix: explicitly linearize the raw pixel values before mapping them back to die indices.</li>
+  <li><strong>A checkpoint bug that orphaned 6,193 images.</strong> The first version of the renderer wrote its annotation shard file once, at the very end of the run. A worker killed mid-run left thousands of rendered JPEGs on disk with zero annotations recorded for any of them. Fix: checkpoint every 20 scenes, with resume logic that only counts a scene as done if it’s both in the checkpoint and its file still exists on disk.</li>
 </ul>
 
                     </div>
