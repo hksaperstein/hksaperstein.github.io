@@ -16,11 +16,11 @@ gallery:
 
 ## Overview
 
-This is a headless Blender (5.1.2) Python pipeline, `src/dice_gen/`, that procedurally generates a labeled library of the 6 standard tabletop RPG dice — d4, d6, d8, d10, d12, d20 — as individual textured 3D assets. Every asset exports as USD alongside a JSON manifest recording every parameter that went into generating it, which makes the library a fully labeled synthetic dataset, built with an eventual object-detection pipeline in mind.
+This is a headless Blender (5.1.2) Python pipeline, `src/datagen/`, that procedurally generates a labeled library of the 6 standard tabletop RPG dice — d4, d6, d8, d10, d12, d20 — as individual textured 3D assets. Every asset exports as USD alongside a JSON manifest recording every parameter that went into generating it, which makes the library a fully labeled synthetic dataset, built with an eventual object-detection pipeline in mind. The gallery has a sample of what actually came out of it.
 
 ## Geometry
 
-Each die's mesh comes from a fixed vertex set run through Blender's boolean tooling rather than hand-authored face topology.
+The fun part of this section: getting a d12's pentagons or a d10's kite faces right without hand-authoring any topology. Each die's mesh comes from a fixed vertex set run through Blender's boolean tooling instead.
 
 - **Base vertices:** the standard Platonic-solid coordinates for d4/d6/d8/d12/d20, plus an empirically-derived pentagonal-trapezohedron set for d10.
 - **Initial approach — hand-author the face/vertex topology:** easy to get subtly wrong on a 12- or 20-sided solid.
@@ -38,9 +38,11 @@ Numerals and materials are both randomized per asset from a fixed set of manufac
 
 ## Results
 
-- **500 assets** generated, **0 recorded failures**, **0 validation errors** from `scripts/validate_dice_assets.py` (verified against `data/raw/dice_assets/manifest.json` and `failures.json`).
+- **500 assets** generated, **0 recorded failures**, **0 validation errors** from `scripts/validate_dice_assets.py` (verified against `data/raw/dice_sets_v1/manifest.json` and `failures.json`).
 - **By die type:** 94 d4, 88 d6, 88 d8, 83 d10, 84 d12, 63 d20.
 - **By material:** 94 metallic, 86 translucent, 85 glitter, 84 speckled, 80 marbled, 71 opaque.
+
+Worth a look yourself: the sample grid in the gallery shows 8 of the 500 side by side, spanning every die type and a mix of the material/glyph combinations above.
 
 ## Notable Bugs
 
@@ -61,7 +63,7 @@ None of these were exotic edge cases — they were real assets in the batch fail
 
 ## Object Detection Dataset
 
-The asset library exists to build a synthetic object-detection dataset from it: rendered scenes of multiple dice scattered on a table, with per-die bounding boxes. I haven't trained a detector on it yet — everything below is about the dataset itself, not a trained model.
+The asset library exists to build a synthetic object-detection dataset from it: rendered scenes of multiple dice scattered on a table, with per-die bounding boxes. I haven't trained a detector on it yet — everything below is about the dataset itself, not a trained model. The two extra gallery shots are straight from this pipeline: one raw scene, one with the annotations drawn on top so you can see what the boxes actually catch.
 
 ### Scene composition
 

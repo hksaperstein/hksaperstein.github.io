@@ -157,11 +157,11 @@
                         <p class="project-lead">A headless-Blender pipeline that procedurally generates a labeled library of TTRPG dice (d4-d20): geometry, engraved or printed numerals, and physically-based materials, exported as USD with ground-truth manifests.</p>
                         <h2 id="overview">Overview</h2>
 
-<p>This is a headless Blender (5.1.2) Python pipeline, <code class="language-plaintext highlighter-rouge">src/dice_gen/</code>, that procedurally generates a labeled library of the 6 standard tabletop RPG dice — d4, d6, d8, d10, d12, d20 — as individual textured 3D assets. Every asset exports as USD alongside a JSON manifest recording every parameter that went into generating it, which makes the library a fully labeled synthetic dataset, built with an eventual object-detection pipeline in mind.</p>
+<p>This is a headless Blender (5.1.2) Python pipeline, <code class="language-plaintext highlighter-rouge">src/datagen/</code>, that procedurally generates a labeled library of the 6 standard tabletop RPG dice — d4, d6, d8, d10, d12, d20 — as individual textured 3D assets. Every asset exports as USD alongside a JSON manifest recording every parameter that went into generating it, which makes the library a fully labeled synthetic dataset, built with an eventual object-detection pipeline in mind. The gallery has a sample of what actually came out of it.</p>
 
 <h2 id="geometry">Geometry</h2>
 
-<p>Each die’s mesh comes from a fixed vertex set run through Blender’s boolean tooling rather than hand-authored face topology.</p>
+<p>The fun part of this section: getting a d12’s pentagons or a d10’s kite faces right without hand-authoring any topology. Each die’s mesh comes from a fixed vertex set run through Blender’s boolean tooling instead.</p>
 
 <ul>
   <li><strong>Base vertices:</strong> the standard Platonic-solid coordinates for d4/d6/d8/d12/d20, plus an empirically-derived pentagonal-trapezohedron set for d10.</li>
@@ -184,10 +184,12 @@
 <h2 id="results">Results</h2>
 
 <ul>
-  <li><strong>500 assets</strong> generated, <strong>0 recorded failures</strong>, <strong>0 validation errors</strong> from <code class="language-plaintext highlighter-rouge">scripts/validate_dice_assets.py</code> (verified against <code class="language-plaintext highlighter-rouge">data/raw/dice_assets/manifest.json</code> and <code class="language-plaintext highlighter-rouge">failures.json</code>).</li>
+  <li><strong>500 assets</strong> generated, <strong>0 recorded failures</strong>, <strong>0 validation errors</strong> from <code class="language-plaintext highlighter-rouge">scripts/validate_dice_assets.py</code> (verified against <code class="language-plaintext highlighter-rouge">data/raw/dice_sets_v1/manifest.json</code> and <code class="language-plaintext highlighter-rouge">failures.json</code>).</li>
   <li><strong>By die type:</strong> 94 d4, 88 d6, 88 d8, 83 d10, 84 d12, 63 d20.</li>
   <li><strong>By material:</strong> 94 metallic, 86 translucent, 85 glitter, 84 speckled, 80 marbled, 71 opaque.</li>
 </ul>
+
+<p>Worth a look yourself: the sample grid in the gallery shows 8 of the 500 side by side, spanning every die type and a mix of the material/glyph combinations above.</p>
 
 <h2 id="notable-bugs">Notable Bugs</h2>
 
@@ -212,7 +214,7 @@
 
 <h2 id="object-detection-dataset">Object Detection Dataset</h2>
 
-<p>The asset library exists to build a synthetic object-detection dataset from it: rendered scenes of multiple dice scattered on a table, with per-die bounding boxes. I haven’t trained a detector on it yet — everything below is about the dataset itself, not a trained model.</p>
+<p>The asset library exists to build a synthetic object-detection dataset from it: rendered scenes of multiple dice scattered on a table, with per-die bounding boxes. I haven’t trained a detector on it yet — everything below is about the dataset itself, not a trained model. The two extra gallery shots are straight from this pipeline: one raw scene, one with the annotations drawn on top so you can see what the boxes actually catch.</p>
 
 <h3 id="scene-composition">Scene composition</h3>
 
