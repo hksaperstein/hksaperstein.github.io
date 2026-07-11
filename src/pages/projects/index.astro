@@ -1,17 +1,21 @@
 ---
-const target = '/#projects';
+import Base from '../../layouts/Base.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Redirecting to projects</title>
-    <meta http-equiv="refresh" content={`0;url=${target}`} />
-    <meta name="robots" content="noindex" />
-    <link rel="canonical" href="https://hksaperstein.github.io/#projects" />
-  </head>
-  <body>
-    <a href={target}>Redirecting to projects…</a>
-  </body>
-</html>
+<Base
+  title="Projects — Harrison Saperstein"
+  description="All of my projects in robotics, machine learning, and 3D printing."
+>
+  <section class="mx-auto max-w-5xl px-6 py-20">
+    <h1 class="text-2xl font-bold tracking-tight">All projects</h1>
+    <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {projects.map((project) => <ProjectCard project={project} />)}
+    </div>
+  </section>
+</Base>
