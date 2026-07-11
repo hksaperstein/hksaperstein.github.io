@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procedural Dice Asset Generator - HKS</title>
+    <meta name="description"
+        content="A headless-Blender pipeline that procedurally generates a labeled library of TTRPG dice (d4-d20): geometry, engraved or printed numerals, and physically-based materials, exported as USD with ground-truth manifests.">
+
+    <!-- Apply theme immediately to prevent flash -->
+    <script>
+        (function () {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
+
+    <!-- SEO -->
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Procedural Dice Asset Generator | HKS</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Procedural Dice Asset Generator" />
+<meta name="author" content="Harrison Saperstein" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A headless-Blender pipeline that procedurally generates a labeled library of TTRPG dice (d4-d20): geometry, engraved or printed numerals, and physically-based materials, exported as USD with ground-truth manifests." />
+<meta property="og:description" content="A headless-Blender pipeline that procedurally generates a labeled library of TTRPG dice (d4-d20): geometry, engraved or printed numerals, and physically-based materials, exported as USD with ground-truth manifests." />
+<link rel="canonical" href="https://hksaperstein.github.io/hksaperstein/projects/dice-detection/" />
+<meta property="og:url" content="https://hksaperstein.github.io/hksaperstein/projects/dice-detection/" />
+<meta property="og:site_name" content="HKS" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2026-07-05T00:00:00-04:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Procedural Dice Asset Generator" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Harrison Saperstein"},"dateModified":"2026-07-05T00:00:00-04:00","datePublished":"2026-07-05T00:00:00-04:00","description":"A headless-Blender pipeline that procedurally generates a labeled library of TTRPG dice (d4-d20): geometry, engraved or printed numerals, and physically-based materials, exported as USD with ground-truth manifests.","headline":"Procedural Dice Asset Generator","mainEntityOfPage":{"@type":"WebPage","@id":"https://hksaperstein.github.io/hksaperstein/projects/dice-detection/"},"url":"https://hksaperstein.github.io/hksaperstein/projects/dice-detection/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- MathJax -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/hksaperstein/assets/css/main.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Favicon -->
+    <!-- <link rel="icon" type="image/svg+xml" href="/hksaperstein/assets/images/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/hksaperstein/assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/hksaperstein/assets/images/favicon-16x16.png"> -->
+</head>
+
+<body>
+    <canvas id="canvas-bg"></canvas>
+
+    <header class="site-header">
+    <div class="container" style="height: 100%;">
+        <div class="header-content">
+            <div class="site-brand">
+                <a href="/hksaperstein/" class="brand-link">
+                    <span class="brand-text">HKS</span>
+                </a>
+            </div>
+
+            <nav class="site-nav" id="site-nav">
+                <ul class="nav-list">
+                    
+                    <li class="nav-item">
+                        <a href="/hksaperstein/"
+                            class="nav-link ">
+                            Home
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a href="/hksaperstein/projects/"
+                            class="nav-link ">
+                            Projects
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a href="/hksaperstein/about/"
+                            class="nav-link ">
+                            About
+                        </a>
+                    </li>
+                    
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+
+                <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <main id="main-content">
+        <div class="project-hero">
+    <div class="container">
+        <div class="project-header">
+            <h1 class="project-title">Procedural Dice Asset Generator</h1>
+            <p class="project-description">A headless-Blender pipeline that procedurally generates a labeled library of TTRPG dice (d4-d20): geometry, engraved or printed numerals, and physically-based materials, exported as USD with ground-truth manifests.</p>
+
+            <div class="project-meta">
+                
+
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="project-content">
+    <div class="container">
+
+        <div class="project-header-simple">
+            <h1 class="project-title-simple">Procedural Dice Asset Generator</h1>
+        </div>
+
+        <div class="project-split-layout">
+            <!-- Left Column: Text & Info -->
+            <div class="project-left-panel">
+
+                <!-- Overview / Description -->
+                <section class="project-section-clean" id="description">
+                    <h3>Overview</h3>
+                    <div class="project-description-content">
+                        <p class="project-lead">A headless-Blender pipeline that procedurally generates a labeled library of TTRPG dice (d4-d20): geometry, engraved or printed numerals, and physically-based materials, exported as USD with ground-truth manifests.</p>
+                        <h2 id="overview">Overview</h2>
+
+<p>This is a headless Blender (5.1.2) Python pipeline, <code class="language-plaintext highlighter-rouge">src/dice_gen/</code>, that procedurally generates a large library of the 6 standard tabletop RPG dice shapes — d4, d6, d8, d10, d12, d20 — as individual textured 3D assets. Every asset is exported as USD alongside a JSON manifest recording every parameter that went into generating it: die type, size, numbering scheme, glyph style and method, material category and its randomized parameters, and the random seed. That makes the whole library a fully labeled synthetic dataset, generated with an eventual object detection/recognition pipeline in mind — the ground-truth manifests exist specifically so a downstream model has something to train against.</p>
+
+<h2 id="geometry">Geometry</h2>
+
+<p>Each die’s base shape starts from a literal list of known vertex coordinates — the standard Platonic-solid vertices for d4/d6/d8/d12/d20, and an empirically-derived pentagonal-trapezohedron vertex set for d10. Rather than hand-authoring face/vertex-index topology (easy to get subtly wrong on a 12- or 20-sided solid), those vertices are run through <code class="language-plaintext highlighter-rouge">bmesh.ops.convex_hull</code> followed by <code class="language-plaintext highlighter-rouge">dissolve_limit</code>: the convex hull computes the correct facets from the raw point set, and dissolve_limit merges the hull’s coplanar triangles back into the real faces (quads for the d10’s kites, pentagons for the d12, and so on).</p>
+
+<p>Face numbering follows real-world dice conventions per die type — opposite faces of a d6 sum to 7, a d20 to 21, and so on for the others. The d4 is the exception: its faces are opposite a vertex rather than another face, so there’s no opposite-face pairing for it, and its values are just assigned once each.</p>
+
+<h2 id="glyphs-and-materials">Glyphs and Materials</h2>
+
+<p>Numerals are applied using two real, manufacturing-accurate methods, chosen at random per asset: <strong>engraved</strong> (boolean-cut directly into the mesh, optionally with a painted recessed fill) and <strong>printed decal</strong> (UV-unwrapped face textures). Five glyph styles are supported — arabic, roman, greek, and CJK numerals, plus pips — with pips restricted to d6 and d4 only, matching how real dice are actually numbered.</p>
+
+<p>Materials come from 6 procedural PBR categories built from Blender shader nodes: opaque, translucent, marbled, glitter, metallic, and speckled. Every asset gets randomized hue/saturation/value/roughness, plus category-specific parameters where relevant — IOR and transmission for translucent, noise scale for marbled, and so on.</p>
+
+<h2 id="results">Results</h2>
+
+<p>The current generated library is 500 assets, with 0 recorded failures during generation and 0 validation errors from <code class="language-plaintext highlighter-rouge">scripts/validate_dice_assets.py</code> against the resulting manifest (verified directly against <code class="language-plaintext highlighter-rouge">data/raw/dice_assets/manifest.json</code> and <code class="language-plaintext highlighter-rouge">failures.json</code>).</p>
+
+<p>By die type: 94 d4, 88 d6, 88 d8, 83 d10, 84 d12, 63 d20.</p>
+
+<p>By material category: 94 metallic, 86 translucent, 85 glitter, 84 speckled, 80 marbled, 71 opaque.</p>
+
+<h2 id="notable-bugs">Notable Bugs</h2>
+
+<p>The boolean-engrave step turned out to be the fiddliest part of the pipeline, and it surfaced a few real correctness bugs worth recording:</p>
+
+<ul>
+  <li><strong>Silent no-op cuts.</strong> On one d20 with arabic numerals, Blender’s EXACT boolean solver silently no-op’d on all 20 numeral cuts — the die’s body came out byte-for-byte untouched, with each cutter just appended as inert debris, and nothing about the die’s volume changed enough to look wrong. That one required adding a connected-component face-count check alongside the existing volume check: a real cut always grows the largest connected shell it touches, so if that shell’s face count doesn’t increase after a cut, the pipeline now retries with the FLOAT solver instead.</li>
+  <li><strong>Full-die collapse on a degenerate cutter.</strong> A d10 with greek numerals hit a case where the EXACT solver collapsed the entire die’s volume on a single glyph cut, because the source glyph (a capital Alpha) had residual non-manifold edges from font curve-fill self-overlap even after welding. The fix snapshots the die’s volume before each cut and, if a single cut would remove more than half of it (geometrically impossible for a numeral engraving), rolls back and retries with FLOAT.</li>
+  <li><strong>Unwelded cutter meshes corrupting geometry.</strong> Converting extruded text curves to mesh leaves duplicate, unwelded vertices at every seam, which occasionally crashed the boolean solver outright and gutted one die into disconnected garbage fragments. Fixed by welding the cutter mesh and recomputing normals before it’s used as a boolean operand.</li>
+</ul>
+
+<p>None of these were exotic edge cases — they were real assets in the batch failing in real ways, caught by generating at scale and checking the output rather than assuming the boolean op just works.</p>
+
+<h2 id="testing">Testing</h2>
+
+<p>Pure-logic modules — numbering and the parameter sampler — are tested with plain pytest. Everything that depends on the Blender API is tested by running scripts through <code class="language-plaintext highlighter-rouge">blender --background --python</code>, using a shared test harness. That harness exists for a specific reason: Blender’s background mode exits with code 0 even when the script raises an uncaught exception, so a bare <code class="language-plaintext highlighter-rouge">assert</code> inside a background script can’t actually fail the shell command that ran it. The harness catches exceptions explicitly and calls <code class="language-plaintext highlighter-rouge">sys.exit(1)</code> on failure or <code class="language-plaintext highlighter-rouge">sys.exit(0)</code> on success, so Blender-dependent tests fail the way a test actually should.</p>
+
+<h2 id="object-detection-dataset">Object Detection Dataset</h2>
+
+<p>The asset library exists to build a synthetic object-detection dataset from it: rendered scenes of multiple dice scattered on a table, with per-die bounding boxes. I haven’t trained a detector on it yet — everything below is about the dataset itself, not a trained model.</p>
+
+<h3 id="scene-composition">Scene composition</h3>
+
+<p>Each scene drops 3-8 dice, sampled randomly from the 500-asset library, onto a ground plane and runs a short rigid-body physics simulation so they settle the way real dice actually land instead of sitting at hand-picked poses. I also scatter 0-5 distractor primitives — cubes, spheres, cones, torii, slabs, sticks — into the same simulation, so a model trained on this data has negative examples of things that aren’t dice, not just positive examples of things that are. The ground gets a randomized material (flat color, or one of four procedural two-tone patterns), and the scene is lit by a random HDRI environment map with randomized rotation and strength, so the same 500 dice show up under a wide range of lighting and backgrounds across the dataset.</p>
+
+<p>Camera azimuth, elevation, and focal length are all randomized, and about half the shots get real depth-of-field with a randomized aperture. Sensor noise, exposure jitter, and randomized JPEG quality get applied to the final image on the way out, closing some of the gap between a clean render and an actual photo.</p>
+
+<h3 id="occlusion-aware-annotation">Occlusion-aware annotation</h3>
+
+<p>Bounding boxes come from a second render pass, not from projecting each die’s 3D silhouette. After the beauty shot, every die is swapped to a unique flat-emission color, the background goes black, and the scene is re-rendered at 1 sample. Reading that image back gives an exact per-pixel visibility mask per die, so a die that’s mostly buried under another die gets a box around the part that’s actually visible, not its full unoccluded footprint. Dice with fewer than 60 visible pixels are skipped entirely rather than getting a box drawn around something the model realistically couldn’t see.</p>
+
+<h3 id="output">Output</h3>
+
+<p>The full run is 10,000 rendered scenes and 51,505 individual die annotations in COCO format, across 7 label classes (d4, d6, d8, d10, d10_pct, d12, d20). I split the render across 6 parallel Blender worker processes, each deterministic from a shared seed, then merged their shard files into one <code class="language-plaintext highlighter-rouge">coco.json</code>.</p>
+
+<h3 id="bugs-worth-recording">Bugs worth recording</h3>
+
+<p>Same as the asset generator, this pipeline had real bugs that only surfaced at scale:</p>
+
+<ul>
+  <li><strong>Depth-of-field leaking into the ID pass.</strong> The occlusion pass initially inherited the beauty render’s camera settings, DOF included. Blurring a flat-color ID image smears colors across neighboring pixels, and one die’s box came out 706px wide from only 672 actually-visible pixels. Fixed by forcing DOF and exposure off before the ID pass renders.</li>
+  <li><strong>sRGB-encoded IDs colliding.</strong> The ID pass PNG stores sRGB-encoded values, and decoding them as if they were already linear shifted two adjacent dice’s ID colors into the same bucket, merging their boxes into one. Fixed by explicitly linearizing the raw pixel values before mapping them back to die indices.</li>
+  <li><strong>A checkpoint bug that orphaned 6,193 images.</strong> The first version of the renderer wrote its annotation shard file once, at the very end of the run. A worker killed mid-run left thousands of rendered JPEGs on disk with zero annotations recorded for any of them. I added checkpointing every 20 scenes, with resume logic that only counts a scene as done if it’s both in the checkpoint and its file still exists on disk.</li>
+</ul>
+
+                    </div>
+                </section>
+
+
+
+                <!-- Code Section (Collapsible) -->
+                
+
+                <!-- Components & Materials -->
+                
+
+                <!-- Meta / Actions (Moved to bottom of left) -->
+                <div class="project-meta-bottom">
+
+                    <div class="project-actions-small">
+                        
+
+                        
+                    </div>
+
+                    <div class="project-categories-bottom">
+                        
+                        <span class="category-tag-small">Machine Learning</span>
+                        
+                        <span class="category-tag-small">Computer Vision</span>
+                        
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Column: Media -->
+            <div class="project-right-panel">
+
+
+
+                <!-- 3D Models Section -->
+                
+
+                <!-- Media Gallery -->
+                
+                <section class="project-gallery">
+                    
+                    
+
+                    
+                    
+
+                    
+                    
+
+                    
+                        
+                        <div class="gallery-carousel" id="carousel-0">
+                            <div class="carousel-media">
+                                <div class="carousel-track">
+                                    
+                                    
+                                    <div class="carousel-slide">
+                                        
+                                        <img src="/hksaperstein/assets/images/projects/dice-detection/asset-sample-grid.png"
+                                            alt="8 of the 500 generated assets, spanning all 6 die types and a range of material/glyph combinations" class="gallery-image" data-zoomable>
+                                        
+                                        
+                                        <p class="gallery-caption">8 of the 500 generated assets, spanning all 6 die types and a range of material/glyph combinations</p>
+                                        
+                                    </div>
+                                    
+                                    
+                                    <div class="carousel-slide">
+                                        
+                                        <img src="/hksaperstein/assets/images/projects/dice-detection/detection-scene-raw.jpg"
+                                            alt="A raw rendered detection scene: physics-scattered dice, distractor primitives, and an HDRI-lit textured ground, before any annotation pass" class="gallery-image" data-zoomable>
+                                        
+                                        
+                                        <p class="gallery-caption">A raw rendered detection scene: physics-scattered dice, distractor primitives, and an HDRI-lit textured ground, before any annotation pass</p>
+                                        
+                                    </div>
+                                    
+                                    
+                                    <div class="carousel-slide">
+                                        
+                                        <img src="/hksaperstein/assets/images/projects/dice-detection/detection-scene-annotated.jpg"
+                                            alt="The same pipeline's COCO annotations overlaid — occlusion-aware boxes, one per visible die, with class/material/glyph metadata" class="gallery-image" data-zoomable>
+                                        
+                                        
+                                        <p class="gallery-caption">The same pipeline's COCO annotations overlaid — occlusion-aware boxes, one per visible die, with class/material/glyph metadata</p>
+                                        
+                                    </div>
+                                    
+                                </div>
+
+                                
+                                <button class="carousel-btn prev" onclick="moveCarousel('carousel-0', -1)">&#8249;</button>
+                                <button class="carousel-btn next" onclick="moveCarousel('carousel-0', 1)">&#8250;</button>
+                                
+                            </div>
+
+                            
+                            <div class="carousel-dots">
+                                
+                                <span class="dot active"
+                                    onclick="goToSlide('carousel-0', 0)"></span>
+                                
+                                <span class="dot "
+                                    onclick="goToSlide('carousel-0', 1)"></span>
+                                
+                                <span class="dot "
+                                    onclick="goToSlide('carousel-0', 2)"></span>
+                                
+                            </div>
+                            
+                        </div>
+                    
+
+                    
+
+                    
+                </section>
+                
+
+                <!-- Visualizations (Interactive HTML Plots) -->
+                
+
+                <!-- Plotly for custom plots -->
+                
+
+                <!-- Interactive Data Plot (only if page has interactive_plot: true) -->
+                
+
+                <!-- Custom Plot Include -->
+                
+
+                <!-- Circuit Schematics -->
+                
+
+        </div>
+    </div>
+</div>
+
+<div id="gallery-modal" class="gallery-modal" aria-modal="true" role="dialog">
+    <button class="modal-close" id="modal-close" aria-label="Close">&#10005;</button>
+    <button class="modal-btn prev" id="modal-prev">&#8249;</button>
+    <button class="modal-btn next" id="modal-next">&#8250;</button>
+    <div class="modal-content">
+        <img id="modal-img" src="" alt="">
+        <p id="modal-caption" class="modal-caption"></p>
+    </div>
+    <div class="modal-dots" id="modal-dots"></div>
+</div>
+<!-- Project Navigation -->
+<div class="project-navigation">
+    <div class="container">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+        <div class="nav-links">
+            
+            
+            
+            <a href="/hksaperstein/projects/agentic-ai-experiments/" class="nav-link prev">
+                <i class="fas fa-chevron-left"></i>
+                <span>Agentic AI Experiments</span>
+            </a>
+            
+
+            <a href="/hksaperstein/projects/" class="nav-link">
+                <i></i>
+                <span>All Projects</span>
+            </a>
+
+              <a
+                href="/hksaperstein/projects/ar4-pickplace-rl/" class="nav-link next">
+                <span>AR4 Pick-and-Place RL</span>
+                <i class="fas fa-chevron-right"></i>
+                </a>
+                
+        </div>
+    </div>
+</div>
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-simple">
+            <div class="footer-brand">
+                <h3 class="mesgro-title">HKS</h3>
+                <div class="mesgro-definition">
+                    Solving real-world problems
+                </div>
+            </div>
+
+            <div class="social-links-center">
+                
+                <a href="https://github.com/hksaperstein" target="_blank" aria-label="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                
+                
+                <a href="https://linkedin.com/in/harrison-saperstein" target="_blank" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                
+                
+                <a href="https://thingiverse.com/hksaperstein/designs" target="_blank" aria-label="Thingiverse">
+                    <i class="icon-thingiverse"></i>
+                </a>
+                
+                
+                <a href="mailto:harrison.saperstein@gmail.com" aria-label="Email">
+                    <i class="fas fa-envelope"></i>
+                </a>
+                
+            </div>
+
+            <div class="footer-credits">
+                <p>&copy; 2026 Harrison Saperstein. Built with &hearts; using Jekyll.</p>
+                <p>Template designed and developed by <strong>Alejandro Ojeda Olarte</strong></p>
+                <p><a href="https://github.com/aojedao/MESGRO" target="_blank">MESGRO Template</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <!-- Scripts -->
+    <script src="/hksaperstein/assets/js/main.js"></script>
+    <script src="/hksaperstein/assets/js/circuit-bg.js"></script>
+    <script src="/hksaperstein/assets/js/carousel.js"></script>
+
+    <!-- 3D Model Viewer -->
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+    <!-- Three.js for additional 3D functionality -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Image zoom library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js"></script>
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-okaidia.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+
+    <!-- Plotly.js for interactive data visualization -->
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+
+    
+    <script src="/hksaperstein/assets/js/project-viewer.js"></script>
+    
+</body>
+
+</html>
