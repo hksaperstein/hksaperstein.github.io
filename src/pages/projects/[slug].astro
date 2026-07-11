@@ -1,6 +1,10 @@
 ---
 import { getCollection, render } from 'astro:content';
-import '../../styles/global.css';
+import Base from '../../layouts/Base.astro';
+import Gallery from '../../components/Gallery.astro';
+import ModelsSection from '../../components/ModelsSection.astro';
+import SchematicsSection from '../../components/SchematicsSection.astro';
+import ComponentsSection from '../../components/ComponentsSection.astro';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
@@ -12,7 +16,52 @@ export async function getStaticPaths() {
 
 const { project } = Astro.props;
 const { Content } = await render(project);
+const { data } = project;
+
+const externalLinks = [
+  { url: data.github_url, label: 'GitHub' },
+  { url: data.thingiverse_url, label: 'Thingiverse' },
+  { url: data.demo_url, label: 'Demo' },
+].filter((link) => link.url && link.url !== '#');
+
+const formattedDate = data.date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  timeZone: 'UTC',
+});
 ---
 
-<h1>{project.data.title}</h1>
-<Content />
+<Base title={`${data.title} — Harrison Saperstein`} description={data.description} ogImage={data.featured_image}>
+  <article class="mx-auto max-w-3xl px-6 py-16">
+    <a href="/#projects" class="text-sm text-muted transition-colors hover:text-fg">← All projects</a>
+
+    <header class="mt-6">
+      <div class="flex flex-wrap gap-2">
+        {data.categories.map((category) => (
+          <span class="rounded-full border border-line px-2.5 py-0.5 text-xs text-muted">{category}</span>
+        ))}
+      </div>
+      <h1 class="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">{data.title}</h1>
+      <p class="mt-3 text-lg text-muted">{data.description}</p>
+      <div class="mt-4 flex flex-wrap items-center gap-4 text-sm text-muted">
+        <time datetime={data.date.toISOString().slice(0, 10)}>{formattedDate}</time>
+        {externalLinks.map((link) => (
+          <a href={link.url} class="font-medium text-accent hover:underline">{link.label} ↗</a>
+        ))}
+      </div>
+    </header>
+
+    <div class="prose prose-stone dark:prose-invert mt-10 max-w-none">
+      <Content />
+    </div>
+
+    {data.gallery && data.gallery.length > 0 && <Gallery items={data.gallery} />}
+    {data.models && data.models.length > 0 && <ModelsSection items={data.models} />}
+    {data.schematics && data.schematics.length > 0 && <SchematicsSection items={data.schematics} />}
+    {data.components && data.components.length > 0 && <ComponentsSection items={data.components} />}
+
+    <div class="mt-14 border-t border-line pt-8">
+      <a href="/#projects" class="font-medium text-accent hover:underline">← All projects</a>
+    </div>
+  </article>
+</Base>

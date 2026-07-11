@@ -1,0 +1,47 @@
+---
+interface GalleryItem {
+  file: string;
+  section?: string;
+  description?: string;
+}
+
+interface Props {
+  items: GalleryItem[];
+}
+
+const { items } = Astro.props;
+
+const groups = new Map<string, GalleryItem[]>();
+for (const item of items) {
+  const key = item.section ?? '';
+  if (!groups.has(key)) groups.set(key, []);
+  groups.get(key)!.push(item);
+}
+
+const isVideo = (file: string) => /\.(mp4|webm)$/i.test(file);
+---
+
+<section class="mt-12">
+  <h2 class="text-2xl font-bold tracking-tight">Gallery</h2>
+  {
+    [...groups.entries()].map(([section, groupItems]) => (
+      <div class="mt-8">
+        {section && <h3 class="text-lg font-semibold tracking-tight">{section}</h3>}
+        <div class="mt-4 grid gap-6 sm:grid-cols-2">
+          {groupItems.map((item) => (
+            <figure class="overflow-hidden rounded-2xl border border-line bg-card">
+              {isVideo(item.file) ? (
+                <video controls preload="metadata" class="w-full" src={item.file} />
+              ) : (
+                <img src={item.file} alt={item.description ?? ''} loading="lazy" class="w-full" />
+              )}
+              {item.description && (
+                <figcaption class="border-t border-line p-4 text-sm text-muted">{item.description}</figcaption>
+              )}
+            </figure>
+          ))}
+        </div>
+      </div>
+    ))
+  }
+</section>

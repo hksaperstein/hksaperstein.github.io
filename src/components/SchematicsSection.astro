@@ -1,0 +1,23 @@
+---
+interface Props {
+  items: { file: string; description?: string }[];
+}
+
+const { items } = Astro.props;
+---
+
+<section class="mt-12">
+  <h2 class="text-2xl font-bold tracking-tight">Schematics</h2>
+  <div class="mt-4 grid gap-6 sm:grid-cols-2">
+    {
+      items.map((item) => (
+        <figure class="overflow-hidden rounded-2xl border border-line bg-card">
+          <img src={item.file} alt={item.description ?? 'Schematic'} loading="lazy" class="w-full bg-white" />
+          {item.description && (
+            <figcaption class="border-t border-line p-4 text-sm text-muted">{item.description}</figcaption>
+          )}
+        </figure>
+      ))
+    }
+  </div>
+</section>

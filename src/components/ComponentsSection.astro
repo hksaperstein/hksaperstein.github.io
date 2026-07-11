@@ -1,0 +1,28 @@
+---
+interface Props {
+  items: { name: string; quantity?: number; description?: string; link?: string }[];
+}
+
+const { items } = Astro.props;
+---
+
+<section class="mt-12">
+  <h2 class="text-2xl font-bold tracking-tight">Components</h2>
+  <ul class="mt-4 divide-y divide-line rounded-2xl border border-line bg-card">
+    {
+      items.map((item) => (
+        <li class="flex flex-wrap items-baseline gap-x-3 gap-y-1 p-4">
+          <span class="font-medium">
+            {item.link ? (
+              <a href={item.link} class="hover:text-accent">{item.name}</a>
+            ) : (
+              item.name
+            )}
+          </span>
+          {item.quantity && <span class="text-sm text-muted">×{item.quantity}</span>}
+          {item.description && <span class="text-sm text-muted">{item.description}</span>}
+        </li>
+      ))
+    }
+  </ul>
+</section>
