@@ -1,0 +1,22 @@
+---
+import { SITE } from '../data/site';
+
+const links = [
+  { href: SITE.github, label: 'GitHub' },
+  { href: SITE.linkedin, label: 'LinkedIn' },
+  { href: SITE.thingiverse, label: 'Thingiverse' },
+  { href: `mailto:${SITE.email}`, label: 'Email' },
+  { href: SITE.resume, label: 'Resume' },
+];
+---
+
+<footer class="border-t border-line">
+  <div class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-6 py-10 text-sm text-muted">
+    <p>© {new Date().getFullYear()} Harrison Saperstein</p>
+    <div class="flex flex-wrap gap-5">
+      {links.map((link) => (
+        <a href={link.href} class="transition-colors hover:text-fg">{link.label}</a>
+      ))}
+    </div>
+  </div>
+</footer>
