@@ -1,0 +1,56 @@
+---
+import { SITE } from '../data/site';
+
+const stats = [
+  { value: '4+', label: 'years shipping surgical robotics software at Medtronic' },
+  { value: '15+', label: 'manual verification processes converted to automation' },
+  { value: 'weeks → days', label: 'system verification cycle time after my automation work' },
+  { value: 'MS + BS', label: 'Robotics Engineering, WPI' },
+];
+---
+
+<section id="experience" class="scroll-mt-16 border-t border-line">
+  <div class="mx-auto max-w-5xl px-6 py-20">
+    <h2 class="text-2xl font-bold tracking-tight">Experience</h2>
+
+    <div class="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
+      {
+        stats.map((stat) => (
+          <div class="block rounded-2xl border border-line bg-card p-5">
+            <p class="text-3xl font-bold tracking-tight">{stat.value}</p>
+            <p class="mt-2 text-sm text-muted">{stat.label}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="mt-10">
+      <div class="flex flex-wrap items-baseline justify-between">
+        <strong class="font-semibold tracking-tight">Medtronic — Hugo RAS</strong>
+        <span class="text-sm text-muted">Boston, MA · Aug 2021 – Present</span>
+      </div>
+      <p class="mt-1 font-medium text-accent">
+        Senior Software Verification Engineer<span class="text-sm text-muted"> · July 2024 – Present</span>
+      </p>
+      <p class="mt-3 text-muted">
+        Hugo is Medtronic's robotic-assisted surgery platform. I architect the automated testing
+        frameworks that verify it — migrating legacy manual processes to automated pipelines,
+        building Python test tooling that cut verification cycles from weeks to days, and
+        mentoring engineers on automation and troubleshooting.
+      </p>
+
+      <div class="mt-4 space-y-2 text-sm text-muted">
+        <p><span class="font-medium text-fg">Software Verification Engineer II, Hugo RAS (2021 – 2024)</span> — built the automated test framework (Python + Squish) and the system-in-loop and software-in-loop verification protocols.</p>
+        <p><span class="font-medium text-fg">Machine Learning Intern, Hubbell R&D (2019 – 2021)</span> — real-time object detection on video streams with TensorFlow, OpenCV, and TensorRT.</p>
+      </div>
+
+      <p class="mt-4 text-sm text-muted">WPI — MS Robotics Engineering '21 · BS Robotics Engineering '20</p>
+
+      <a
+        href={SITE.resume}
+        download={SITE.resumeFilename}
+        class="mt-6 inline-block rounded-md bg-accent px-4 py-2 font-medium text-white transition-opacity hover:opacity-90"
+      >Download resume</a>
+    </div>
+  </div>
+</section>

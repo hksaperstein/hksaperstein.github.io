@@ -1,10 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
+import ExperienceSection from '../components/ExperienceSection.astro';
 import AboutSection from '../components/AboutSection.astro';
 import FeaturedProject from '../components/FeaturedProject.astro';
 import ProjectSections from '../components/ProjectSections.astro';
-import SkillsSection from '../components/SkillsSection.astro';
+import ToolsSection from '../components/ToolsSection.astro';
+import HobbiesSection from '../components/HobbiesSection.astro';
 ---
 
 <Base
@@ -13,8 +15,10 @@ import SkillsSection from '../components/SkillsSection.astro';
   ogImage="/assets/images/projects/franka-dice-pick/featured.jpg"
 >
   <Hero />
+  <ExperienceSection />
   <FeaturedProject />
-  <AboutSection />
   <ProjectSections />
-  <SkillsSection />
+  <ToolsSection />
+  <AboutSection />
+  <HobbiesSection />
 </Base>
