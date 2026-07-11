@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Procedural Dice Asset Generator - HKS</title>
     <meta name="description"
-        content="A headless-Blender pipeline that procedurally generates a labeled library of TTRPG dice (d4-d20): geometry, engraved or printed numerals, and physically-based materials, exported as USD with ground-truth manifests.">
+        content="A headless-Blender pipeline that procedurally generates a labeled library of TTRPG dice, grown into a full synthetic-to-real object detection pipeline: rendered scenes, COCO annotations, and a trained YOLO detector.">
 
     <!-- Apply theme immediately to prevent flash -->
     <script>
@@ -23,17 +23,17 @@
 <meta property="og:title" content="Procedural Dice Asset Generator" />
 <meta name="author" content="Harrison Saperstein" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="A headless-Blender pipeline that procedurally generates a labeled library of TTRPG dice (d4-d20): geometry, engraved or printed numerals, and physically-based materials, exported as USD with ground-truth manifests." />
-<meta property="og:description" content="A headless-Blender pipeline that procedurally generates a labeled library of TTRPG dice (d4-d20): geometry, engraved or printed numerals, and physically-based materials, exported as USD with ground-truth manifests." />
-<link rel="canonical" href="https://hksaperstein.github.io/hksaperstein/projects/dice-detection/" />
-<meta property="og:url" content="https://hksaperstein.github.io/hksaperstein/projects/dice-detection/" />
+<meta name="description" content="A headless-Blender pipeline that procedurally generates a labeled library of TTRPG dice, grown into a full synthetic-to-real object detection pipeline: rendered scenes, COCO annotations, and a trained YOLO detector." />
+<meta property="og:description" content="A headless-Blender pipeline that procedurally generates a labeled library of TTRPG dice, grown into a full synthetic-to-real object detection pipeline: rendered scenes, COCO annotations, and a trained YOLO detector." />
+<link rel="canonical" href="http://localhost:4321/hksaperstein/projects/dice-detection/" />
+<meta property="og:url" content="http://localhost:4321/hksaperstein/projects/dice-detection/" />
 <meta property="og:site_name" content="HKS" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2026-07-05T00:00:00-04:00" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Procedural Dice Asset Generator" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Harrison Saperstein"},"dateModified":"2026-07-05T00:00:00-04:00","datePublished":"2026-07-05T00:00:00-04:00","description":"A headless-Blender pipeline that procedurally generates a labeled library of TTRPG dice (d4-d20): geometry, engraved or printed numerals, and physically-based materials, exported as USD with ground-truth manifests.","headline":"Procedural Dice Asset Generator","mainEntityOfPage":{"@type":"WebPage","@id":"https://hksaperstein.github.io/hksaperstein/projects/dice-detection/"},"url":"https://hksaperstein.github.io/hksaperstein/projects/dice-detection/"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Harrison Saperstein"},"dateModified":"2026-07-05T00:00:00-04:00","datePublished":"2026-07-05T00:00:00-04:00","description":"A headless-Blender pipeline that procedurally generates a labeled library of TTRPG dice, grown into a full synthetic-to-real object detection pipeline: rendered scenes, COCO annotations, and a trained YOLO detector.","headline":"Procedural Dice Asset Generator","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4321/hksaperstein/projects/dice-detection/"},"url":"http://localhost:4321/hksaperstein/projects/dice-detection/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -126,7 +126,7 @@
     <div class="container">
         <div class="project-header">
             <h1 class="project-title">Procedural Dice Asset Generator</h1>
-            <p class="project-description">A headless-Blender pipeline that procedurally generates a labeled library of TTRPG dice (d4-d20): geometry, engraved or printed numerals, and physically-based materials, exported as USD with ground-truth manifests.</p>
+            <p class="project-description">A headless-Blender pipeline that procedurally generates a labeled library of TTRPG dice, grown into a full synthetic-to-real object detection pipeline: rendered scenes, COCO annotations, and a trained YOLO detector.</p>
 
             <div class="project-meta">
                 
@@ -154,42 +154,41 @@
                 <section class="project-section-clean" id="description">
                     <h3>Overview</h3>
                     <div class="project-description-content">
-                        <p class="project-lead">A headless-Blender pipeline that procedurally generates a labeled library of TTRPG dice (d4-d20): geometry, engraved or printed numerals, and physically-based materials, exported as USD with ground-truth manifests.</p>
+                        <p class="project-lead">A headless-Blender pipeline that procedurally generates a labeled library of TTRPG dice, grown into a full synthetic-to-real object detection pipeline: rendered scenes, COCO annotations, and a trained YOLO detector.</p>
                         <h2 id="overview">Overview</h2>
 
-<p>This is a headless Blender (5.1.2) Python pipeline, <code class="language-plaintext highlighter-rouge">src/datagen/</code>, that procedurally generates a labeled library of the 6 standard tabletop RPG dice — d4, d6, d8, d10, d12, d20 — as individual textured 3D assets. Every asset exports as USD alongside a JSON manifest recording every parameter that went into generating it, which makes the library a fully labeled synthetic dataset, built with an eventual object-detection pipeline in mind. The gallery has a sample of what actually came out of it.</p>
+<p>This started as a headless Blender pipeline that procedurally generates individual TTRPG dice, and grew into a full synthetic-to-real object detection project: generate a labeled asset library, render tabletop scenes from it, auto-annotate them, train a detector, and check the result against real photos. It didn’t hold up on real photos — not fully — and that failure turned out to be the most interesting part of the whole project. This page walks through it in order: the assets, the scenes, the labels, and finally what happened when a model trained on all of it met a camera.</p>
 
-<h2 id="geometry">Geometry</h2>
+<h2 id="step-1-geometry">Step 1: Geometry</h2>
 
-<p>The fun part of this section: getting a d12’s pentagons or a d10’s kite faces right without hand-authoring any topology. Each die’s mesh comes from a fixed vertex set run through Blender’s boolean tooling instead.</p>
+<p>The fun part of this step: getting a d12’s pentagons or a d10’s kite faces right without hand-authoring any topology. Each die’s mesh comes from a fixed vertex set run through Blender’s boolean tooling instead.</p>
 
 <ul>
-  <li><strong>Base vertices:</strong> the standard Platonic-solid coordinates for d4/d6/d8/d12/d20, plus an empirically-derived pentagonal-trapezohedron set for d10.</li>
+  <li><strong>Base vertices:</strong> the standard Platonic-solid coordinates for d4/d6/d8/d12/d20, plus an empirically-derived pentagonal-trapezohedron set for d10 (also reused for d10_pct, the percentile die).</li>
   <li><strong>Initial approach — hand-author the face/vertex topology:</strong> easy to get subtly wrong on a 12- or 20-sided solid.</li>
   <li><strong>What I used instead:</strong> <code class="language-plaintext highlighter-rouge">bmesh.ops.convex_hull</code> on the raw vertices, then <code class="language-plaintext highlighter-rouge">dissolve_limit</code> to merge the hull’s coplanar triangles back into real faces — quads for the d10’s kites, pentagons for the d12.</li>
   <li><strong>Face numbering:</strong> follows real dice conventions — opposite faces sum to 7 on a d6, 21 on a d20, and so on. The d4 is the exception: its faces sit opposite a vertex, not another face, so there’s no pairing and values are assigned once each.</li>
 </ul>
 
-<h2 id="glyphs-and-materials">Glyphs and Materials</h2>
+<h2 id="step-2-glyphs-and-materials">Step 2: Glyphs and Materials</h2>
 
-<p>Numerals and materials are both randomized per asset from a fixed set of manufacturing-accurate methods.</p>
+<p>Numerals and materials are both randomized per asset from a fixed set of manufacturing-accurate methods. The specimen strip in the gallery shows this best — each crop is a straight zoom into a real generated face texture, not a mockup.</p>
 
 <ul>
   <li><strong>Glyph application — 2 methods, chosen at random per asset:</strong> engraved (boolean-cut into the mesh, optional painted recessed fill) and printed decal (UV-unwrapped face textures).</li>
-  <li><strong>Glyph styles — 5 supported:</strong> arabic, roman, greek, CJK numerals, and pips. Pips are restricted to d6 and d4 only, matching how real dice are actually numbered.</li>
+  <li><strong>Glyph styles — 5 supported:</strong> arabic, roman, greek, CJK numerals, and pips (pips restricted to d6 and d4 only, matching how real dice are actually numbered).</li>
   <li><strong>Materials — 6 procedural PBR categories:</strong> opaque, translucent, marbled, glitter, metallic, speckled, all built from Blender shader nodes.</li>
   <li><strong>Randomization:</strong> every asset gets randomized hue/saturation/value/roughness, plus category-specific parameters — IOR and transmission for translucent, noise scale for marbled, and so on.</li>
 </ul>
 
-<h2 id="results">Results</h2>
+<h2 id="asset-library-results">Asset Library Results</h2>
 
 <ul>
-  <li><strong>500 assets</strong> generated, <strong>0 recorded failures</strong>, <strong>0 validation errors</strong> from <code class="language-plaintext highlighter-rouge">scripts/validate_dice_assets.py</code> (verified against <code class="language-plaintext highlighter-rouge">data/raw/dice_sets_v1/manifest.json</code> and <code class="language-plaintext highlighter-rouge">failures.json</code>).</li>
-  <li><strong>By die type:</strong> 94 d4, 88 d6, 88 d8, 83 d10, 84 d12, 63 d20.</li>
-  <li><strong>By material:</strong> 94 metallic, 86 translucent, 85 glitter, 84 speckled, 80 marbled, 71 opaque.</li>
+  <li><strong>2,100 assets</strong> generated, evenly spread across all <strong>7 die types</strong> at 300 each — d4, d6, d8, d10, d10_pct, d12, d20.</li>
+  <li><strong>By material:</strong> 413 opaque, 364 marbled, 357 speckled, 343 translucent, 336 metallic, 287 glitter.</li>
+  <li><strong>0 recorded failures</strong> during generation.</li>
+  <li><strong>10 known validation errors</strong>, all on d10s: <code class="language-plaintext highlighter-rouge">scripts/validate_dice_assets.py</code> currently flags 10 of the 300 d10 meshes for open boundary edges or a degenerate face on the final exported mesh. I haven’t root-caused or fixed this yet — it’s an honest known issue, not swept under the rug, and it’s the top candidate for the next pass at the d10/d10_pct geometry.</li>
 </ul>
-
-<p>Worth a look yourself: the sample grid in the gallery shows 8 of the 500 side by side, spanning every die type and a mix of the material/glyph combinations above.</p>
 
 <h2 id="notable-bugs">Notable Bugs</h2>
 
@@ -212,14 +211,14 @@
   <li><strong>Fix:</strong> the harness catches exceptions explicitly and calls <code class="language-plaintext highlighter-rouge">sys.exit(1)</code> on failure or <code class="language-plaintext highlighter-rouge">sys.exit(0)</code> on success, so Blender-dependent tests fail the way a test actually should.</li>
 </ul>
 
-<h2 id="object-detection-dataset">Object Detection Dataset</h2>
+<h2 id="step-3-object-detection-dataset">Step 3: Object Detection Dataset</h2>
 
-<p>The asset library exists to build a synthetic object-detection dataset from it: rendered scenes of multiple dice scattered on a table, with per-die bounding boxes. I haven’t trained a detector on it yet — everything below is about the dataset itself, not a trained model. The two extra gallery shots are straight from this pipeline: one raw scene, one with the annotations drawn on top so you can see what the boxes actually catch.</p>
+<p>With an asset library in hand, the next step was building something to actually train a detector on: rendered scenes of multiple dice scattered on a table, with per-die bounding boxes. The three scene pairs in the gallery are real output from this stage — same scene, once raw and once with the annotations drawn on top, so you can see exactly what the boxes catch.</p>
 
 <h3 id="scene-composition">Scene composition</h3>
 
 <ul>
-  <li><strong>Dice per scene:</strong> 3-8, sampled randomly from the 500-asset library.</li>
+  <li><strong>Dice per scene:</strong> 3-8, sampled randomly from the asset library.</li>
   <li><strong>Placement:</strong> dropped onto a ground plane and settled with a short rigid-body physics simulation, rather than hand-picked poses.</li>
   <li><strong>Distractors:</strong> 0-5 random primitives (cubes, spheres, cones, torii, slabs, sticks) scattered into the same simulation, so the model gets negative examples of things that aren’t dice, not just positive examples of things that are.</li>
   <li><strong>Ground material:</strong> flat color, or one of 4 procedural two-tone patterns (noise, voronoi, checker, wave).</li>
@@ -255,6 +254,83 @@
   <li><strong>sRGB-encoded IDs colliding.</strong> The ID pass PNG stores sRGB-encoded values, and decoding them as if they were already linear shifted two adjacent dice’s ID colors into the same bucket, merging their boxes into one. Fix: explicitly linearize the raw pixel values before mapping them back to die indices.</li>
   <li><strong>A checkpoint bug that orphaned 6,193 images.</strong> The first version of the renderer wrote its annotation shard file once, at the very end of the run. A worker killed mid-run left thousands of rendered JPEGs on disk with zero annotations recorded for any of them. Fix: checkpoint every 20 scenes, with resume logic that only counts a scene as done if it’s both in the checkpoint and its file still exists on disk.</li>
 </ul>
+
+<h2 id="step-4-training-and-sim-to-real-results">Step 4: Training and Sim-to-Real Results</h2>
+
+<p>This is the part I’m least precious about, and probably the most useful thing on this page: I trained a detector on the synthetic data, pointed it at real photos, and it broke in a specific, diagnosable way. I’d rather show that than round it off.</p>
+
+<p>I trained YOLO11s (imgsz 640, 60 epochs, batch 32, seed 42) two ways and evaluated both against a frozen set of 1,376 real dice photos:</p>
+
+<ul>
+  <li><strong>Variant S</strong> — synthetic data only, 9,000 training images.</li>
+  <li><strong>Variant S+R</strong> — synthetic plus a real-photo fine-tune slice, 22,255 training images.</li>
+</ul>
+
+<p><strong>Headline result:</strong> S is near-perfect on synthetic validation (mAP50 0.984) and fails hard on real photos (mean mAP50 0.532). S+R closes that gap within the test set’s own photo collections (real mAP50 ≥0.989 on every class) — see the caveat below on what “within-collection” means.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>class</th>
+      <th>S real mAP50</th>
+      <th>S+R real mAP50</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>d4</td>
+      <td>0.695</td>
+      <td>1.000</td>
+    </tr>
+    <tr>
+      <td>d6</td>
+      <td>0.519</td>
+      <td>1.000</td>
+    </tr>
+    <tr>
+      <td>d8</td>
+      <td><strong>0.090</strong></td>
+      <td>1.000</td>
+    </tr>
+    <tr>
+      <td>d10</td>
+      <td><strong>0.097</strong></td>
+      <td>0.989</td>
+    </tr>
+    <tr>
+      <td>d12</td>
+      <td>0.936</td>
+      <td>1.000</td>
+    </tr>
+    <tr>
+      <td>d20</td>
+      <td>0.855</td>
+      <td>1.000</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>What’s actually going wrong (variant S):</strong> not a detection failure — a systematic classification shift up the shape-complexity ladder. The confusion matrix in the gallery shows it directly:</p>
+
+<ul>
+  <li>True d10 gets predicted d12 (37%) or d20 (41%); only 4% correct.</li>
+  <li>True d8 gets predicted d20 (52%); only 15% correct.</li>
+  <li>d12 (100%) and d20 (96%) are correct — the top of the ladder has nowhere left to shift to.</li>
+  <li>Overlays confirm the boxes are right and confident (≈0.94) — it’s the class head that’s wrong, not localization.</li>
+</ul>
+
+<p><strong>My working hypothesis:</strong> in the synthetic scenes, dice sit at realistic <em>relative</em> sizes in multi-die tabletop shots, so apparent in-frame size correlates with class — a d20 really is bigger than a d8. The real test photos are almost all single-die extreme close-ups, where every die fills the frame, and the model reads “big die in frame” as d12/d20 regardless of actual shape. I’m not fully certain that’s the whole story, but it’s consistent with everything in the confusion matrix, and it points at a real gap in the data generator rather than the model or task.</p>
+
+<p><strong>What I’d change in the data generator next</strong>, in priority order:</p>
+
+<ul>
+  <li>Render single- and few-die close-ups across the full focal/framing range, so every class shows up at every apparent scale — directly tests the size-confound hypothesis.</li>
+  <li>Split the asset pool so there’s a leak-free synthetic validation set (today’s is saturated at 0.98+ and predicts nothing about real transfer).</li>
+  <li>Weight glyph styles toward real-world convention (arabic dominant), keeping the exotic styles as a minority slice.</li>
+  <li>Review d8/d10 geometry and engraving legibility against real dice — they’re the two worst classes.</li>
+</ul>
+
+<p><strong>Caveat on the S+R number:</strong> the fine-tune slice and the frozen test set come from the same two real-photo collections — same physical dice, same cameras. I removed image-level duplicate leakage with a group-aware split, but the same physical die still shows up in both splits in different photos. So S+R’s near-1.0 is within-collection performance, not proof this generalizes to dice or cameras it’s never seen. The real photos are also almost entirely single-die close-ups, so the multi-die clutter scenes the synthetic data covers heavily are essentially untested against reality.</p>
 
                     </div>
                 </section>
@@ -305,6 +381,8 @@
                     
 
                     
+                        <h4 class="gallery-section-header">Generated Assets</h4>
+                    
                     
 
                     
@@ -317,32 +395,21 @@
                                     <div class="carousel-slide">
                                         
                                         <img src="/hksaperstein/assets/images/projects/dice-detection/asset-sample-grid.png"
-                                            alt="8 of the 500 generated assets, spanning all 6 die types and a range of material/glyph combinations" class="gallery-image" data-zoomable>
+                                            alt="8 of the 2,100 generated assets, spanning all 7 die types and a range of material/glyph combinations" class="gallery-image" data-zoomable>
                                         
                                         
-                                        <p class="gallery-caption">8 of the 500 generated assets, spanning all 6 die types and a range of material/glyph combinations</p>
-                                        
-                                    </div>
-                                    
-                                    
-                                    <div class="carousel-slide">
-                                        
-                                        <img src="/hksaperstein/assets/images/projects/dice-detection/detection-scene-raw.jpg"
-                                            alt="A raw rendered detection scene: physics-scattered dice, distractor primitives, and an HDRI-lit textured ground, before any annotation pass" class="gallery-image" data-zoomable>
-                                        
-                                        
-                                        <p class="gallery-caption">A raw rendered detection scene: physics-scattered dice, distractor primitives, and an HDRI-lit textured ground, before any annotation pass</p>
+                                        <p class="gallery-caption">8 of the 2,100 generated assets, spanning all 7 die types and a range of material/glyph combinations</p>
                                         
                                     </div>
                                     
                                     
                                     <div class="carousel-slide">
                                         
-                                        <img src="/hksaperstein/assets/images/projects/dice-detection/detection-scene-annotated.jpg"
-                                            alt="The same pipeline's COCO annotations overlaid — occlusion-aware boxes, one per visible die, with class/material/glyph metadata" class="gallery-image" data-zoomable>
+                                        <img src="/hksaperstein/assets/images/projects/dice-detection/glyph-specimen.png"
+                                            alt="4 of the supported glyph styles, cropped straight off the actual face textures the pipeline generates" class="gallery-image" data-zoomable>
                                         
                                         
-                                        <p class="gallery-caption">The same pipeline's COCO annotations overlaid — occlusion-aware boxes, one per visible die, with class/material/glyph metadata</p>
+                                        <p class="gallery-caption">4 of the supported glyph styles, cropped straight off the actual face textures the pipeline generates</p>
                                         
                                     </div>
                                     
@@ -363,14 +430,180 @@
                                 <span class="dot "
                                     onclick="goToSlide('carousel-0', 1)"></span>
                                 
+                            </div>
+                            
+                        </div>
+                    
+
+                    
+
+                    
+                    
+
+                    
+                        <h4 class="gallery-section-header">Detection Scenes</h4>
+                    
+                    
+
+                    
+                        
+                        <div class="gallery-carousel" id="carousel-1">
+                            <div class="carousel-media">
+                                <div class="carousel-track">
+                                    
+                                    
+                                    <div class="carousel-slide">
+                                        
+                                        <img src="/hksaperstein/assets/images/projects/dice-detection/detection-scene-clutter-raw.jpg"
+                                            alt="A physics-scattered scene with distractor primitives and an HDRI-lit honeycomb ground" class="gallery-image" data-zoomable>
+                                        
+                                        
+                                        <p class="gallery-caption">A physics-scattered scene with distractor primitives and an HDRI-lit honeycomb ground</p>
+                                        
+                                    </div>
+                                    
+                                    
+                                    <div class="carousel-slide">
+                                        
+                                        <img src="/hksaperstein/assets/images/projects/dice-detection/detection-scene-tabletop-raw.jpg"
+                                            alt="A cleaner tabletop scene: marbled and opaque dice on a plain lit surface" class="gallery-image" data-zoomable>
+                                        
+                                        
+                                        <p class="gallery-caption">A cleaner tabletop scene: marbled and opaque dice on a plain lit surface</p>
+                                        
+                                    </div>
+                                    
+                                    
+                                    <div class="carousel-slide">
+                                        
+                                        <img src="/hksaperstein/assets/images/projects/dice-detection/detection-scene-blur-raw.jpg"
+                                            alt="A scene with real depth-of-field engaged, testing annotation quality under blur" class="gallery-image" data-zoomable>
+                                        
+                                        
+                                        <p class="gallery-caption">A scene with real depth-of-field engaged, testing annotation quality under blur</p>
+                                        
+                                    </div>
+                                    
+                                </div>
+
+                                
+                                <button class="carousel-btn prev" onclick="moveCarousel('carousel-1', -1)">&#8249;</button>
+                                <button class="carousel-btn next" onclick="moveCarousel('carousel-1', 1)">&#8250;</button>
+                                
+                            </div>
+
+                            
+                            <div class="carousel-dots">
+                                
+                                <span class="dot active"
+                                    onclick="goToSlide('carousel-1', 0)"></span>
+                                
                                 <span class="dot "
-                                    onclick="goToSlide('carousel-0', 2)"></span>
+                                    onclick="goToSlide('carousel-1', 1)"></span>
+                                
+                                <span class="dot "
+                                    onclick="goToSlide('carousel-1', 2)"></span>
                                 
                             </div>
                             
                         </div>
                     
 
+                    
+
+                    
+                    
+
+                    
+                        <h4 class="gallery-section-header">Labeled Annotations</h4>
+                    
+                    
+
+                    
+                        
+                        <div class="gallery-carousel" id="carousel-2">
+                            <div class="carousel-media">
+                                <div class="carousel-track">
+                                    
+                                    
+                                    <div class="carousel-slide">
+                                        
+                                        <img src="/hksaperstein/assets/images/projects/dice-detection/detection-scene-clutter-annotated.jpg"
+                                            alt="The clutter scene above, with occlusion-aware COCO boxes overlaid" class="gallery-image" data-zoomable>
+                                        
+                                        
+                                        <p class="gallery-caption">The clutter scene above, with occlusion-aware COCO boxes overlaid</p>
+                                        
+                                    </div>
+                                    
+                                    
+                                    <div class="carousel-slide">
+                                        
+                                        <img src="/hksaperstein/assets/images/projects/dice-detection/detection-scene-tabletop-annotated.jpg"
+                                            alt="The tabletop scene above, labeled — clean, non-overlapping boxes on a simple background" class="gallery-image" data-zoomable>
+                                        
+                                        
+                                        <p class="gallery-caption">The tabletop scene above, labeled — clean, non-overlapping boxes on a simple background</p>
+                                        
+                                    </div>
+                                    
+                                    
+                                    <div class="carousel-slide">
+                                        
+                                        <img src="/hksaperstein/assets/images/projects/dice-detection/detection-scene-blur-annotated.jpg"
+                                            alt="The blurred scene above, labeled — boxes still land correctly under depth-of-field" class="gallery-image" data-zoomable>
+                                        
+                                        
+                                        <p class="gallery-caption">The blurred scene above, labeled — boxes still land correctly under depth-of-field</p>
+                                        
+                                    </div>
+                                    
+                                </div>
+
+                                
+                                <button class="carousel-btn prev" onclick="moveCarousel('carousel-2', -1)">&#8249;</button>
+                                <button class="carousel-btn next" onclick="moveCarousel('carousel-2', 1)">&#8250;</button>
+                                
+                            </div>
+
+                            
+                            <div class="carousel-dots">
+                                
+                                <span class="dot active"
+                                    onclick="goToSlide('carousel-2', 0)"></span>
+                                
+                                <span class="dot "
+                                    onclick="goToSlide('carousel-2', 1)"></span>
+                                
+                                <span class="dot "
+                                    onclick="goToSlide('carousel-2', 2)"></span>
+                                
+                            </div>
+                            
+                        </div>
+                    
+
+                    
+
+                    
+                    
+
+                    
+                        <h4 class="gallery-section-header">Sim-to-Real Results</h4>
+                    
+                    
+
+                    
+                        <div class="gallery-single">
+                        
+                        
+                            <img src="/hksaperstein/assets/images/projects/dice-detection/real-confusion-matrix.png"
+                                alt="Confusion matrix for the synthetic-only model, evaluated on real dice photos — the class head drifts up the shape-complexity ladder" class="gallery-image" data-zoomable>
+                        
+                        
+                            <p class="media-caption"></p>
+                        
+                        </div>
                     
 
                     
