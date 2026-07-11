@@ -3,7 +3,7 @@ title: "Procedural Dice Asset Generator"
 description: "A headless-Blender pipeline that procedurally generates a labeled library of TTRPG dice, grown into a full synthetic-to-real object detection pipeline: rendered scenes, COCO annotations, and a trained YOLO detector."
 date: 2026-07-05
 categories: [Machine Learning, Computer Vision]
-featured_image: "/assets/images/projects/dice-detection/featured.png"
+featured_image: "/assets/images/projects/dice-detection/detection-scene-tabletop-annotated.jpg"
 gallery:
   - section: "Generated Assets"
     file: "/assets/images/projects/dice-detection/die-d4.png"

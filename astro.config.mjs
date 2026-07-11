@@ -7,7 +7,9 @@ export default defineConfig({
   site: 'https://hksaperstein.github.io',
   integrations: [
     sitemap({
-      filter: (page) => page !== 'https://hksaperstein.github.io/projects/',
+      filter: (page) =>
+        page !== 'https://hksaperstein.github.io/projects/' &&
+        page !== 'https://hksaperstein.github.io/projects/ar4-pickplace-rl/',
     }),
   ],
   redirects: {
