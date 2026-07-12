@@ -4,8 +4,8 @@ import { SITE } from '../data/site';
 const stats = [
   { value: '5', label: 'years in surgical robotics' },
   { value: '15+', label: 'manual processes automated' },
-  { value: 'MS + BS', label: 'Robotics Engineering at WPI' },
   { value: 'WEEKS → DAYS', label: 'per verification cycle', wide: true },
+  { value: 'MS + BS', label: 'Robotics Engineering at WPI' },
 ];
 ---
 
@@ -25,6 +25,17 @@ const stats = [
     </div>
 
     <div class="mt-10 space-y-8">
+      <div>
+        <div class="flex flex-wrap items-baseline justify-between">
+          <strong class="font-semibold tracking-tight">Worcester Polytechnic Institute</strong>
+          <span class="text-sm text-muted">Worcester, MA</span>
+        </div>
+        <div class="mt-2">
+          <p><span class="font-medium text-fg">MS + BS, Robotics Engineering</span><span class="text-sm text-muted"> · MS '21 · BS '20</span></p>
+          <p class="mt-1 text-sm text-muted">Key coursework: robot controls, dynamics, manipulation, computer vision, AI, and navigation.</p>
+        </div>
+      </div>
+
       <div>
         <div class="flex flex-wrap items-baseline justify-between">
           <strong class="font-semibold tracking-tight">Medtronic - Hugo RAS</strong>
@@ -60,7 +71,6 @@ const stats = [
     </div>
 
     <div class="mt-10">
-      <p class="text-sm text-muted">WPI - MS Robotics Engineering '21 · BS Robotics Engineering '20</p>
 
       <a
         href={SITE.resume}
