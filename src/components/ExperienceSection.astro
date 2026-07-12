@@ -4,7 +4,7 @@ import { SITE } from '../data/site';
 const stats = [
   { value: '5', label: 'years in surgical robotics' },
   { value: '15+', label: 'manual processes automated' },
-  { value: 'WEEKS → DAYS', label: 'per verification cycle' },
+  { value: 'WEEKS → DAYS', label: 'per verification cycle', wide: true },
   { value: 'MS + BS', label: 'Robotics Engineering at WPI' },
 ];
 ---
@@ -16,8 +16,8 @@ const stats = [
     <div class="mt-10 grid grid-cols-2 gap-x-8 gap-y-8 lg:grid-cols-4">
       {
         stats.map((stat) => (
-          <div>
-            <p class="text-3xl font-bold tracking-tight whitespace-nowrap">{stat.value}</p>
+          <div class={stat.wide ? 'col-span-2 lg:col-span-1' : ''}>
+            <p class="text-2xl font-bold tracking-tight whitespace-nowrap sm:text-3xl">{stat.value}</p>
             <p class="mt-1 text-sm text-muted">{stat.label}</p>
           </div>
         ))
