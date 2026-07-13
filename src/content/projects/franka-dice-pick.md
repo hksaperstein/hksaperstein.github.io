@@ -1,6 +1,6 @@
 ---
 title: "Robotic DnD"
-description: "The inspiration here is simple: I enjoy DnD, and if I'm going to train a robot to pick something up, it may as well be the right die for the roll."
+description: "DnD is a game of chance, and control is an illusion. Training a robot to hand me the right die felt like the next best thing."
 date: 2026-07-11
 featured: true
 categories: [Robotics, Machine Learning, AI]
