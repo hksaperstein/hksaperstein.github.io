@@ -6,6 +6,7 @@ featured: true
 categories: [Robotics, Machine Learning, AI]
 featured_image: "/assets/images/projects/franka-dice-pick/featured.jpg"
 github_url: "https://github.com/hksaperstein/rl"
+training_curves: true
 gallery:
   - file: "/assets/images/projects/franka-dice-pick/detection-overlay.png"
     section: "Detection"

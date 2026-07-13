@@ -1,0 +1,569 @@
+---
+import curvesData from '../data/training-curves.json';
+
+interface Series {
+  variant: string;
+  seed: string;
+  points: [number, number][];
+}
+
+const data = curvesData as {
+  experiment: string;
+  tag: string;
+  generated: string;
+  series: Series[];
+};
+
+// Categorical slots 1-3 from the dataviz skill's reference palette, in the skill's
+// fixed hue order (blue, aqua, yellow). Validated with scripts/validate_palette.js
+// against this site's actual card surface (#ffffff light / #1c1a19 dark):
+// both modes pass all checks; light mode's aqua/yellow slots land in the
+// documented sub-3:1 contrast WARN band, whose relief (direct labels, never
+// color-only identity) this chart already ships.
+const PALETTE = [
+  { light: '#2a78d6', dark: '#3987e5' }, // slot 0: blue
+  { light: '#1baf7a', dark: '#199e70' }, // slot 1: aqua
+  { light: '#eda100', dark: '#c98500' }, // slot 2: yellow
+];
+
+const variantNames = [...new Set(data.series.map((s) => s.variant))].sort();
+const variantSlot = new Map(variantNames.map((name, i) => [name, i]));
+const variantLabel = (name: string) => name.replace(/-/g, ' ');
+
+const W = 760;
+const H = 400;
+const MARGIN = { top: 16, right: 138, bottom: 32, left: 46 };
+const plotW = W - MARGIN.left - MARGIN.right;
+const plotH = H - MARGIN.top - MARGIN.bottom;
+
+const allPoints = data.series.flatMap((s) => s.points);
+const maxStep = Math.max(...allPoints.map((p) => p[0]));
+const rawMinValue = Math.min(...allPoints.map((p) => p[1]));
+const rawMaxValue = Math.max(...allPoints.map((p) => p[1]));
+
+function niceStep(rawStep: number): number {
+  if (rawStep <= 0) return 1;
+  const exponent = Math.floor(Math.log10(rawStep));
+  const fraction = rawStep / 10 ** exponent;
+  const niceFraction = fraction <= 1 ? 1 : fraction <= 2 ? 2 : fraction <= 5 ? 5 : 10;
+  return niceFraction * 10 ** exponent;
+}
+
+function niceTicks(min: number, max: number, targetCount: number) {
+  let lo = min;
+  let hi = max;
+  if (lo === hi) {
+    lo -= 1;
+    hi += 1;
+  }
+  const step = niceStep((hi - lo) / (targetCount - 1));
+  const niceMin = Math.floor(lo / step) * step;
+  const niceMax = Math.ceil(hi / step) * step;
+  const ticks: number[] = [];
+  for (let v = niceMin; v <= niceMax + step / 2; v += step) {
+    ticks.push(Math.round(v * 1e6) / 1e6);
+  }
+  return { ticks, min: niceMin, max: niceMax };
+}
+
+const yTicksInfo = niceTicks(rawMinValue, rawMaxValue, 5);
+const xTicksInfo = niceTicks(0, maxStep, 6);
+const yTicks = yTicksInfo.ticks;
+const yMin = yTicksInfo.min;
+const yMax = yTicksInfo.max;
+const xTicks = xTicksInfo.ticks.filter((t) => t >= 0 && t <= maxStep + 1e-6);
+
+const xScale = (step: number) => MARGIN.left + (step / maxStep) * plotW;
+const yScale = (value: number) => MARGIN.top + (1 - (value - yMin) / (yMax - yMin)) * plotH;
+
+const seriesRender = data.series.map((s) => {
+  const slot = variantSlot.get(s.variant)!;
+  const d = s.points
+    .map(([step, value], i) => `${i === 0 ? 'M' : 'L'}${xScale(step).toFixed(2)},${yScale(value).toFixed(2)}`)
+    .join(' ');
+  const [lastStep, lastValue] = s.points[s.points.length - 1];
+  return {
+    variant: s.variant,
+    seed: s.seed,
+    slot,
+    d,
+    endX: xScale(lastStep),
+    endY: yScale(lastValue),
+    points: s.points,
+  };
+});
+
+// One direct label per variant (not per seed), anchored at the average end-y of
+// its runs, with a minimum-gap pass so variants whose curves converge don't get
+// overlapping labels. A short leader line marks the offset when a label was
+// nudged off its raw anchor (marks-and-anatomy.md's collision guidance).
+const labelMinGap = 14;
+const variantLabels = variantNames
+  .map((variant) => {
+    const runs = seriesRender.filter((s) => s.variant === variant);
+    const rawY = runs.reduce((sum, r) => sum + r.endY, 0) / runs.length;
+    const endX = Math.max(...runs.map((r) => r.endX));
+    return { variant, slot: variantSlot.get(variant)!, rawY, y: rawY, endX };
+  })
+  .sort((a, b) => a.rawY - b.rawY);
+
+for (let i = 1; i < variantLabels.length; i++) {
+  const prev = variantLabels[i - 1];
+  const cur = variantLabels[i];
+  if (cur.y - prev.y < labelMinGap) cur.y = prev.y + labelMinGap;
+}
+for (const label of variantLabels) {
+  label.y = Math.min(Math.max(label.y, MARGIN.top + 4), MARGIN.top + plotH - 4);
+}
+const labelX = MARGIN.left + plotW + 10;
+
+// Step grid for the hover layer: the step values of whichever run has the most
+// points (the longest, most finely sampled series).
+const gridSeries = seriesRender.reduce((a, b) => (a.points.length >= b.points.length ? a : b));
+const stepGrid = gridSeries.points.map((p) => p[0]);
+
+const chartPayload = JSON.stringify({
+  viewBoxWidth: W,
+  maxStep,
+  xScale: { left: MARGIN.left, plotW },
+  stepGrid,
+  series: seriesRender.map((s) => ({ variant: s.variant, seed: s.seed, slot: s.slot, points: s.points })),
+});
+---
+
+<section class="training-curves mt-12">
+  <h2 class="text-2xl font-bold tracking-tight">Training progress</h2>
+  <p class="mt-3 text-muted">
+    I'm training a grasp policy against a few candidate object variants at once - joint-space
+    lift experiments run on the die assets and a baked cube - to see which one the policy
+    actually learns on. Each line below is one seed's mean training reward, colored by variant.
+    This is pulled straight from the synced TensorBoard runs bucket and the chart is regenerated
+    by hand, not a live feed.
+  </p>
+
+  <div class="tc-chart-wrap mt-6 rounded-2xl border border-line bg-card p-4" id="tc-wrap">
+    <svg
+      id="tc-svg"
+      viewBox={`0 0 ${W} ${H}`}
+      role="img"
+      aria-label={`Line chart of mean training reward across ${data.series.length} training runs, spanning steps 0 to ${maxStep}, grouped into ${variantNames.length} colors by object variant.`}
+      class="tc-svg"
+    >
+      <title>Mean training reward by step, one line per seed, colored by object variant</title>
+
+      {yTicks.map((tick) => (
+        <line x1={MARGIN.left} x2={MARGIN.left + plotW} y1={yScale(tick)} y2={yScale(tick)} class="tc-grid" />
+      ))}
+
+      {yTicks.map((tick) => (
+        <text x={MARGIN.left - 8} y={yScale(tick)} class="tc-axis-label" text-anchor="end" dominant-baseline="middle">
+          {tick}
+        </text>
+      ))}
+
+      {xTicks.map((tick) => (
+        <text x={xScale(tick)} y={MARGIN.top + plotH + 20} class="tc-axis-label" text-anchor="middle">
+          {tick}
+        </text>
+      ))}
+      <line
+        x1={MARGIN.left}
+        x2={MARGIN.left + plotW}
+        y1={MARGIN.top + plotH}
+        y2={MARGIN.top + plotH}
+        class="tc-axis-rule"
+      />
+
+      {seriesRender.map((s) => (
+        <path d={s.d} fill="none" class={`tc-line tc-series-${s.slot}`} data-variant={s.variant} data-seed={s.seed} />
+      ))}
+
+      {seriesRender.map((s) => (
+        <circle cx={s.endX} cy={s.endY} r="4" class={`tc-dot tc-series-${s.slot}`} />
+      ))}
+
+      {variantLabels.map((label) => (
+        <g>
+          {Math.abs(label.y - label.rawY) > 3 && (
+            <line x1={label.endX + 4} y1={label.rawY} x2={labelX - 6} y2={label.y} class="tc-leader" />
+          )}
+          <line
+            x1={labelX}
+            x2={labelX + 12}
+            y1={label.y}
+            y2={label.y}
+            class={`tc-swatch-mark tc-series-${label.slot}`}
+          />
+          <text x={labelX + 18} y={label.y} class="tc-direct-label" dominant-baseline="middle">
+            {variantLabel(label.variant)}
+          </text>
+        </g>
+      ))}
+
+      <line id="tc-crosshair" x1="0" x2="0" y1={MARGIN.top} y2={MARGIN.top + plotH} class="tc-crosshair" />
+      <rect
+        id="tc-hit"
+        x={MARGIN.left}
+        y={MARGIN.top}
+        width={plotW}
+        height={plotH}
+        fill="transparent"
+        tabindex="0"
+        role="img"
+        aria-label="Training reward chart. Use arrow keys to move through training steps and read exact values per run."
+      />
+    </svg>
+
+    <div id="tc-tooltip" class="tc-tooltip" hidden>
+      <div class="tc-tooltip-step"></div>
+      <ul class="tc-tooltip-rows"></ul>
+    </div>
+  </div>
+
+  <ul class="tc-legend mt-4">
+    {variantNames.map((variant) => (
+      <li class="tc-legend-item">
+        <span class={`tc-legend-swatch tc-series-${variantSlot.get(variant)}`}></span>
+        <span>{variantLabel(variant)}</span>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<script type="application/json" id="tc-data" set:html={chartPayload} />
+
+<script>
+  const svg = document.getElementById('tc-svg');
+  const wrap = document.getElementById('tc-wrap');
+  const dataEl = document.getElementById('tc-data');
+  const hit = document.getElementById('tc-hit');
+  const crosshair = document.getElementById('tc-crosshair');
+  const tooltip = document.getElementById('tc-tooltip');
+
+  if (svg && wrap && dataEl && hit && crosshair && tooltip) {
+    const tooltipStep = tooltip.querySelector('.tc-tooltip-step');
+    const tooltipRows = tooltip.querySelector('.tc-tooltip-rows');
+    const payload = JSON.parse(dataEl.textContent || '{}') as {
+      viewBoxWidth: number;
+      maxStep: number;
+      xScale: { left: number; plotW: number };
+      stepGrid: number[];
+      series: { variant: string; seed: string; slot: number; points: [number, number][] }[];
+    };
+    const { xScale, stepGrid, series, maxStep, viewBoxWidth } = payload;
+    const gap = stepGrid.length > 1 ? stepGrid[1] - stepGrid[0] : Infinity;
+
+    const sortedSeries = [...series].sort((a, b) =>
+      a.variant === b.variant ? Number(a.seed) - Number(b.seed) : a.variant.localeCompare(b.variant),
+    );
+
+    function pixelToStep(px: number): number {
+      const ratio = (px - xScale.left) / xScale.plotW;
+      return Math.min(Math.max(ratio, 0), 1) * maxStep;
+    }
+
+    function nearestGridStep(step: number): number {
+      let nearest = stepGrid[0];
+      let best = Infinity;
+      for (const g of stepGrid) {
+        const diff = Math.abs(g - step);
+        if (diff < best) {
+          best = diff;
+          nearest = g;
+        }
+      }
+      return nearest;
+    }
+
+    function nearestValue(points: [number, number][], step: number): number {
+      let best = points[0];
+      let bestDiff = Infinity;
+      for (const p of points) {
+        const diff = Math.abs(p[0] - step);
+        if (diff < bestDiff) {
+          bestDiff = diff;
+          best = p;
+        }
+      }
+      return best[1];
+    }
+
+    function render(step: number) {
+      const snapped = nearestGridStep(step);
+      const x = xScale.left + (snapped / maxStep) * xScale.plotW;
+      crosshair.setAttribute('x1', String(x));
+      crosshair.setAttribute('x2', String(x));
+      (crosshair as SVGLineElement).style.opacity = '1';
+
+      if (tooltipStep) tooltipStep.textContent = `Step ${snapped}`;
+      if (tooltipRows) {
+        tooltipRows.textContent = '';
+        for (const s of sortedSeries) {
+          const lastStep = s.points[s.points.length - 1][0];
+          if (snapped > lastStep + gap) continue;
+
+          const value = nearestValue(s.points, snapped);
+
+          const row = document.createElement('li');
+          row.className = 'tc-tooltip-row';
+
+          const key = document.createElement('span');
+          key.className = `tc-tooltip-key tc-series-${s.slot}`;
+
+          const label = document.createElement('span');
+          label.className = 'tc-tooltip-label';
+          label.textContent = `${s.variant.replace(/-/g, ' ')} · seed ${s.seed}`;
+
+          const valueEl = document.createElement('span');
+          valueEl.className = 'tc-tooltip-value';
+          valueEl.textContent = String(value);
+
+          row.append(key, label, valueEl);
+          tooltipRows.appendChild(row);
+        }
+      }
+      tooltip.hidden = false;
+    }
+
+    function positionTooltip(clientX: number, clientY: number | null) {
+      const wrapRect = wrap.getBoundingClientRect();
+      const left = clientX - wrapRect.left;
+      const top = clientY !== null ? clientY - wrapRect.top : 24;
+      tooltip.style.left = `${left}px`;
+      tooltip.style.top = `${top}px`;
+      requestAnimationFrame(() => {
+        const tRect = tooltip.getBoundingClientRect();
+        let dx = 0;
+        if (tRect.right > wrapRect.right) dx = wrapRect.right - tRect.right - 8;
+        if (tRect.left < wrapRect.left) dx = wrapRect.left - tRect.left + 8;
+        if (dx !== 0) tooltip.style.left = `${left + dx}px`;
+      });
+    }
+
+    function stepToClientX(step: number): number {
+      const rect = svg.getBoundingClientRect();
+      const scale = rect.width / viewBoxWidth;
+      const svgX = xScale.left + (step / maxStep) * xScale.plotW;
+      return rect.left + svgX * scale;
+    }
+
+    function hide() {
+      tooltip.hidden = true;
+      (crosshair as SVGLineElement).style.opacity = '0';
+    }
+
+    svg.addEventListener('pointermove', (evt: PointerEvent) => {
+      const rect = svg.getBoundingClientRect();
+      const scale = viewBoxWidth / rect.width;
+      const localX = (evt.clientX - rect.left) * scale;
+      render(pixelToStep(localX));
+      positionTooltip(evt.clientX, evt.clientY);
+    });
+    svg.addEventListener('pointerleave', hide);
+
+    let focusIndex = 0;
+    hit.addEventListener('focus', () => {
+      render(stepGrid[focusIndex]);
+      positionTooltip(stepToClientX(stepGrid[focusIndex]), null);
+    });
+    hit.addEventListener('blur', hide);
+    hit.addEventListener('keydown', (evt: KeyboardEvent) => {
+      if (evt.key === 'ArrowRight') focusIndex = Math.min(focusIndex + 1, stepGrid.length - 1);
+      else if (evt.key === 'ArrowLeft') focusIndex = Math.max(focusIndex - 1, 0);
+      else if (evt.key === 'Home') focusIndex = 0;
+      else if (evt.key === 'End') focusIndex = stepGrid.length - 1;
+      else return;
+      evt.preventDefault();
+      render(stepGrid[focusIndex]);
+      positionTooltip(stepToClientX(stepGrid[focusIndex]), null);
+    });
+  }
+</script>
+
+<style>
+  .training-curves {
+    --tc-series-0: #2a78d6;
+    --tc-series-1: #1baf7a;
+    --tc-series-2: #eda100;
+  }
+  @media (prefers-color-scheme: dark) {
+    .training-curves {
+      --tc-series-0: #3987e5;
+      --tc-series-1: #199e70;
+      --tc-series-2: #c98500;
+    }
+  }
+
+  .tc-chart-wrap {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tc-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    overflow: visible;
+  }
+
+  .tc-grid {
+    stroke: var(--line);
+    stroke-width: 1;
+  }
+
+  .tc-axis-rule {
+    stroke: var(--line);
+    stroke-width: 1;
+  }
+
+  .tc-axis-label {
+    fill: var(--muted);
+    font-size: 11px;
+  }
+
+  .tc-line {
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .tc-dot {
+    stroke: var(--card);
+    stroke-width: 2;
+  }
+
+  .tc-series-0 {
+    stroke: var(--tc-series-0);
+    fill: var(--tc-series-0);
+  }
+  .tc-series-1 {
+    stroke: var(--tc-series-1);
+    fill: var(--tc-series-1);
+  }
+  .tc-series-2 {
+    stroke: var(--tc-series-2);
+    fill: var(--tc-series-2);
+  }
+
+  .tc-swatch-mark {
+    stroke-width: 3;
+    stroke-linecap: round;
+  }
+
+  .tc-leader {
+    stroke: var(--muted);
+    stroke-width: 1;
+    opacity: 0.6;
+  }
+
+  .tc-direct-label {
+    fill: var(--fg);
+    font-size: 12px;
+  }
+
+  .tc-crosshair {
+    stroke: var(--muted);
+    stroke-width: 1;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.1s ease;
+  }
+
+  #tc-hit {
+    cursor: crosshair;
+  }
+  #tc-hit:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .tc-tooltip {
+    position: absolute;
+    transform: translate(-50%, calc(-100% - 12px));
+    pointer-events: none;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-size: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.16);
+    min-width: 180px;
+    z-index: 10;
+  }
+  .tc-tooltip[hidden] {
+    display: none;
+  }
+  .tc-tooltip-step {
+    font-weight: 600;
+    color: var(--fg);
+    margin-bottom: 4px;
+  }
+  .tc-tooltip-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 3px;
+  }
+  .tc-tooltip-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .tc-tooltip-key {
+    width: 10px;
+    height: 2px;
+    border-radius: 1px;
+    flex: none;
+  }
+  .tc-tooltip-key.tc-series-0 {
+    background: var(--tc-series-0);
+  }
+  .tc-tooltip-key.tc-series-1 {
+    background: var(--tc-series-1);
+  }
+  .tc-tooltip-key.tc-series-2 {
+    background: var(--tc-series-2);
+  }
+  .tc-tooltip-label {
+    color: var(--muted);
+    flex: 1;
+    white-space: nowrap;
+  }
+  .tc-tooltip-value {
+    font-weight: 600;
+    color: var(--fg);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .tc-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .tc-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--fg);
+  }
+  .tc-legend-swatch {
+    width: 16px;
+    height: 2px;
+    border-radius: 1px;
+    display: inline-block;
+  }
+  .tc-legend-swatch.tc-series-0 {
+    background: var(--tc-series-0);
+  }
+  .tc-legend-swatch.tc-series-1 {
+    background: var(--tc-series-1);
+  }
+  .tc-legend-swatch.tc-series-2 {
+    background: var(--tc-series-2);
+  }
+</style>

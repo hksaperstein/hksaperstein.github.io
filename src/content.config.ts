@@ -20,6 +20,7 @@ const projects = defineCollection({
     thingiverse_url: z.string().optional(),
     demo_url: z.string().optional(),
     gallery: z.array(mediaItem).optional(),
+    training_curves: z.boolean().optional(),
     models: z.array(mediaItem).optional(),
     schematics: z.array(mediaItem).optional(),
     components: z
