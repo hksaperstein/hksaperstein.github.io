@@ -1,0 +1,166 @@
+---
+import { SITE } from '../data/site';
+
+type Day = { date: string; level: number; id: string | null; count: number | null };
+
+const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+let weeks: Day[][] = [];
+let monthLabels: string[] = [];
+let total: string | null = null;
+
+try {
+  const res = await fetch('https://github.com/users/hksaperstein/contributions');
+  if (res.ok) {
+    const html = await res.text();
+
+    const days: Day[] = [];
+    const tdRegex = /<td\b[^>]*class="[^"]*ContributionCalendar-day[^"]*"[^>]*>/g;
+    const tdMatches = html.match(tdRegex) ?? [];
+    for (const td of tdMatches) {
+      const dateMatch = td.match(/data-date="([^"]+)"/);
+      const levelMatch = td.match(/data-level="(\d+)"/);
+      const idMatch = td.match(/\sid="([^"]+)"/);
+      if (dateMatch && levelMatch) {
+        days.push({
+          date: dateMatch[1],
+          level: parseInt(levelMatch[1], 10),
+          id: idMatch ? idMatch[1] : null,
+          count: null,
+        });
+      }
+    }
+
+    // per-day contribution counts live in sibling <tool-tip> elements keyed by
+    // the td's id via the tool-tip's "for" attribute, e.g.
+    // <tool-tip ... for="contribution-day-component-0-51" ...>25 contributions on July 5th.</tool-tip>
+    const countMap = new Map<string, number>();
+    const tooltipRegex = /<tool-tip\b([^>]*)>([^<]*)<\/tool-tip>/g;
+    let tm;
+    while ((tm = tooltipRegex.exec(html))) {
+      const forMatch = tm[1].match(/for="([^"]+)"/);
+      if (!forMatch) continue;
+      const countMatch = tm[2].match(/^\s*(\d+|No)\s+contributions?/i);
+      if (countMatch) {
+        const count = countMatch[1].toLowerCase() === 'no' ? 0 : parseInt(countMatch[1], 10);
+        countMap.set(forMatch[1], count);
+      }
+    }
+    for (const day of days) {
+      if (day.id && countMap.has(day.id)) {
+        day.count = countMap.get(day.id)!;
+      }
+    }
+
+    days.sort((a, b) => a.date.localeCompare(b.date));
+
+    if (days.length) {
+      let currentWeek: Day[] = [];
+      for (const day of days) {
+        const dow = new Date(day.date + 'T00:00:00Z').getUTCDay();
+        if (currentWeek.length === 0 && dow !== 0 && weeks.length === 0) {
+          // pad the first (partial) week so Sunday-start columns line up
+          for (let i = 0; i < dow; i++) currentWeek.push({ date: '', level: -1, id: null, count: null });
+        }
+        currentWeek.push(day);
+        if (currentWeek.length === 7) {
+          weeks.push(currentWeek);
+          currentWeek = [];
+        }
+      }
+      if (currentWeek.length) weeks.push(currentWeek);
+    }
+
+    // show only the last ~13 weeks (roughly the last 3 months)
+    weeks = weeks.slice(-13);
+
+    if (weeks.length) {
+      let lastMonth = -1;
+      monthLabels = weeks.map((week) => {
+        const firstReal = week.find((d) => d.level !== -1);
+        if (!firstReal) return '';
+        const month = parseInt(firstReal.date.slice(5, 7), 10) - 1;
+        if (month !== lastMonth) {
+          lastMonth = month;
+          return MONTH_NAMES[month];
+        }
+        return '';
+      });
+
+      const realDays = weeks.flat().filter((d) => d.level !== -1);
+      if (realDays.length && realDays.every((d) => d.count !== null)) {
+        const sum = realDays.reduce((acc, d) => acc + (d.count ?? 0), 0);
+        total = String(sum);
+      }
+    }
+  }
+} catch {
+  weeks = [];
+  monthLabels = [];
+  total = null;
+}
+---
+
+{
+  weeks.length > 0 && (
+    <section class="border-t border-line">
+      <div class="reveal mx-auto max-w-5xl px-6 py-20">
+        <h2 class="text-2xl font-bold tracking-tight">GitHub Contributions</h2>
+        {total && <p class="mt-2 text-muted">{total} contributions in the last 3 months</p>}
+
+        <div class="mt-8 overflow-x-auto pb-2">
+          <div class="w-max">
+            <div class="flex gap-[4px]">
+              {monthLabels.map((label) => (
+                <div class="w-5 shrink-0 text-xs whitespace-nowrap text-muted">{label}</div>
+              ))}
+            </div>
+            <div class="mt-1 flex gap-[4px]">
+              {weeks.map((week) => (
+                <div class="flex flex-col gap-[4px]">
+                  {week.map((day) =>
+                    day.level === -1 ? (
+                      <span class="h-5 w-5" />
+                    ) : (
+                      <span
+                        class={`h-5 w-5 rounded-[3px] l${day.level}`}
+                        title={
+                          day.count !== null
+                            ? `${day.count} contribution${day.count === 1 ? '' : 's'} on ${day.date}`
+                            : `Contributions on ${day.date}`
+                        }
+                      />
+                    )
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <a
+          href={SITE.github}
+          class="mt-4 inline-block text-sm text-muted hover:text-accent hover:underline"
+        >@hksaperstein</a>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .l0 {
+    background-color: var(--line);
+  }
+  .l1 {
+    background-color: color-mix(in oklab, var(--accent) 30%, var(--bg));
+  }
+  .l2 {
+    background-color: color-mix(in oklab, var(--accent) 55%, var(--bg));
+  }
+  .l3 {
+    background-color: color-mix(in oklab, var(--accent) 80%, var(--bg));
+  }
+  .l4 {
+    background-color: var(--accent);
+  }
+</style>
