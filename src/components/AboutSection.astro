@@ -1,3 +1,14 @@
+---
+const HOBBIES = [
+  { name: 'Winters', detail: 'Skiing.' },
+  { name: 'Summers', detail: 'Golf and a rec softball league.' },
+  { name: 'Boston sports', detail: "The Sox, Pats, B's and C's." },
+  { name: 'Maker YouTube', detail: "Adam Savage's Tested, Jeremy Fielding, StuffMadeHere, Nerdforge, Alec Steele." },
+  { name: 'Science YouTube', detail: 'Veritasium, Smarter Every Day.' },
+  { name: 'Tech YouTube', detail: 'Linus Tech Tips, MKBHD, JayzTwoCents.' },
+];
+---
+
 <section id="about" class="scroll-mt-16 border-t border-line">
   <div class="reveal mx-auto max-w-5xl px-6 py-20">
     <div class="max-w-3xl">
@@ -14,6 +25,22 @@
           projects on this page. This site is where I scratch the itch: solving problems,
           making robots move, and continuing to grow as an engineer.
         </p>
+      </div>
+    </div>
+
+    <div class="mt-12">
+      <h3 class="text-xl font-bold tracking-tight">Off the clock</h3>
+      <p class="mt-2 text-muted">What I'm into when I'm not building.</p>
+
+      <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          HOBBIES.map((hobby) => (
+            <div class="rounded-2xl border border-line bg-card p-5">
+              <h4 class="font-semibold tracking-tight">{hobby.name}</h4>
+              <p class="mt-2 text-sm text-muted">{hobby.detail}</p>
+            </div>
+          ))
+        }
       </div>
     </div>
   </div>
