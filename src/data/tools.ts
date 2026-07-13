@@ -7,4 +7,5 @@ export const TOOLS = [
   { name: 'Python + C/C++', how: 'Daily drivers - at work that means test automation frameworks for a surgical robot.' },
   { name: 'Claude Code', how: 'Multi-agent workflows with spec, plan, and review gates - most of what is on this site shipped through them.', project: '/projects/agentic-ai-experiments/' },
   { name: 'Docker + Linux', how: 'Every sim rig and CI pipeline I run lives on them.' },
+  { name: 'Google Cloud', how: 'Compute Engine for training, Cloud Storage for every run, Cloud Run for the TensorBoard that reads them.', project: '/projects/franka-dice-pick/' },
 ];
