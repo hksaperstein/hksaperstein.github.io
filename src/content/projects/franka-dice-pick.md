@@ -1,5 +1,5 @@
 ---
-title: "Franka Dice-Pick"
+title: "Robotic DnD"
 description: "A perception-in-the-loop pick demo in Isaac Lab: command a die type, and a Franka Panda finds it with my dice detector and picks it up."
 date: 2026-07-11
 featured: true
@@ -30,7 +30,7 @@ gallery:
 
 ## Overview
 
-This is where two other projects on this site converge: the [dice detector](/projects/dice-detection/) and the Isaac Lab manipulation platform. Command a die type — d20, say — and a Franka Panda in Isaac Lab finds that die on a five-die table using the trained detector, then picks it up with a staged inverse-kinematics sequence. Object positions come from the detector plus depth deprojection; the simulator's ground truth is used to verify the result, never to drive it. Four of the five die types pass. The d4 doesn't, and I'll get to why.
+The inspiration here is simple: I enjoy DnD, and if I'm going to train a robot to pick something up, it may as well be the right die for the roll. This is where two other projects on this site converge: the [dice detector](/projects/dice-detection/) and the Isaac Lab manipulation platform. Command a die type — d20, say — and a Franka Panda in Isaac Lab finds that die on a five-die table using the trained detector, then picks it up with a staged inverse-kinematics sequence. Object positions come from the detector plus depth deprojection; the simulator's ground truth is used to verify the result, never to drive it. Four of the five die types pass. The d4 doesn't, and I'll get to why.
 
 To be clear about what this is and isn't: the controller is scripted, not learned. What the demo proves is the platform — assets, camera, detector, IK, gripper — and the perception bridge between them. Learned grasping on top of this stack is the open next phase.
 
