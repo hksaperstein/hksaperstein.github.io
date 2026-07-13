@@ -35,6 +35,8 @@ suddenly turn into ad copy, and the about page shouldn't turn into a status repo
   X" is a fine sentence to write.
 - No AI-tell words: "leverage," "seamless," "cutting-edge," "robust solution," "delve,"
   "furthermore." Just say the thing.
+- No stock framings or tropes: "by day X, by night Y" and its variants are out. Describe the
+  work/hobby split plainly if it needs describing at all.
 - No emoji in site copy.
 - Short technical sentences over long compound ones in write-ups. Save longer sentences for
   personal/narrative sections where a real thought runs long.
