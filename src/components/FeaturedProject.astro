@@ -1,14 +1,22 @@
 ---
 import { getCollection } from 'astro:content';
+import ProjectPreviewDialog from './ProjectPreviewDialog.astro';
+import { previewDialogId } from '../lib/previewDialog';
 
 const [featured] = await getCollection('projects', (p) => p.data.featured);
+const dialogId = featured ? previewDialogId('featured', featured.id) : undefined;
 ---
 
 {
   featured && (
     <section class="reveal mx-auto max-w-5xl px-6 pb-20">
       <p class="mb-4 text-sm font-medium tracking-widest text-accent uppercase">Current project</p>
-      <div class="overflow-hidden rounded-2xl border border-line bg-card sm:grid sm:grid-cols-2">
+      <a
+        href={`/projects/${featured.id}/`}
+        data-preview-trigger
+        data-dialog-id={dialogId}
+        class="group block overflow-hidden rounded-2xl border border-line bg-card transition-transform duration-150 hover:-translate-y-0.5 hover:border-accent motion-reduce:transition-none motion-reduce:hover:translate-y-0 sm:grid sm:grid-cols-2"
+      >
         <video
           autoplay
           muted
@@ -24,25 +32,30 @@ const [featured] = await getCollection('projects', (p) => p.data.featured);
               <span class="rounded-full border border-line px-2.5 py-0.5 text-xs text-muted">{category}</span>
             ))}
           </div>
-          <h3 class="mt-4 text-2xl font-bold tracking-tight">
-            <a href={`/projects/${featured.id}/`} class="hover:text-accent">{featured.data.title}</a>
-          </h3>
+          <h3 class="mt-4 text-2xl font-bold tracking-tight group-hover:text-accent">{featured.data.title}</h3>
           <p class="mt-3 text-muted">{featured.data.description}</p>
-          <a href={`/projects/${featured.id}/`} class="mt-6 inline-block font-medium text-accent hover:underline">
-            Read the write-up →
-          </a>
         </div>
-      </div>
+      </a>
+      <ProjectPreviewDialog project={featured} idPrefix="featured" />
     </section>
   )
 }
 
 <script>
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    document.querySelectorAll<HTMLVideoElement>('video[autoplay]').forEach((video) => {
+  document.querySelectorAll<HTMLVideoElement>('video[autoplay]').forEach((video) => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       video.removeAttribute('autoplay');
       video.pause();
       video.setAttribute('controls', '');
+    }
+
+    // The video sits inside the whole-card preview trigger; once it has native
+    // controls (reduced-motion fallback above), clicks on those controls
+    // shouldn't also open the preview dialog.
+    video.addEventListener('click', (event) => {
+      if (video.hasAttribute('controls')) {
+        event.stopPropagation();
+      }
     });
-  }
+  });
 </script>

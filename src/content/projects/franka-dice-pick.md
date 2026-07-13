@@ -7,6 +7,10 @@ categories: [Robotics, Machine Learning, AI]
 featured_image: "/assets/images/projects/franka-dice-pick/featured.jpg"
 github_url: "https://github.com/hksaperstein/rl"
 training_curves: true
+preview:
+  overview: "Ask for a d20 and the robot picks it out of the pile. Underneath it's a Franka Panda in Isaac Lab, finding dice with a detector that has never seen a real photo - only renders from my dice generator. The sim's ground truth checks my work, it never does the work."
+  tools: [NVIDIA Isaac Lab, YOLO, Claude Code]
+  highlight: "Four of the five die types pass. The d4 doesn't - I called that one before the demo ran. Flat gripper pads squeeze a tetrahedron right out of the grasp, and I haven't solved it yet."
 gallery:
   - file: "/assets/images/projects/franka-dice-pick/detection-overlay.png"
     section: "Detection"

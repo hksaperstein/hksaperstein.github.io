@@ -1,5 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import ProjectPreviewDialog from './ProjectPreviewDialog.astro';
+import { previewDialogId } from '../lib/previewDialog';
 
 interface Props {
   project: CollectionEntry<'projects'>;
@@ -7,10 +9,13 @@ interface Props {
 
 const { project } = Astro.props;
 const href = `/projects/${project.id}/`;
+const dialogId = previewDialogId('grid', project.id);
 ---
 
 <a
   href={href}
+  data-preview-trigger
+  data-dialog-id={dialogId}
   class="group overflow-hidden rounded-2xl border border-line bg-card transition-transform duration-150 hover:-translate-y-0.5 hover:border-accent motion-reduce:transition-none motion-reduce:hover:translate-y-0"
 >
   {
@@ -37,3 +42,5 @@ const href = `/projects/${project.id}/`;
     <p class="mt-2 line-clamp-2 text-sm text-muted">{project.data.description}</p>
   </div>
 </a>
+
+<ProjectPreviewDialog project={project} idPrefix="grid" />

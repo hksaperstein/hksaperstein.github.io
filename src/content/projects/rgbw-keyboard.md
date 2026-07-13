@@ -6,6 +6,9 @@ categories: [Arduino, Electronics, 3D Printing]
 featured_image: "/assets/images/projects/rgbw-keyboard/proto-pcb.png"
 github_url: "https://github.com/hksaperstein/keyboard"
 demo_url: "#"
+preview:
+  overview: "Building a mechanical keyboard from scratch, starting small - a 2x4 RGBW LED prototype board to get the electronics right first."
+  tools: [Arduino]
 
 # 3D Models - Support for STL, OBJ, GLTF, GLB formats
 # models:

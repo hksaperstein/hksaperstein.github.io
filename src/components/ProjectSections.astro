@@ -1,13 +1,15 @@
 ---
 import { getEntry } from 'astro:content';
+import ProjectPreviewDialog from './ProjectPreviewDialog.astro';
+import { previewDialogId } from '../lib/previewDialog';
 
-const ids = ['dice-detection', '6dof-robotic-arm', 'rgbw-keyboard'] as const;
+const ids = ['dice-detection', 'agentic-ai-experiments', '6dof-robotic-arm'] as const;
 
 const entries = await Promise.all(ids.map((id) => getEntry('projects', id)));
 const projects = entries.filter((entry): entry is NonNullable<typeof entry> => Boolean(entry));
 ---
 
-<section id="projects" class="scroll-mt-16 border-t border-line">
+<section id="projects" class="border-t border-line">
   <div class="reveal mx-auto max-w-5xl px-6 py-20">
     <h2 class="text-2xl font-bold tracking-tight">Projects</h2>
     <div class="mt-10 flex flex-col gap-16">
@@ -15,39 +17,44 @@ const projects = entries.filter((entry): entry is NonNullable<typeof entry> => B
         projects.map((project, index) => {
           const mediaOrder = index % 2 === 0 ? 'sm:order-1' : 'sm:order-2';
           const textOrder = index % 2 === 0 ? 'sm:order-2' : 'sm:order-1';
+          const projectHref = `/projects/${project.id}/`;
+          const dialogId = previewDialogId('home', project.id);
           return (
-            <div class="reveal grid gap-6 sm:grid-cols-2 sm:gap-10">
-              <figure class={`order-1 overflow-hidden rounded-2xl border border-line bg-card ${mediaOrder}`}>
-                {project.data.featured_image ? (
-                  <img
-                    src={project.data.featured_image}
-                    alt={project.data.title}
-                    loading="lazy"
-                    class="aspect-video w-full object-cover"
-                  />
-                ) : (
-                  <div class="flex aspect-video w-full items-center justify-center bg-bg text-sm tracking-widest text-muted uppercase">
-                    {project.data.categories[0] ?? 'Project'}
+            <>
+              <a
+                href={projectHref}
+                data-preview-trigger
+                data-dialog-id={dialogId}
+                class="group reveal grid gap-6 overflow-hidden rounded-2xl border border-line bg-card p-6 transition-transform duration-150 hover:-translate-y-0.5 hover:border-accent motion-reduce:transition-none motion-reduce:hover:translate-y-0 sm:grid-cols-2 sm:gap-10 sm:p-8"
+              >
+                <figure class={`order-1 overflow-hidden rounded-xl border border-line ${mediaOrder}`}>
+                  {project.data.featured_image ? (
+                    <img
+                      src={project.data.featured_image}
+                      alt={project.data.title}
+                      loading="lazy"
+                      class="aspect-video w-full object-cover"
+                    />
+                  ) : (
+                    <div class="flex aspect-video w-full items-center justify-center bg-bg text-sm tracking-widest text-muted uppercase">
+                      {project.data.categories[0] ?? 'Project'}
+                    </div>
+                  )}
+                </figure>
+                <div class={`order-2 flex flex-col justify-center ${textOrder}`}>
+                  <div class="flex flex-wrap gap-2">
+                    {project.data.categories.slice(0, 3).map((category) => (
+                      <span class="rounded-full border border-line px-2.5 py-0.5 text-xs text-muted">{category}</span>
+                    ))}
                   </div>
-                )}
-              </figure>
-              <div class={`order-2 flex flex-col justify-center ${textOrder}`}>
-                <div class="flex flex-wrap gap-2">
-                  {project.data.categories.slice(0, 3).map((category) => (
-                    <span class="rounded-full border border-line px-2.5 py-0.5 text-xs text-muted">{category}</span>
-                  ))}
-                </div>
-                <h3 class="mt-4 text-xl font-semibold tracking-tight">
-                  <a href={`/projects/${project.id}/`} class="hover:text-accent">
+                  <h3 class="mt-4 text-xl font-semibold tracking-tight group-hover:text-accent">
                     {project.data.title}
-                  </a>
-                </h3>
-                <p class="mt-3 text-muted">{project.data.description}</p>
-                <a href={`/projects/${project.id}/`} class="mt-6 inline-block font-medium text-accent hover:underline">
-                  Read the write-up →
-                </a>
-              </div>
-            </div>
+                  </h3>
+                  <p class="mt-3 text-muted">{project.data.description}</p>
+                </div>
+              </a>
+              <ProjectPreviewDialog project={project} idPrefix="home" />
+            </>
           );
         })
       }

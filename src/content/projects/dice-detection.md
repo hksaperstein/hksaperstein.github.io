@@ -4,6 +4,10 @@ description: "A headless-Blender pipeline that procedurally generates a labeled 
 date: 2026-07-05
 categories: [Machine Learning, Computer Vision]
 featured_image: "/assets/images/projects/dice-detection/detection-scene-tabletop-annotated.jpg"
+preview:
+  overview: "What started as a Blender script to generate some dice grew into a full pipeline: build a dice library, render tabletop scenes, label them automatically, and train a detector without a single real photo. Then I pointed it at real photos to see what would happen."
+  tools: [Blender, YOLO11, COCO]
+  highlight: "2,100 dice, 10,000 scenes, 51,505 labels - and a model that aced synthetic validation, then stumbled on real photos. Working out exactly how it stumbled turned out to be the best part of the project."
 gallery:
   - section: "Generated Assets"
     file: "/assets/images/projects/dice-detection/die-d4.png"

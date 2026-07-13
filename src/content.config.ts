@@ -33,6 +33,13 @@ const projects = defineCollection({
         }),
       )
       .optional(),
+    preview: z
+      .object({
+        overview: z.string().optional(),
+        tools: z.array(z.string()).optional(),
+        highlight: z.string().optional(),
+      })
+      .optional(),
   }),
 });
 

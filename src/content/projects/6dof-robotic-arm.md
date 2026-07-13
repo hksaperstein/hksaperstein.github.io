@@ -6,6 +6,9 @@ categories: [Robotics, Computer Vision, Machine Learning, 3D Printing]
 featured_image: "/assets/images/projects/robotic-arm/featured.jpg"
 github_url: "https://github.com/hksaperstein/6DoF"
 demo_url: "#"
+preview:
+  overview: "Getting a hobby-class arm, the Annin Robotics AR4, to move the way I want it to - working through the kinematics and control in ROS2."
+  tools: [ROS2]
 
 models:
   - file: "/assets/models/robotic-arm/base.gltf"

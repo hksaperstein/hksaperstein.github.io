@@ -1,0 +1,122 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { previewDialogId } from '../lib/previewDialog';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  // Distinguishes dialogs for the same project rendered in different contexts
+  // on the same page (e.g. homepage rows vs. the /projects/ grid) so ids never collide.
+  idPrefix?: string;
+}
+
+const { project, idPrefix = 'preview' } = Astro.props;
+const href = `/projects/${project.id}/`;
+const dialogId = previewDialogId(idPrefix, project.id);
+
+const gallery = project.data.gallery ?? [];
+const previewMedia =
+  gallery.find((item) => item.section?.toLowerCase().includes('result'))?.file ??
+  project.data.featured_image ??
+  gallery[0]?.file;
+
+const isVideo = previewMedia ? /\.(mp4|webm|mov)$/i.test(previewMedia) : false;
+
+const overview = project.data.preview?.overview ?? project.data.description;
+const tools = project.data.preview?.tools;
+const highlight = project.data.preview?.highlight;
+---
+
+<dialog id={dialogId} data-preview-dialog class="dialog-preview m-auto w-[calc(100vw-2rem)] max-w-lg rounded-2xl border border-line bg-card p-0 text-fg lg:max-w-2xl xl:max-w-3xl">
+  <div class="relative">
+    <button
+      type="button"
+      data-dialog-close
+      aria-label="Close"
+      class="absolute top-3 right-3 rounded-full bg-bg/60 p-1.5 text-muted backdrop-blur transition-colors hover:text-fg"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
+      </svg>
+    </button>
+    {
+      previewMedia ? (
+        isVideo ? (
+          <video controls muted playsinline preload="metadata" class="aspect-video w-full rounded-t-2xl object-cover" src={previewMedia} />
+        ) : (
+          <img src={previewMedia} alt={project.data.title} loading="lazy" class="aspect-video w-full rounded-t-2xl object-cover" />
+        )
+      ) : null
+    }
+  </div>
+  <div class="p-6 lg:p-8">
+    <div class="flex flex-wrap gap-2">
+      {project.data.categories.slice(0, 2).map((category) => (
+        <span class="rounded-full border border-line px-2.5 py-0.5 text-xs text-muted">{category}</span>
+      ))}
+    </div>
+    <h3 class="mt-3 text-xl font-semibold tracking-tight">{project.data.title}</h3>
+    <p class="mt-3 text-muted">{overview}</p>
+    {
+      tools && tools.length > 0 && (
+        <div class="mt-4">
+          <p class="text-xs tracking-widest text-muted uppercase">Built with</p>
+          <div class="mt-2 flex flex-wrap gap-2">
+            {tools.map((tool) => (
+              <span class="rounded-full border border-accent/30 bg-bg px-2.5 py-0.5 text-xs text-muted">{tool}</span>
+            ))}
+          </div>
+        </div>
+      )
+    }
+    {
+      highlight && (
+        <div class="mt-4 border-l-2 border-accent pl-3 text-sm text-muted">{highlight}</div>
+      )
+    }
+    <div class="mt-5 text-right">
+      <a href={href} class="font-medium text-accent hover:underline">View project →</a>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  .dialog-preview::backdrop {
+    background: rgb(0 0 0 / 0.6);
+  }
+</style>
+
+<script>
+  const triggers = document.querySelectorAll<HTMLAnchorElement>('[data-preview-trigger]');
+
+  for (const trigger of triggers) {
+    trigger.addEventListener('click', (event) => {
+      if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) {
+        return;
+      }
+
+      const dialogId = trigger.dataset.dialogId;
+      if (!dialogId) return;
+      const dialog = document.getElementById(dialogId) as HTMLDialogElement | null;
+      if (!dialog) return;
+
+      event.preventDefault();
+      if (!dialog.open) {
+        dialog.showModal();
+      }
+    });
+  }
+
+  const dialogs = document.querySelectorAll<HTMLDialogElement>('dialog[data-preview-dialog]');
+
+  for (const dialog of dialogs) {
+    const closeButton = dialog.querySelector<HTMLButtonElement>('[data-dialog-close]');
+    closeButton?.addEventListener('click', () => dialog.close());
+
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) {
+        dialog.close();
+      }
+    });
+  }
+</script>

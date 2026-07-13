@@ -34,6 +34,20 @@ html {
   scroll-behavior: smooth;
 }
 
+/* anchored sections align their top border with the sticky header's bottom border
+   (header = py-2 + h-11 logo = 3.75rem; the section's own 1px border hides under the header's) */
+section[id] {
+  scroll-margin-top: 3.75rem;
+}
+
+/* scale the whole page up on large displays - rem-based utilities follow the root.
+   1080p-class monitors stay at 100%; the bump starts at 1440p-and-up widths */
+@media (min-width: 2560px) {
+  html {
+    font-size: 150%;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
