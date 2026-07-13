@@ -5,9 +5,9 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/start-jekyll-dev-server.sh\"",
+            "command": "bash \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/start-astro-dev-server.sh\"",
             "timeout": 30,
-            "statusMessage": "Starting Jekyll dev server..."
+            "statusMessage": "Starting Astro dev server..."
           }
         ]
       }
