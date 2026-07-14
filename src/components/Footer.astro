@@ -11,7 +11,7 @@ const links = [
 
 <footer class="border-t border-line">
   <div class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-6 py-10 text-sm text-muted">
-    <p>© {new Date().getFullYear()} Harrison Saperstein</p>
+    <p>© {new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', year: 'numeric' }).format(new Date())} Harrison Saperstein</p>
     <div class="flex flex-wrap gap-5">
       {links.map((link) => (
         <a href={link.href} class="transition-colors hover:text-fg">{link.label}</a>

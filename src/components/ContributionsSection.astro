@@ -28,6 +28,19 @@ if (token) {
 const DAY_MS = 86400000;
 const WEEKS_SHOWN = 6;
 
+// bucket days in Harrison's timezone, not UTC - late-evening commits belong
+// to the day they were made, and DST is handled by the IANA zone
+const NY_DATE = new Intl.DateTimeFormat('en-CA', {
+  timeZone: 'America/New_York',
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+});
+const nyDateOf = (d: Date) => NY_DATE.format(d);
+// calendar-date arithmetic on YYYY-MM-DD strings; noon UTC anchor avoids DST edges
+const dateMs = (dateStr: string) => Date.parse(`${dateStr}T12:00:00Z`);
+const dateStrOf = (ms: number) => new Date(ms).toISOString().slice(0, 10);
+
 // Count commits per day straight from the commits API. Unlike the
 // stats/commit_activity endpoint (a lazily recomputed cache that our own
 // pushes invalidate right before each deploy reads it), this is synchronous
@@ -45,8 +58,10 @@ async function fetchDailyCommitCounts(repo: string): Promise<Map<string, number>
       const data = await res.json();
       if (!Array.isArray(data)) return page === 1 ? null : counts;
       for (const entry of data) {
-        const date = (entry?.commit?.committer?.date ?? entry?.commit?.author?.date ?? '').slice(0, 10);
-        if (date) counts.set(date, (counts.get(date) ?? 0) + 1);
+        const stamp = entry?.commit?.committer?.date ?? entry?.commit?.author?.date;
+        if (!stamp) continue;
+        const date = nyDateOf(new Date(stamp));
+        counts.set(date, (counts.get(date) ?? 0) + 1);
       }
       if (data.length < 100) break;
     }
@@ -59,9 +74,9 @@ async function fetchDailyCommitCounts(repo: string): Promise<Map<string, number>
 function buildCard(repo: string, label: string, counts: Map<string, number> | null): Card | null {
   if (!counts) return null;
   try {
-    const now = new Date();
-    const todayUTC = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
-    const currentSunday = todayUTC - new Date(todayUTC).getUTCDay() * DAY_MS;
+    const today = nyDateOf(new Date());
+    const todayMs = dateMs(today);
+    const currentSunday = todayMs - new Date(todayMs).getUTCDay() * DAY_MS;
 
     // Sunday-aligned columns: (WEEKS_SHOWN - 1) full weeks plus the partial current week
     const weeks: Day[][] = [];
@@ -70,12 +85,12 @@ function buildCard(repo: string, label: string, counts: Map<string, number> | nu
       const week: Day[] = [];
       for (let d = 0; d < 7; d++) {
         const dayMs = weekStartMs + d * DAY_MS;
-        if (dayMs > todayUTC) {
+        if (dayMs > todayMs) {
           // current week is partial - keep the placeholder so the last column trails off
           week.push({ date: '', level: -1, count: null });
           continue;
         }
-        const dateStr = new Date(dayMs).toISOString().slice(0, 10);
+        const dateStr = dateStrOf(dayMs);
         week.push({ date: dateStr, level: 0, count: counts.get(dateStr) ?? 0 });
       }
       weeks.push(week);
