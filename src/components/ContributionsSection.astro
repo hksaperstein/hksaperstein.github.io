@@ -27,12 +27,14 @@ if (token) {
 }
 
 // GitHub computes stats asynchronously: a 202 means "try again shortly".
+// Pushing to a repo invalidates its stats cache, so the build triggered by a
+// push almost always starts cold - give the recompute a generous window.
 async function fetchCommitActivity(repo: string): Promise<StatsWeek[] | null> {
   try {
-    for (let attempt = 0; attempt < 5; attempt++) {
+    for (let attempt = 0; attempt < 12; attempt++) {
       const res = await fetch(`https://api.github.com/repos/${repo}/stats/commit_activity`, { headers });
       if (res.status === 202) {
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+        await new Promise((resolve) => setTimeout(resolve, 5000));
         continue;
       }
       if (res.ok) {
@@ -140,8 +142,8 @@ try {
               </button>
             )}
 
-            <div class="scrollbar-hide overflow-x-auto" data-carousel-scroll>
-              <div class="flex snap-x snap-mandatory" data-carousel-track data-real-count={cards.length}>
+            <div class="scrollbar-hide snap-x snap-mandatory overflow-x-auto" data-carousel-scroll>
+              <div class="flex" data-carousel-track data-real-count={cards.length}>
                 {(cards.length > 1 ? [cards[cards.length - 1], ...cards, cards[0]] : cards).map((card) => (
                   <div class="flex w-full shrink-0 snap-center justify-center px-1">
                     <div class="flex w-full max-w-md flex-col rounded-2xl border border-line bg-card p-6">
