@@ -293,18 +293,18 @@ try {
 
       let scrollTimeout: number | undefined;
       scrollEl.addEventListener('scroll', () => {
+        // dot tracks the nearest slide live, mid-swipe
+        setActive(realFromVisual(visualIndex()));
+
+        // the clone jump waits until scrolling settles
         window.clearTimeout(scrollTimeout);
         scrollTimeout = window.setTimeout(() => {
-          let visual = visualIndex();
+          const visual = visualIndex();
           if (hasClones && visual === 0) {
-            visual = realCount;
-            scrollToVisual(visual, false);
+            scrollToVisual(realCount, false);
           } else if (hasClones && visual === realCount + 1) {
-            visual = 1;
-            scrollToVisual(visual, false);
+            scrollToVisual(1, false);
           }
-          const real = ((visual - offset) % realCount + realCount) % realCount;
-          setActive(real);
         }, 100);
       });
 
