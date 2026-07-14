@@ -1,6 +1,5 @@
 ---
 type Day = { date: string; level: number; count: number | null };
-type StatsWeek = { week: number; total: number; days: number[] };
 type Card = {
   repoUrl: string;
   repoName: string;
@@ -26,55 +25,61 @@ if (token) {
   headers.Authorization = `Bearer ${token}`;
 }
 
-// GitHub computes stats asynchronously: a 202 means "try again shortly".
-// Pushing to a repo invalidates its stats cache, so the build triggered by a
-// push almost always starts cold - give the recompute a generous window.
-async function fetchCommitActivity(repo: string): Promise<StatsWeek[] | null> {
+const DAY_MS = 86400000;
+const WEEKS_SHOWN = 6;
+
+// Count commits per day straight from the commits API. Unlike the
+// stats/commit_activity endpoint (a lazily recomputed cache that our own
+// pushes invalidate right before each deploy reads it), this is synchronous
+// and never answers "still computing".
+async function fetchDailyCommitCounts(repo: string): Promise<Map<string, number> | null> {
   try {
-    for (let attempt = 0; attempt < 12; attempt++) {
-      const res = await fetch(`https://api.github.com/repos/${repo}/stats/commit_activity`, { headers });
-      if (res.status === 202) {
-        await new Promise((resolve) => setTimeout(resolve, 5000));
-        continue;
+    const since = new Date(Date.now() - (WEEKS_SHOWN + 1) * 7 * DAY_MS).toISOString();
+    const counts = new Map<string, number>();
+    for (let page = 1; page <= 10; page++) {
+      const res = await fetch(
+        `https://api.github.com/repos/${repo}/commits?since=${since}&per_page=100&page=${page}`,
+        { headers },
+      );
+      if (!res.ok) return page === 1 ? null : counts;
+      const data = await res.json();
+      if (!Array.isArray(data)) return page === 1 ? null : counts;
+      for (const entry of data) {
+        const date = (entry?.commit?.committer?.date ?? entry?.commit?.author?.date ?? '').slice(0, 10);
+        if (date) counts.set(date, (counts.get(date) ?? 0) + 1);
       }
-      if (res.ok) {
-        const data = await res.json();
-        if (Array.isArray(data) && data.length) return data;
-      }
-      return null;
+      if (data.length < 100) break;
     }
-    return null;
+    return counts;
   } catch {
     return null;
   }
 }
 
-function buildCard(repo: string, label: string, statsData: StatsWeek[] | null): Card | null {
-  if (!statsData) return null;
+function buildCard(repo: string, label: string, counts: Map<string, number> | null): Card | null {
+  if (!counts) return null;
   try {
     const now = new Date();
     const todayUTC = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+    const currentSunday = todayUTC - new Date(todayUTC).getUTCDay() * DAY_MS;
 
-    const allWeeks: Day[][] = [];
-    for (const weekEntry of statsData) {
-      const weekStartMs = weekEntry.week * 1000;
+    // Sunday-aligned columns: (WEEKS_SHOWN - 1) full weeks plus the partial current week
+    const weeks: Day[][] = [];
+    for (let w = WEEKS_SHOWN - 1; w >= 0; w--) {
+      const weekStartMs = currentSunday - w * 7 * DAY_MS;
       const week: Day[] = [];
       for (let d = 0; d < 7; d++) {
-        const dayMs = weekStartMs + d * 86400000;
+        const dayMs = weekStartMs + d * DAY_MS;
         if (dayMs > todayUTC) {
           // current week is partial - keep the placeholder so the last column trails off
           week.push({ date: '', level: -1, count: null });
           continue;
         }
         const dateStr = new Date(dayMs).toISOString().slice(0, 10);
-        const count = weekEntry.days?.[d] ?? 0;
-        week.push({ date: dateStr, level: 0, count });
+        week.push({ date: dateStr, level: 0, count: counts.get(dateStr) ?? 0 });
       }
-      allWeeks.push(week);
+      weeks.push(week);
     }
-
-    const weeks = allWeeks.slice(-6);
-    if (!weeks.length) return null;
 
     const realDays = weeks.flat().filter((d) => d.level !== -1);
     const max = realDays.reduce((acc, d) => Math.max(acc, d.count ?? 0), 0);
@@ -116,7 +121,7 @@ function buildCard(repo: string, label: string, statsData: StatsWeek[] | null): 
 
 let cards: Card[] = [];
 try {
-  const results = await Promise.all(REPOS.map((r) => fetchCommitActivity(r.repo)));
+  const results = await Promise.all(REPOS.map((r) => fetchDailyCommitCounts(r.repo)));
   cards = REPOS.map((r, i) => buildCard(r.repo, r.label, results[i])).filter((c): c is Card => c !== null);
 } catch {
   cards = [];
