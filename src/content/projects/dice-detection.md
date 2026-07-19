@@ -192,3 +192,24 @@ I trained YOLO11s (imgsz 640, 60 epochs, batch 32, seed 42) two ways and evaluat
 - Review d8/d10 geometry and engraving legibility against real dice — they're the two worst classes.
 
 **Caveat on the S+R number:** the fine-tune slice and the frozen test set come from the same two real-photo collections — same physical dice, same cameras. I removed image-level duplicate leakage with a group-aware split, but the same physical die still shows up in both splits in different photos. So S+R's near-1.0 is within-collection performance, not proof this generalizes to dice or cameras it's never seen. The real photos are also almost entirely single-die close-ups, so the multi-die clutter scenes the synthetic data covers heavily are essentially untested against reality.
+
+## Status
+
+The pipeline runs end to end: procedural dice generation, scene rendering, automatic annotation, and detector training all work and produce real output. The open question isn't whether the pipeline works - it does - it's why the resulting detector doesn't transfer cleanly to real photos yet.
+
+## Results
+
+- **Asset generation:** 2,100 dice across all 7 types (300 each), spanning 5 glyph styles and 6 material categories, with 0 recorded generation failures.
+- **Dataset:** 10,000 rendered scenes and 51,505 COCO annotations, using an occlusion-aware second pass so boxes reflect what's actually visible rather than a die's full unoccluded silhouette.
+- **Synthetic training:** YOLO11s trained on the synthetic set alone hit mAP50 0.984 on synthetic validation - the full pipeline closes the loop from geometry to a working detector.
+- **Real-photo fine-tune:** adding a real-photo slice (variant S+R) pushed real-photo mAP50 to 0.989 or better on every class, within the photo collections used for training and testing.
+
+## Challenges
+
+- **The sim-to-real gap:** the synthetic-only model (S) drops to a mean real-photo mAP50 of 0.532, and two classes collapse outright - d8 at 0.090, d10 at 0.097. The confusion matrix shows it's not a localization problem (boxes are confident, around 0.94) but a classification shift up the shape-complexity ladder: true d10s mostly get called d12 or d20. My working theory is that the synthetic scenes teach the model to read apparent in-frame size as a class signal, which breaks down on the real test photos since they're almost all single-die close-ups where every die fills the frame.
+- **S+R's numbers don't prove generalization:** the fine-tune slice and the frozen test set share the same physical dice and cameras. I split by group to avoid image-level leakage, but the same dice still appear in both splits. So S+R's near-1.0 scores are within-collection, not evidence the model would hold up on dice or cameras it's never seen - and the multi-die clutter scenes the synthetic data covers heavily are barely represented in the real test photos at all.
+- **10 of 300 d10 meshes still fail asset validation**, flagged for open boundary edges or a degenerate face. I haven't root-caused it.
+
+## What's next
+
+Most of what I'd change lives in the data generator, not the model: render single- and few-die close-ups across the full focal range so every class shows up at every apparent size, carve out a synthetic validation split that isn't leaked (today's is saturated and doesn't predict real transfer), shift glyph style weighting toward arabic numerals to match real dice, and take a closer look at d8/d10 geometry and engraving legibility since they're the two worst classes. I also still want to track down the 10 outstanding d10 validation failures.

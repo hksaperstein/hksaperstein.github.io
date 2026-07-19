@@ -7,9 +7,11 @@ interface GalleryItem {
 
 interface Props {
   items: GalleryItem[];
+  title?: string;
+  intro?: string;
 }
 
-const { items } = Astro.props;
+const { items, title = 'Gallery', intro } = Astro.props;
 
 const groups = new Map<string, GalleryItem[]>();
 for (const item of items) {
@@ -21,27 +23,157 @@ for (const item of items) {
 const isVideo = (file: string) => /\.(mp4|webm)$/i.test(file);
 ---
 
-<section class="mt-12">
-  <h2 class="text-2xl font-bold tracking-tight">Gallery</h2>
+<details class="group mt-12 rounded-2xl border border-line bg-card">
+  <summary class="flex cursor-pointer list-none items-center justify-between gap-4 p-6 [&::-webkit-details-marker]:hidden">
+    <h2 class="text-2xl font-bold tracking-tight">{title}</h2>
+    <svg
+      class="h-5 w-5 shrink-0 text-muted transition-transform group-open:rotate-180"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      aria-hidden="true"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6" />
+    </svg>
+  </summary>
+
+  <div class="border-t border-line p-6 pt-5">
+  {intro && <p class="text-muted">{intro}</p>}
   {
     [...groups.entries()].map(([section, groupItems]) => (
       <div class="mt-8">
         {section && <h3 class="text-lg font-semibold tracking-tight">{section}</h3>}
-        <div class="mt-4 grid gap-6 sm:grid-cols-2">
-          {groupItems.map((item) => (
-            <figure class="overflow-hidden rounded-2xl border border-line bg-card">
-              {isVideo(item.file) ? (
-                <video controls preload="metadata" class="w-full" src={item.file} />
-              ) : (
-                <img src={item.file} alt={item.description ?? ''} loading="lazy" class="w-full" />
-              )}
-              {item.description && (
-                <figcaption class="border-t border-line p-4 text-sm text-muted">{item.description}</figcaption>
-              )}
-            </figure>
-          ))}
-        </div>
+
+        {groupItems.length > 1 ? (
+          <div class="mt-4 gallery-carousel" data-carousel>
+            <div class="relative">
+              <button
+                type="button"
+                class="absolute left-0 top-1/2 z-10 -translate-x-3 -translate-y-1/2 rounded-full border border-line bg-card p-1.5 text-muted transition-colors hover:text-fg disabled:pointer-events-none disabled:opacity-0"
+                aria-label="Previous"
+                data-carousel-prev
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+
+              <div class="scrollbar-hide snap-x snap-mandatory overflow-x-auto" data-carousel-scroll>
+                <div class="flex" data-carousel-track>
+                  {groupItems.map((item) => (
+                    <div class="w-full shrink-0 snap-center px-1">
+                      <figure class="overflow-hidden rounded-2xl border border-line bg-card">
+                        {isVideo(item.file) ? (
+                          <video controls preload="metadata" class="aspect-video w-full" src={item.file} />
+                        ) : (
+                          <img src={item.file} alt={item.description ?? ''} loading="lazy" class="max-h-[32rem] w-full bg-bg object-contain" />
+                        )}
+                        {item.description && (
+                          <figcaption class="border-t border-line p-4 text-sm text-muted">{item.description}</figcaption>
+                        )}
+                      </figure>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <button
+                type="button"
+                class="absolute right-0 top-1/2 z-10 -translate-y-1/2 translate-x-3 rounded-full border border-line bg-card p-1.5 text-muted transition-colors hover:text-fg disabled:pointer-events-none disabled:opacity-0"
+                aria-label="Next"
+                data-carousel-next
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+
+            <div class="mt-4 flex justify-center gap-2" data-carousel-dots>
+              {groupItems.map((_, i) => (
+                <button
+                  type="button"
+                  class="h-2 w-2 rounded-full bg-line transition-colors"
+                  aria-label={`Go to slide ${i + 1} of ${groupItems.length}`}
+                  data-carousel-dot
+                  data-index={i}
+                />
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div class="mt-4">
+            {groupItems.map((item) => (
+              <figure class="overflow-hidden rounded-2xl border border-line bg-card">
+                {isVideo(item.file) ? (
+                  <video controls preload="metadata" class="aspect-video w-full" src={item.file} />
+                ) : (
+                  <img src={item.file} alt={item.description ?? ''} loading="lazy" class="aspect-video w-full object-cover" />
+                )}
+                {item.description && (
+                  <figcaption class="border-t border-line p-4 text-sm text-muted">{item.description}</figcaption>
+                )}
+              </figure>
+            ))}
+          </div>
+        )}
       </div>
     ))
   }
-</section>
+  </div>
+</details>
+
+<style>
+  .scrollbar-hide {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+</style>
+
+<script>
+  const carousels = document.querySelectorAll<HTMLElement>('[data-carousel]');
+
+  carousels.forEach((root) => {
+    const scrollEl = root.querySelector<HTMLElement>('[data-carousel-scroll]');
+    const track = root.querySelector<HTMLElement>('[data-carousel-track]');
+    const prevBtn = root.querySelector<HTMLButtonElement>('[data-carousel-prev]');
+    const nextBtn = root.querySelector<HTMLButtonElement>('[data-carousel-next]');
+    const dots = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-carousel-dot]'));
+    const slides = track ? Array.from(track.children) : [];
+
+    if (!(scrollEl && track && slides.length > 0)) return;
+
+    const width = () => scrollEl.clientWidth;
+    const currentIndex = () => Math.round(scrollEl.scrollLeft / width());
+
+    const setActive = (index: number) => {
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('bg-accent', i === index);
+        dot.classList.toggle('bg-line', i !== index);
+      });
+      if (prevBtn) prevBtn.disabled = index <= 0;
+      if (nextBtn) nextBtn.disabled = index >= slides.length - 1;
+    };
+
+    const scrollToIndex = (index: number) => {
+      const clamped = Math.max(0, Math.min(slides.length - 1, index));
+      setActive(clamped);
+      scrollEl.scrollTo({ left: clamped * width(), behavior: 'smooth' });
+    };
+
+    prevBtn?.addEventListener('click', () => scrollToIndex(currentIndex() - 1));
+    nextBtn?.addEventListener('click', () => scrollToIndex(currentIndex() + 1));
+    dots.forEach((dot, i) => dot.addEventListener('click', () => scrollToIndex(i)));
+
+    scrollEl.addEventListener('scroll', () => {
+      // dots and arrow state track the nearest slide live, mid-swipe
+      setActive(currentIndex());
+    });
+
+    setActive(0);
+  });
+</script>

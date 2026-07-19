@@ -41,6 +41,33 @@ suddenly turn into ad copy, and the about page shouldn't turn into a status repo
 - Short technical sentences over long compound ones in write-ups. Save longer sentences for
   personal/narrative sections where a real thought runs long.
 - Contractions are fine ("doesn't," "I'll," "isn't") — this isn't formal writing.
+- Watch for a metaphor or framing repeating within one piece (an "itch," a "journey," a
+  "calling"). If it shows up more than once, it's become a crutch — cut it or make it earn its
+  keep once.
+- When there's a choice between stating the point plainly and withholding it to build curiosity,
+  default to plain. Only tease a reader deliberately, and only when there's an actual payoff
+  later in the piece — don't tease and then explain immediately after, that reads as bloated.
+- Humor, when it shows up, is earnest and forward-looking (hoping for a good outcome), not
+  self-deprecating (joking about failure before it happens). "Hoping for a sweet nat 20," not
+  "even if it leaves me with a nat 1."
+- Resume-style sections (Experience) can stay factual and dense in content, but still prefer
+  several short declarative sentences over one long compound sentence stacked with clauses.
+
+## Project page structure
+
+Every project write-up covers the same five checkpoints, in order. Between Overview and
+Status, add whatever narrative/technical sections the project actually needs (how it works, why
+a decision got made) — same as `franka-dice-pick.md` does with "Why a Franka" and "The pipeline."
+
+1. **Overview** — what it is, in plain terms.
+2. *(optional narrative/technical sections)*
+3. **Status** — where it stands right now.
+4. **Results** — what actually worked, backed by something real (a number, a video, a log).
+5. **Challenges** — what didn't work or isn't solved yet, stated plainly.
+6. **What's next** — always last.
+
+Demo videos and data belong in the `gallery` / `models` / `schematics` frontmatter, referenced
+from wherever in the prose they're relevant — not crammed into one section.
 
 ## Reference samples
 

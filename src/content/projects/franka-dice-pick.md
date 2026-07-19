@@ -7,14 +7,14 @@ categories: [Robotics, Machine Learning, AI]
 featured_image: "/assets/images/projects/franka-dice-pick/featured.jpg"
 github_url: "https://github.com/hksaperstein/rl"
 training_curves: true
+training_curves_title: "Stage 1: Default training"
+gallery_title: "Stage 2: D20 grasping"
+gallery_intro: "The scripted pipeline picks four of the five die types reliably. Here's each one, plus the d4 attempt that fails exactly as predicted."
 preview:
-  overview: "Ask for a d20 and the robot picks it out of the pile. Underneath it's a Franka Panda in Isaac Lab, finding dice with a detector that has never seen a real photo - only renders from my dice generator. The sim's ground truth checks my work, it never does the work."
+  overview: "This project combines two interests of mine, DnD and robotic manipulation. With a Franka Panda in Isaac Lab, I explore RL models, training hyperparameters, and techniques - all to simply help me with my next role. Hoping for that sweet nat 20."
   tools: [NVIDIA Isaac Lab, YOLO, Claude Code]
   highlight: "Four of the five die types pass. The d4 doesn't - I called that one before the demo ran. Flat gripper pads squeeze a tetrahedron right out of the grasp, and I haven't solved it yet."
 gallery:
-  - file: "/assets/images/projects/franka-dice-pick/detection-overlay.png"
-    section: "Detection"
-    description: "The trained detector on the demo scene: all five dice identified and 3D-localized, confidences 0.89–0.96. The green markers are simulator ground truth, overlaid for verification only — the pick sequence never reads them."
   - file: "/assets/videos/projects/franka-dice-pick/dice_pick_d20.mp4"
     section: "Picks by commanded type"
     description: "Commanded d20: the detector finds it among the five dice, depth deprojection gives the 3D target, and the staged DiffIK sequence descends, grasps, and lifts."
@@ -34,13 +34,7 @@ gallery:
 
 ## Overview
 
-This is where two other projects on this site converge: the [dice detector](/projects/dice-detection/) and the Isaac Lab manipulation platform. Command a die type — d20, say — and a Franka Panda in Isaac Lab finds that die on a five-die table using the trained detector, then picks it up with a staged inverse-kinematics sequence. Object positions come from the detector plus depth deprojection; the simulator's ground truth is used to verify the result, never to drive it. Four of the five die types pass. The d4 doesn't, and I'll get to why.
-
-To be clear about what this is and isn't: the controller is scripted, not learned. What the demo proves is the platform — assets, camera, detector, IK, gripper — and the perception bridge between them. Learned grasping on top of this stack is the open next phase.
-
-## Why a Franka
-
-The manipulation work started on a different arm, and across a long series of training experiments the policy reliably learned to reach but never to grasp and lift. Part of that is scale: a 2.8cm gripper aperture closing on 18mm objects leaves very little margin, where the Franka's 8cm aperture — the platform Isaac Lab's own manipulation examples are built around — leaves a lot. This project has a standing rule: after repeated non-improving results, escalate to a structurally different approach instead of tuning the same one. So the platform pivoted to the Franka, and the perception stack came along unchanged.
+A Franka Panda in Isaac Lab picks whichever die I name off a five-die table, using a detector I built in a [separate project](/projects/dice-detection/). It's a provided asset in Isaac Lab - the platform the built-in manipulation examples are built around - so I get to focus on the RL and perception software instead of arm hardware. The point of this page isn't the pick itself - it's what the pick proves: a manipulation platform working end to end, ready for a trained RL policy on top of it. Four of the five die types pick reliably today with a scripted controller; the d4 doesn't, and I'll get to why.
 
 ## The pipeline
 
@@ -58,13 +52,17 @@ One fixed camera looks at the table. Every pick runs the same sequence:
 - A DomeLight-only scene renders near-black to a camera sensor. Add a DistantLight, render extra RTX frames before reading the output, and reset the scene after the sim — otherwise the camera's pose reads as zeros and NaNs.
 - Rigidly holding the Franka's default ready-pose orientation during descent funnels the arm into joint-limit branches no matter where the target is. The straight-down quaternion plus bounded relative stepping fixed it — and made low IK damping safe again.
 
-## The d4
+## Status
 
-The honest failure. Flat parallel pads squeeze a tetrahedron out of the grasp even when the descent converges to under a millimeter. This was declared a permitted failure before the demo ran, it failed exactly as predicted, and it stays on the books as an open problem — the candidate fixes are a reorient, an edge grasp, or a push-assist, and I haven't built any of them yet.
+The scripted pipeline — detector, depth deprojection, staged IK descent, grasp — works today. The controller is scripted, not learned. Four of the five die types pick successfully with it; the d4 is the known exception. Learned grasping on top of this same platform is the declared next phase, listed below under what's next.
 
-## The agentic workflow
+## Results
 
-This repo is as much an experiment in agentic engineering as in robotics. The demo milestone was reached by Claude Code agent teams working through staged gates — camera and projection, perception, grasping, and finally video capture — each gate with its own spec, implementation plan, and review before the next one opened. I direct and make the calls; agents implement, review each other's work, and record what they learn in a knowledge base of transferable findings, which is where most of the hard-won list above comes from. Negative results get written down with the same care as wins — that's a rule, not a preference. The [agentic experiments page](/projects/agentic-ai-experiments/) is where I'm collecting the broader pattern.
+Four of the five die types — d20, d12, d10, d8 — pick successfully with the scripted pipeline; videos of each run are in the gallery. The trained detector, built entirely on synthetic renders, identifies and 3D-localizes all five dice on the demo table at confidences of 0.89–0.96, checked against but never driven by simulator ground truth. Tightening the grasp-position tolerance from 15mm to about 5mm was what got the smaller 15–18mm dice actually gripped instead of squeezed past. The geometric plausibility filter on depth deprojection caught a real false positive during development: a hole in the table that "existed" below the surface.
+
+## Challenges
+
+The d4 is the honest failure here. Flat parallel pads squeeze a tetrahedron out of the grasp even when the descent converges to under a millimeter. This was declared a permitted failure before the demo ran, it failed exactly as predicted, and it stays on the books as an open problem — the candidate fixes are a reorient, an edge grasp, or a push-assist, and I haven't built any of them yet.
 
 ## What's next
 
