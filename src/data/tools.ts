@@ -5,7 +5,7 @@ export const TOOLS = [
   { name: 'TensorFlow', how: 'Real-time object detection on video streams during my Hubbell R&D internship, accelerated with TensorRT.' },
   { name: 'OpenCV', how: 'Classical perception where it earns its keep: ground-plane removal, shape classification, tracking.', project: '/#franka-dice-pick' },
   { name: 'ROS 2', how: 'Kinematics and control work on a real 6-DOF arm.' },
-  { name: 'Claude Code + Copilot CLI', how: 'Multi-agent workflows with spec, plan, and review gates - most of this site shipped through them, and the same discipline runs on Copilot CLI at work.' },
+  { name: 'Claude Code + Copilot CLI', how: 'Multi-agent workflows with spec, plan, and review gates - most of this site shipped through them, and the same discipline runs on Copilot CLI at work.', project: '/#agentic-ai-experiments' },
   { name: 'Google Cloud', how: 'Compute Engine for training, Cloud Storage for every run, Cloud Run for the TensorBoard that reads them.', project: '/#franka-dice-pick' },
   { name: 'KiCad', how: 'Schematic capture and PCB layout for the keyboard prototype board.', project: '/#rgbw-keyboard' },
 ];
