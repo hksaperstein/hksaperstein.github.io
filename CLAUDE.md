@@ -12,7 +12,9 @@ and match it. Site copy should read as something Harrison wrote, not AI-generate
 - `src/content/projects/*.md` — project write-ups (content collection; schema in
   `src/content.config.ts`)
 - `src/pages/index.astro` — single-page homepage (hero, featured project, about, grid, skills)
-- `src/pages/projects/[slug].astro` — project detail pages
+- `src/components/ProjectDialog.astro` — each project's full write-up, shown as a modal on the
+  homepage; link to `/#<slug>` to open one. `src/pages/projects/` only holds redirect stubs
+  so old `/projects/<slug>/` URLs land on the right modal.
 - `public/assets/` — images, videos, models, schematics, resume (URLs are `/assets/...`)
 - `scripts/` — CAD/SPICE asset-generation utilities (not part of the site build)
 

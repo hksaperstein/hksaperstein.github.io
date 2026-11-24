@@ -53,7 +53,7 @@ This is a running log, not a finished build - it stays open. I direct and make t
 
 Workflows that stuck:
 
-- **Staged gates.** The [Robotic DnD](/projects/franka-dice-pick/) demo was built this way: camera and projection, perception, grasping, video capture - each gate with its own spec, implementation plan, and review before the next one opened. No gate opens on top of unreviewed work.
+- **Staged gates.** The [Robotic DnD](/#franka-dice-pick) demo was built this way: camera and projection, perception, grasping, video capture - each gate with its own spec, implementation plan, and review before the next one opened. No gate opens on top of unreviewed work.
 - **Cross-review.** Agents review each other's output before I see it. My review then happens at the level of intent and judgment, not syntax.
 - **A knowledge base of transferable findings.** Hard-won lessons - USD physics schemas that silently no-op, cameras that render black without a light and a warm-up frame - get recorded where the next agent will find them, instead of being relearned per session.
 - **Negative results get written down with the same care as wins.** That's a rule, not a preference, and it's the reason the write-ups on this site admit what doesn't work.

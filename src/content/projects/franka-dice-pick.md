@@ -34,7 +34,7 @@ gallery:
 
 ## Overview
 
-A Franka Panda in Isaac Lab picks whichever die I name off a five-die table, using a detector I built in a [separate project](/projects/dice-detection/). It's a provided asset in Isaac Lab - the platform the built-in manipulation examples are built around - so I get to focus on the RL and perception software instead of arm hardware. The point of this page isn't the pick itself - it's what the pick proves: a manipulation platform working end to end, ready for a trained RL policy on top of it. Four of the five die types pick reliably today with a scripted controller; the d4 doesn't, and I'll get to why.
+A Franka Panda in Isaac Lab picks whichever die I name off a five-die table, using a detector I built in a [separate project](/#dice-detection). It's a provided asset in Isaac Lab - the platform the built-in manipulation examples are built around - so I get to focus on the RL and perception software instead of arm hardware. The point of this page isn't the pick itself - it's what the pick proves: a manipulation platform working end to end, ready for a trained RL policy on top of it. Four of the five die types pick reliably today with a scripted controller; the d4 doesn't, and I'll get to why.
 
 ## The pipeline
 

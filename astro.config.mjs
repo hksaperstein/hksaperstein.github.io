@@ -7,12 +7,13 @@ export default defineConfig({
   site: 'https://hksaperstein.github.io',
   integrations: [
     sitemap({
-      filter: (page) =>
-        page !== 'https://hksaperstein.github.io/projects/ar4-pickplace-rl/',
+      // /projects/* are redirect stubs; the write-ups live in homepage modals.
+      filter: (page) => !page.startsWith('https://hksaperstein.github.io/projects/'),
     }),
   ],
   redirects: {
     '/about': '/#about',
+    '/projects': '/#projects',
   },
   vite: {
     plugins: [tailwindcss()],

@@ -7,6 +7,10 @@ import FeaturedProject from '../components/FeaturedProject.astro';
 // import ContributionsSection from '../components/ContributionsSection.astro';
 import ProjectSections from '../components/ProjectSections.astro';
 import ToolsSection from '../components/ToolsSection.astro';
+import ProjectDialog from '../components/ProjectDialog.astro';
+import { getCollection } from 'astro:content';
+
+const projects = await getCollection('projects');
 ---
 
 <Base
@@ -22,4 +26,5 @@ import ToolsSection from '../components/ToolsSection.astro';
   <ExperienceSection />
   <ProjectSections />
   <AboutSection />
+  {projects.map((project) => <ProjectDialog project={project} />)}
 </Base>

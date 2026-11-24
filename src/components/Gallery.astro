@@ -21,6 +21,8 @@ for (const item of items) {
 }
 
 const isVideo = (file: string) => /\.(mp4|webm)$/i.test(file);
+// Videos start as preload="none"; ProjectDialog switches them to "metadata" when
+// the project's modal opens, so the homepage doesn't fetch every gallery video.
 ---
 
 <details class="group mt-12 rounded-2xl border border-line bg-card">
@@ -65,7 +67,7 @@ const isVideo = (file: string) => /\.(mp4|webm)$/i.test(file);
                     <div class="w-full shrink-0 snap-center px-1">
                       <figure class="overflow-hidden rounded-2xl border border-line bg-card">
                         {isVideo(item.file) ? (
-                          <video controls preload="metadata" class="aspect-video w-full" src={item.file} />
+                          <video controls preload="none" class="aspect-video w-full" src={item.file} />
                         ) : (
                           <img src={item.file} alt={item.description ?? ''} loading="lazy" class="max-h-[32rem] w-full bg-bg object-contain" />
                         )}
@@ -107,7 +109,7 @@ const isVideo = (file: string) => /\.(mp4|webm)$/i.test(file);
             {groupItems.map((item) => (
               <figure class="overflow-hidden rounded-2xl border border-line bg-card">
                 {isVideo(item.file) ? (
-                  <video controls preload="metadata" class="aspect-video w-full" src={item.file} />
+                  <video controls preload="none" class="aspect-video w-full" src={item.file} />
                 ) : (
                   <img src={item.file} alt={item.description ?? ''} loading="lazy" class="aspect-video w-full object-cover" />
                 )}
