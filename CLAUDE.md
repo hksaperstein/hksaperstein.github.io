@@ -18,6 +18,14 @@ and match it. Site copy should read as something Harrison wrote, not AI-generate
 - `public/assets/` — images, videos, models, schematics, resume (URLs are `/assets/...`)
 - `scripts/` — CAD/SPICE asset-generation utilities (not part of the site build)
 
+## Branches
+
+- `main` is live: every push deploys. Only finished projects live here.
+- Each unfinished project has its own branch, `project/<slug>`, cut from `main` with just
+  that project's write-up (and any links to it) added back. Work on the project there;
+  when it's done, merge the branch into `main`. Pull `main` into the project branch now and
+  then so the eventual merge stays small.
+
 ## Build
 
 Node 26 (matches `.nvmrc` and the deploy workflow); on the Mac it's Homebrew's `node`.
