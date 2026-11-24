@@ -18,9 +18,8 @@ and match it. Site copy should read as something Harrison wrote, not AI-generate
 
 ## Build
 
-Node 22 required (matches `.nvmrc` and CI). On the Mac it comes from Homebrew `node@22`,
-put on PATH in `~/.zprofile`; if `node --version` isn't 22, run
-`export PATH="/opt/homebrew/opt/node@22/bin:$PATH"`. Run `npm ci` after a fresh clone.
+Node 26 (matches `.nvmrc` and the deploy workflow); on the Mac it's Homebrew's `node`.
+Run `npm ci` after a fresh clone.
 
 - `npm run build` — must pass before committing site changes
 - `npm run dev` — local dev server
